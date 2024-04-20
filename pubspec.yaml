@@ -1,0 +1,58 @@
+name: wallet_watch
+description: "WalletWatch"
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.2.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.2.4
+  shared_preferences: ^2.2.2
+  stroke_text: ^0.0.2
+  data_table_2: ^2.5.10
+  flutter_tex: ^4.0.6
+  flutter_screenutil: ^5.9.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.2
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/icons/ic_launcher.png"
+  adaptive_icon_background: "assets/icons/ic_launcher_background.png"
+
+flutter_native_splash:
+  android: false
+  ios: false
+  web: false
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
+  fonts:
+    - family: Baloo
+      fonts:
+        - asset: assets/fonts/Baloo/Baloo-Regular.ttf
+    - family: Baloo2
+      fonts:
+        - asset: assets/fonts/Baloo2/Baloo2-Regular.ttf
+        - asset: assets/fonts/Baloo2/Baloo2-Bold.ttf
+          weight: 700
+    - family: EduTAS
+      fonts:
+        - asset: assets/fonts/EduTAS/EduTAS-Regular.ttf
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito/Nunito-Regular.ttf
+        - asset: assets/fonts/Nunito/Nunito-Bold.ttf
+          weight: 700
