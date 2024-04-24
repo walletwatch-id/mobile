@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
 import 'package:wallet_watch/common/utils/transtition_fade.dart';
+import 'package:wallet_watch/common/widgets/back_clipper.dart';
 import 'package:wallet_watch/common/widgets/custom_text_field.dart';
 import 'package:wallet_watch/views/auth/login.dart';
 import 'package:wallet_watch/views/auth/register.dart';
@@ -51,7 +54,7 @@ class _LoginState extends State<Intro> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 12.h,
+                height: 42.h,
               ),
               Center(
                 child: Text(
@@ -80,10 +83,11 @@ class _LoginState extends State<Intro> {
               SizedBox(
                 height: 46.h,
               ),
-                            Center(
+              Center(
                 child: Text(
                   'Sudah punya akun?',
-                  style: AppFontStyle.authSmallText.copyWith(color: darkColor),
+                  style:
+                      AppFontStyle.authSubTitleText.copyWith(color: darkColor),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -92,8 +96,8 @@ class _LoginState extends State<Intro> {
                   width: MediaQuery.of(context).size.width * 0.55,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).push(
-                          TransitionFade(child: const Login()));
+                      Navigator.of(context)
+                          .push(TransitionFade(child: const Login()));
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -123,10 +127,11 @@ class _LoginState extends State<Intro> {
               SizedBox(
                 height: 30.h,
               ),
-                                          Center(
+              Center(
                 child: Text(
                   'Belum punya akun?',
-                  style: AppFontStyle.authSmallText.copyWith(color: darkColor),
+                  style:
+                      AppFontStyle.authSubTitleText.copyWith(color: darkColor),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -135,8 +140,8 @@ class _LoginState extends State<Intro> {
                   width: MediaQuery.of(context).size.width * 0.55,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).push(
-                          TransitionFade(child: const Register()));
+                      Navigator.of(context)
+                          .push(TransitionFade(child: const Register()));
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -163,107 +168,56 @@ class _LoginState extends State<Intro> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 12,
+              SizedBox(
+                height: 80.h,
               ),
-              const SizedBox(height: 20),
-              Text('Email',
-                  style:
-                      AppFontStyle.authLabelText.copyWith(color: primaryColor)),
-              CustomTextField(
-                controller: _usernameController,
-                hintText: "Email..",
-                obscureText: false,
-                keyboardType: TextInputType.emailAddress,
-                color: secondaryColor,
-                startIcon: Icon(
-                  Icons.person,
-                  color: secondaryColor,
-                ),
-              ),
-              const SizedBox(height: 24),
-              Text('Password',
-                  style:
-                      AppFontStyle.authLabelText.copyWith(color: primaryColor)),
-              CustomTextField(
-                controller: _passwordController,
-                hintText: "Password..",
-                obscureText: true,
-                keyboardType: TextInputType.visiblePassword,
-                color: secondaryColor,
-                startIcon: Icon(
-                  Icons.lock,
-                  color: secondaryColor,
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Center(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      //  login(context, _usernameController.text, _passwordController.text);
-                      // Navigator.pushReplacement(context,
-                      //     MaterialPageRoute(builder: (context) {
-                      //   return const Home();
-                      // }));
-                    },
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                      ),
-                      padding: MaterialStateProperty.all(EdgeInsets.zero),
-                    ),
-                    child: Container(
-                      height: 42.0,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFF3CEAC1), Color(0xFF00C0DA)],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Intro",
-                          style: AppFontStyle.authLabelText
-                              .copyWith(color: Colors.black),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Stack(
                 children: [
-                  Text("Belum punya akun?",
-                      style: AppFontStyle.authSmallText
-                          .copyWith(color: darkColor)),
-                  const SizedBox(
-                    width: 2,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushReplacement(
-                        TransitionFade(child: const Register()),
-                      );
-                    },
-                    child:
-                        Text("Sign up", style: AppFontStyle.authSmallBoldText),
+                  ClipPath(
+                      clipper: BackClipper(),
+                      child: Container(
+                          color: const Color(0xFF80D6DA),
+                          height: 200.h,
+                          child: Container(
+                            width: double.infinity,
+                            color: secondaryColor,
+                          ))),
+                  Positioned(
+                    top: 40.h,
+                    bottom: 40.h,
+                    right: 40.w,
+                    left: 40.w,
+                    child: Center(
+                        child: RichText(
+                      text: TextSpan(children: [
+                        TextSpan(
+                            text: '"Mari Gunakan ',
+                            style: AppFontStyle.authTitleText
+                                .copyWith(color: lightColor, fontSize: 24.sp)),
+                        TextSpan(
+                            text: "Paylater\n",
+                            style: AppFontStyle.authTitleText.copyWith(
+                                color: primaryColor, fontSize: 24.sp)),
+                        TextSpan(
+                            text: 'dengan ',
+                            style: AppFontStyle.authTitleText
+                                .copyWith(color: lightColor, fontSize: 24.sp)),
+                        TextSpan(
+                            text: "Bijak",
+                            style: AppFontStyle.authTitleText.copyWith(
+                                color: primaryColor, fontSize: 24.sp)),
+                        TextSpan(
+                            text: '"',
+                            style: AppFontStyle.authTitleText
+                                .copyWith(color: lightColor, fontSize: 24.sp)),
+                      ]),
+                      textAlign: TextAlign.center,
+                    )),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 50,
+              SizedBox(
+                height: 50.h,
               )
             ],
           ),

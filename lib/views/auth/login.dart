@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
 import 'package:wallet_watch/common/utils/transtition_fade.dart';
 import 'package:wallet_watch/common/widgets/custom_text_field.dart';
 import 'package:wallet_watch/views/auth/register.dart';
+import 'package:wallet_watch/views/home/home.dart';
+import 'package:wallet_watch/views/home/home_monitor.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -37,13 +41,34 @@ class _LoginState extends State<Login> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 10,
+              SizedBox(
+                height: 18.h,
               ),
-              Text('Login',
-                  style: AppFontStyle.authTitleText
-                      .copyWith(color: darkColor)),
-              const SizedBox(height: 20),
+              Center(
+                  child: RichText(
+                text: TextSpan(children: [
+                  TextSpan(
+                      text: "Wallet",
+                      style: AppFontStyle.authTitleText
+                          .copyWith(color: primaryColor, fontSize: 38.sp)),
+                  TextSpan(
+                      text: "Watch",
+                      style: AppFontStyle.authTitleText
+                          .copyWith(color: secondaryColor, fontSize: 38.sp))
+                ]),
+                textAlign: TextAlign.center,
+              )),
+                            SizedBox(
+                height: 8.h,
+              ),
+              Center(
+                child: Text(
+                  'Selamat datang kembali! Silahkan mengisi email dan password kamu di bawah',
+                  style: AppFontStyle.authSubTitleText.copyWith(color: darkColor),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(height: 60.h),
               Text('Email',
                   style: AppFontStyle.authLabelText
                       .copyWith(color: primaryColor)),
@@ -55,7 +80,7 @@ class _LoginState extends State<Login> {
                 color: secondaryColor,
                 startIcon: Icon(Icons.person, color: secondaryColor,),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               Text('Password',
                   style: AppFontStyle.authLabelText
                       .copyWith(color: primaryColor)),
@@ -67,10 +92,14 @@ class _LoginState extends State<Login> {
                                 color: secondaryColor,
                 startIcon: Icon(Icons.lock, color: secondaryColor,),
               ),
-              const SizedBox(
-                height: 30,
+                            SizedBox(height: 14.h),
+              Text('Lupa password?',
+                  style: AppFontStyle.authSubLabelText
+                      .copyWith(color: primaryColor, decoration: TextDecoration.underline, decorationColor: primaryColor)),
+              SizedBox(
+                height: 30.h,
               ),
-              Center(
+                            Center(
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.7,
                   child: ElevatedButton(
@@ -80,6 +109,11 @@ class _LoginState extends State<Login> {
                       //     MaterialPageRoute(builder: (context) {
                       //   return const Home();
                       // }));
+
+                                         Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const Home();
+                      }));
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -90,51 +124,44 @@ class _LoginState extends State<Login> {
                       padding: MaterialStateProperty.all(EdgeInsets.zero),
                     ),
                     child: Container(
-                      height: 42.0,
+                      height: 48.h,
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFF3CEAC1), Color(0xFF00C0DA)],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
+                        color: primaryColor,
                         borderRadius: BorderRadius.circular(16.0),
                       ),
                       child: Center(
                         child: Text(
-                          "Login",
+                          "Login/Masuk",
                           style: AppFontStyle.authLabelText
-                              .copyWith(color: Colors.black),
+                              .copyWith(color: darkColor, fontSize: 20.sp),
                         ),
                       ),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 12,
+              SizedBox(
+                height: 22.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Belum punya akun?",
-                      style: AppFontStyle.authSmallText.copyWith(
-                          color: darkColor)),
-                  const SizedBox(
-                    width: 2,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushReplacement(
-                        TransitionFade(child: const Register()),
-                      );
+              Center(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  height: 42,
+                  child: SignInButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      side: const BorderSide(color: Color(0xFF4285F4)),
+                    ),
+                    Buttons.googleDark,
+                    text: "Masuk dengan Google",
+                    onPressed: () {
+                      // signIn();
                     },
-                    child:
-                        Text("Sign up", style: AppFontStyle.authSmallBoldText),
                   ),
-                ],
+                ),
               ),
-              const SizedBox(
-                height: 50,
+              SizedBox(
+                height: 50.h,
               )
             ],
           ),

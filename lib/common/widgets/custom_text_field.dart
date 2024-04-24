@@ -31,7 +31,7 @@ class CustomTextField extends StatefulWidget {
 class _CustomTextFieldState extends State<CustomTextField> {
   final FocusNode _focusNode = FocusNode();
   bool _isFocused = false;
-  bool _isVisible = true;
+  late bool _isVisible = !widget.obscureText;
 
   @override
   void initState() {
@@ -81,7 +81,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             contentPadding: EdgeInsets.only(left: 18.w, right: 18.w),
             hintText: widget.hintText,
             hintStyle: AppFontStyle.authHintText
-                .copyWith(color: widget.color),
+                .copyWith(color: widget.color?.withOpacity(.7)),
             border: OutlineInputBorder(
                 borderSide: BorderSide(
                     color: widget.color ??
@@ -95,7 +95,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             focusedBorder: OutlineInputBorder(
               
                 borderSide:
-                    BorderSide(color: widget.color ?? const Color(0xFF9EA3A2), width: 2),
+                    BorderSide(color: widget.color ?? const Color(0xFF9EA3A2), width: 2.w),
                 borderRadius: BorderRadius.circular(radius)),
           ),
         ),

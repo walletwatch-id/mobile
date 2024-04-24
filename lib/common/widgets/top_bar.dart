@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
-import 'package:wallet_watch/common/utils/transtition_fade.dart';
 
 class TopBar extends StatefulWidget {
-  final String title;
-  final List<Color> colors;
+  final String? title;
   final VoidCallback settingAction;
   final VoidCallback? popAction;
+  final AdvancedDrawerController? controller;
   const TopBar(
       {super.key,
-      this.title = "",
-      required this.colors,
+      this.title,
       required this.settingAction,
-      this.popAction});
+      this.popAction,
+      this.controller});
 
   @override
   State<TopBar> createState() => _TopBarState();
@@ -21,77 +23,90 @@ class TopBar extends StatefulWidget {
 class _TopBarState extends State<TopBar> {
   @override
   Widget build(BuildContext context) {
-    return Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: widget.colors,
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight),
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(.3),
-                  spreadRadius: 1,
-                  blurRadius: 10,
-                  offset: const Offset(0, -1),
-                ),
-              ],
-            ),
-            child: Container(
-              margin: const EdgeInsets.only(top: 30, left: 16, right: 20),
-              alignment: Alignment.topCenter,
-              height: 45,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      if (widget.popAction != null) {
-                        widget.popAction!();
-                      }
-                      Navigator.pop(context);
+    return Container(
+      margin: EdgeInsets.only(left: 8.w, right: 16.w),
+      height: 50.h,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          widget.controller != null
+              ? IconButton(
+                  onPressed: _handleMenuButtonPressed,
+                  icon: ValueListenableBuilder<AdvancedDrawerValue>(
+                    valueListenable: widget.controller!,
+                    builder: (_, value, __) {
+                      return AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 250),
+                        child: Icon(
+                          value.visible ? Icons.clear : Icons.menu,
+                          key: ValueKey<bool>(value.visible),
+                          size: 32.w,
+                          color: primaryColor,
+                        ),
+                      );
                     },
+                  ),
+                )
+              : GestureDetector(
+                  onTap: () {
+                    if (widget.popAction != null) {
+                      widget.popAction!();
+                    }
+                    // setState(() {
+                    //   isSettingAlertVisible = false;
+                    // });
+                    Navigator.pop(context);
+                  },
+                  child: Semantics(
+                    label: "Kembali ke halaman sebelumnya!",
                     child: Image.asset(
-                      'assets/icons/backs.png',
-                      color: Colors.white,
-                      width: 28,
+                      'assets/icons/back.png',
+                      color: primaryColor,
+                      width: 32.w,
                       fit: BoxFit.cover,
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 8),
-                    width: MediaQuery.of(context).size.width * 0.68,
-                    child: Text(
-                        widget.title.length > 24
-                            ? '${widget.title.substring(0, 24)}...'
-                            : widget.title,
-                        style: AppFontStyle.topBarText),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      if (widget.popAction != null) {
-                        widget.popAction!();
-                      }
-                      // Navigator.of(context).pushAndRemoveUntil(
-                      //     TransitionFade(child: const Home()),
-                      //     (route) => false);
-                    },
-                    child: Image.asset(
-                      'assets/icons/home.png',
-                      color: Colors.white,
-                      width: 28,
-                      fit: BoxFit.cover,
+                ),
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 12.w),
+              alignment: Alignment.center,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.zero,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 16.w),
+                    child: Center(
+                      child: Text(widget.title ?? '',
+                          style: AppFontStyle.topBarTitleText.copyWith(
+                              color: lightColor)),
                     ),
                   ),
                 ],
               ),
-            )));
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                widget.settingAction();
+              });
+            },
+            child: Semantics(
+              label: "Notification",
+              child: Icon(Icons.notifications_outlined, color: primaryColor,)
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _handleMenuButtonPressed() {
+    // NOTICE: Manage Advanced Drawer state through the Controller.
+    // _advancedDrawerController.value = AdvancedDrawerValue.visible();
+    widget.controller!.showDrawer();
   }
 }

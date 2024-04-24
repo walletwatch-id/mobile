@@ -1,20 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/views/splash/splash.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.light,
       statusBarColor: Colors.transparent,
     ),
   );
   runApp(const MainApp());
+  _configLoading();
 }
+
+void _configLoading() {
+  EasyLoading.instance
+    ..indicatorType = EasyLoadingIndicatorType.dualRing
+    ..loadingStyle = EasyLoadingStyle.custom
+    ..maskType = EasyLoadingMaskType.custom
+    ..radius = 20
+    ..progressColor = Colors.white
+    ..backgroundColor = secondaryColor
+    ..indicatorColor = Colors.white
+    ..textColor = Colors.white
+    ..maskColor = Colors.white.withOpacity(.3);
+}
+
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
