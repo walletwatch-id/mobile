@@ -23,6 +23,7 @@ dependencies:
   flutter_rounded_progress_bar: ^0.3.2
   custom_sliding_segmented_control: ^1.8.1
   flutter_floating_bottom_bar: ^1.2.0
+  flutter_chat_ui: ^1.6.12
 
 dev_dependencies:
   flutter_test:
@@ -46,6 +47,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/images/paylater/
   fonts:
     - family: Baloo
       fonts:

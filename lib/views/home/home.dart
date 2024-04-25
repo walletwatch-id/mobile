@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
@@ -21,7 +23,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     _currentPage = 0;
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     _tabController.animation?.addListener(
       () {
         final value = _tabController.animation!.value.round();
@@ -48,8 +50,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final Color unselectedColor = lightColor;
-    final Color unselectedColorReverse =
-        bottomBarColor.computeLuminance() < 0.5 ? Colors.white : Colors.black;
 
     final height = widget.height.h;
     final width = widget.width.w;
@@ -59,7 +59,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         backgroundColor: darkColor,
         body: BottomBar(
           clip: Clip.none,
-          fit: StackFit.expand,
+          fit: StackFit.passthrough,
           icon: (width, height) => Center(
             child: IconButton(
               padding: EdgeInsets.zero,
@@ -94,11 +94,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               physics: const BouncingScrollPhysics(),
               children: [
                 HomeMonitor(controller: controller),
-                Container(
-                  color: primaryColor,
-                ),
-                Container(
-                  color: secondaryColor,
+                ListView(
+                  controller: controller,
+                  children: [
+                    Container(
+                      height: 600,
+                      color: primaryColor,
+                    ),
+                    Container(
+                      height: 600,
+                      color: secondaryColor,
+                    ),
+                  ],
                 ),
                 Container(
                   color: secondaryColor,
@@ -115,12 +122,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 indicatorPadding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
                 controller: _tabController,
                 dividerColor: Colors.transparent,
+                tabAlignment: TabAlignment.center,
                 indicator: UnderlineTabIndicator(
                     borderSide: BorderSide(
-                      color: _currentPage <= 4 ? primaryColor : unselectedColor,
-                      width: 4.w,
-                    ),
-                    insets: const EdgeInsets.fromLTRB(16, 0, 16, 8)),
+                  // color: _currentPage <= 4 ? primaryColor : unselectedColor,
+                  color: Colors.transparent,
+                  width: 4.w,
+                )),
                 tabs: [
                   SizedBox(
                     height: height,
@@ -131,37 +139,33 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       color: _currentPage == 0 ? primaryColor : unselectedColor,
                     )),
                   ),
-                  SizedBox(
-                    height: height,
-                    width: width,
-                    child: Center(
-                      child: Icon(
-                        Icons.chat,
-                        color:
-                            _currentPage == 1 ? primaryColor : unselectedColor,
+                  Container(
+                    padding: EdgeInsets.only(right: width),
+                    child: SizedBox(
+                      height: height,
+                      width: width,
+                      child: Center(
+                        child: Icon(
+                          Icons.chat,
+                          color: _currentPage == 1
+                              ? primaryColor
+                              : unselectedColor,
+                        ),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: height,
-                    width: width,
-                    child: Center(
-                      child: Icon(
-                        Icons.add,
-                        color: _currentPage == 2
-                            ? primaryColor
-                            : unselectedColorReverse,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height,
-                    width: width + 10.w,
-                    child: Center(
-                      child: Icon(
-                        Icons.contacts,
-                        color:
-                            _currentPage == 3 ? primaryColor : unselectedColor,
+                  Container(
+                    padding: EdgeInsets.only(left: width),
+                    child: SizedBox(
+                      height: height,
+                      width: width,
+                      child: Center(
+                        child: Icon(
+                          Icons.contacts,
+                          color: _currentPage == 2
+                              ? primaryColor
+                              : unselectedColor,
+                        ),
                       ),
                     ),
                   ),
@@ -172,7 +176,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       child: Icon(
                         Icons.person,
                         color:
-                            _currentPage == 4 ? primaryColor : unselectedColor,
+                            _currentPage == 3 ? primaryColor : unselectedColor,
                       ),
                     ),
                   ),
@@ -184,25 +188,26 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   height: height * 1.3,
                   width: height * 1.3,
                   child: Stack(
-    children: [
-      Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: bottomBarColor, width: 2.2.w),
-        ),
-        child: ClipOval(
-          child: FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: primaryColor,
-            child: Icon(
-              Icons.add,
-              color: lightColor,
-            ),
-          ),
-        ),
-      ),
-    ],
-  ),
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border:
+                              Border.all(color: bottomBarColor, width: 2.2.w),
+                        ),
+                        child: ClipOval(
+                          child: FloatingActionButton(
+                            onPressed: () {},
+                            backgroundColor: primaryColor,
+                            child: Icon(
+                              Icons.add,
+                              color: lightColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

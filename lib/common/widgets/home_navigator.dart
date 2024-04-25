@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:wallet_watch/common/enum/monitor_state.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wallet_watch/common/enum/home_state.dart';
 import 'package:wallet_watch/common/helper.dart';
+import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
 
-class MonitorNavigator extends StatefulWidget {
+class HomeNavigator extends StatefulWidget {
   final AdvancedDrawerController controller;
-  final MonitorState state;
+  final HomeState state;
   final Widget child;
   final Function()? load;
-  const MonitorNavigator(
+  const HomeNavigator(
       {super.key,
       required this.controller,
       required this.state,
@@ -18,10 +20,10 @@ class MonitorNavigator extends StatefulWidget {
       this.load});
 
   @override
-  State<MonitorNavigator> createState() => _MonitorNavigatorState();
+  State<HomeNavigator> createState() => _HomeNavigatorState();
 }
 
-class _MonitorNavigatorState extends State<MonitorNavigator> {
+class _HomeNavigatorState extends State<HomeNavigator> {
   @override
   void initState() {
     super.initState();
@@ -45,8 +47,8 @@ class _MonitorNavigatorState extends State<MonitorNavigator> {
         height: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: [
-            const Color(0xFFCFA476),
-            const Color(0xFFD2AC80).withOpacity(.79),
+            secondaryColor,
+            primaryColor,
           ], stops: const [
             0.2,
             1.0
@@ -108,7 +110,7 @@ class _MonitorNavigatorState extends State<MonitorNavigator> {
                     Expanded(
                       child: Container(
                         padding: const EdgeInsets.only(left: 16),
-                        height: 70,
+                        height: 80.h,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,13 +118,13 @@ class _MonitorNavigatorState extends State<MonitorNavigator> {
                             Text(
                               user.name,
                               style: AppFontStyle.accountNameText.copyWith(
-                                color: const Color(0xFF3A2723),
+                                color: lightColor,
                               ),
                             ),
                             Text(
                               '@${user.username}',
                               style: AppFontStyle.accountUsernameText.copyWith(
-                                color: const Color(0xFF3A2723),
+                                color: lightColor,
                               ),
                             ),
                           ],
@@ -142,7 +144,7 @@ class _MonitorNavigatorState extends State<MonitorNavigator> {
                   margin: const EdgeInsets.symmetric(
                     vertical: 16.0,
                   ),
-                  child: const Text('NembangKuy! <Monitor> | Ver 1.0'),
+                  child: Text('WalletWatch <Home> | Ver 1.0', style: TextStyle(color: lightColor),),
                 ),
               ),
             ],
@@ -154,7 +156,7 @@ class _MonitorNavigatorState extends State<MonitorNavigator> {
         // if (userMode == UserMode.normal)
         //   SettingAlert(
         //     visible: isSettingAlertVisible,
-        //     isMonitor: true,
+        //     isHome: true,
         //     onDismiss: () {
         //       if (widget.load != null) {
         //         widget.load!();

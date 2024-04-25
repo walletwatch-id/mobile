@@ -7,12 +7,14 @@ import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wallet_watch/common/data/chart_data.dart';
-import 'package:wallet_watch/common/enum/monitor_state.dart';
+import 'package:wallet_watch/common/enum/home_state.dart';
+import 'package:wallet_watch/common/enum/paylater_state.dart';
 import 'package:wallet_watch/common/helper.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
 import 'package:wallet_watch/common/widgets/area_chart.dart';
-import 'package:wallet_watch/common/widgets/monitor_navigator.dart';
+import 'package:wallet_watch/common/widgets/home_navigator.dart';
+import 'package:wallet_watch/common/widgets/monitor_card.dart';
 import 'package:wallet_watch/common/widgets/top_bar.dart';
 
 class HomeMonitor extends StatefulWidget {
@@ -67,9 +69,9 @@ class _HomeMonitorState extends State<HomeMonitor>
 
   @override
   Widget build(BuildContext context) {
-    return MonitorNavigator(
+    return HomeNavigator(
         controller: _advancedDrawerController,
-        state: MonitorState.monitor,
+        state: HomeState.monitor,
         child: Scaffold(
           body: Stack(
             children: [
@@ -155,8 +157,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                             RoundedProgressBar(
                                 height: 150.h,
                                 childLeft: Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 73 / 1.3),
+                                  padding: EdgeInsets.only(left: 73.w / 1.1),
                                   child: Text("73%",
                                       style: AppFontStyle
                                           .homeMonitorIndicatorText
@@ -277,53 +278,68 @@ class _HomeMonitorState extends State<HomeMonitor>
                           right: 0,
                           bottom: 0,
                           left: 0,
-                          child: ListView(
-                            controller: widget.controller,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    height: 320.h,
-                                    child: TabBarView(
-                                      controller: _tabController,
+                          child: SizedBox(
+                            height: double.infinity,
+                            child: TabBarView(
+                              controller: _tabController,
+                              children: [
+                                ListView(
+                                  controller: widget.controller,
+                                  children: [
+                                    Column(
                                       children: [
-                                        Column(
-                                          children: [
-                                            Container(
-                                              margin: EdgeInsets.only(top: 8.h),
-                                              height: 280.h,
-                                              width: double.infinity,
-                                              decoration: BoxDecoration(
-                                                color: lightColor,
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(16),
-                                                ),
-                                                border: Border.all(
-                                                  color: const Color(0xFF4F4F4F)
-                                                      .withOpacity(0.31),
-                                                  width: 1.5,
-                                                ),
+                                        Container(
+                                          margin: EdgeInsets.only(top: 8.h),
+                                          height: 280.h,
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                              color: lightColor,
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                Radius.circular(16),
                                               ),
-                                              child: AreaChart(
-                                                title: "Penggunaan Paylater",
-                                                color: primaryColor,
-                                                data: _data,
+                                              border: Border.all(
+                                                color: borderColor,
+                                                width: 1.5.w,
                                               ),
-                                            ),
-                                          ],
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: borderColor,
+                                                  spreadRadius: -1.h,
+                                                  blurRadius: 5.w,
+                                                  offset: Offset(0, 5.h),
+                                                ),
+                                              ]),
+                                          child: AreaChart(
+                                            title: "Penggunaan Paylater",
+                                            color: primaryColor,
+                                            data: _data,
+                                          ),
                                         ),
-                                        // Content for Pendapatan tab
-                                        Center(
-                                          child: Text('Pendapatan'),
-                                        ),
+                                        const MonitorCard(
+                                            state: PaylaterState.shopee,
+                                            value: 958125),
+                                        const MonitorCard(
+                                            state: PaylaterState.kredivo,
+                                            value: 958125),
+                                        const MonitorCard(
+                                            state: PaylaterState.akulaku,
+                                            value: 958125),
                                       ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              .3,
+                                    )
+                                  ],
+                                ),
+                                // Content for Pendapatan tab
+                                const Center(
+                                  child: Text('Pendapatan'),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],

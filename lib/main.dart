@@ -35,7 +35,6 @@ void _configLoading() {
     ..maskColor = Colors.white.withOpacity(.3);
 }
 
-
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 

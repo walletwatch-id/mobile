@@ -1,4 +1,4 @@
-enum MonitorState {
+enum HomeState {
   monitor,
   chat,
   hotline,

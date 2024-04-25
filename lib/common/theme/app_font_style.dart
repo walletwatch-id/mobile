@@ -50,6 +50,13 @@ class AppFontStyle {
       height: .8,
       color: Colors.black);
 
+              static TextStyle homeCardTitleText = TextStyle(
+      fontSize: 22.sp,
+      fontFamily: 'Nunito',
+      fontWeight: FontWeight.bold,
+      height: 1.1,
+      color: Colors.black);
+
     static TextStyle homeNormalText = TextStyle(
       fontSize: 14.sp,
       fontFamily: 'Nunito',
