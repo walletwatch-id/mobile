@@ -119,8 +119,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                       Container(
                         margin: EdgeInsets.symmetric(
                             vertical: 10.h, horizontal: 20.w),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 18.h, horizontal: 10.w),
+                        padding: EdgeInsets.symmetric( horizontal: 10.w),
                         height: 260.h,
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -136,6 +135,9 @@ class _HomeMonitorState extends State<HomeMonitor>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            SizedBox(
+                              height: 18.h,
+                            ),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.w),
                               child: Column(
@@ -172,6 +174,16 @@ class _HomeMonitorState extends State<HomeMonitor>
                                   widthShadow: 0,
                                 ),
                                 percent: 73),
+                                SizedBox(height: 11.h,),
+                                Center(
+                                  child: SizedBox(
+                                    height: 7.h,
+                                    child: Image.asset(
+                                                    'assets/images/monitor_indicator.png',
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                  ),
+                                ),
                           ],
                         ),
                       ),

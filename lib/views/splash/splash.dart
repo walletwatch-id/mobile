@@ -5,6 +5,7 @@ import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
 import 'package:wallet_watch/common/utils/transtition_fade.dart';
 import 'package:wallet_watch/views/auth/intro.dart';
+import 'package:wallet_watch/views/splash/splash_auth.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -22,7 +23,7 @@ class _SplashState extends State<Splash>
 
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context)
-          .pushReplacement(TransitionFade(child: const Intro()));
+          .pushReplacement(TransitionFade(child: const SplashAuth()));
     });
   }
 
@@ -39,35 +40,33 @@ class _SplashState extends State<Splash>
       body: Container(
        width: double.infinity,
         padding: const EdgeInsets.all(16),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-        ),
+        color: lightColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.7,
-              child:               Center(
-                  child: RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                      text: "Wallet",
-                      style: AppFontStyle.authTitleText
-                          .copyWith(color: primaryColor, fontSize: 52.sp)),
-                  TextSpan(
-                      text: "Watch",
-                      style: AppFontStyle.authTitleText
-                          .copyWith(color: secondaryColor, fontSize: 52.sp))
-                ]),
-                textAlign: TextAlign.center,
-              )),
-              // child: Image.asset(
-              //   'assets/images/splash.png',
-              //   fit: BoxFit.contain,
-              // ),
+              // child:               Center(
+              //     child: RichText(
+              //   text: TextSpan(children: [
+              //     TextSpan(
+              //         text: "Wallet",
+              //         style: AppFontStyle.authTitleText
+              //             .copyWith(color: primaryColor, fontSize: 52.sp)),
+              //     TextSpan(
+              //         text: "Watch",
+              //         style: AppFontStyle.authTitleText
+              //             .copyWith(color: secondaryColor, fontSize: 52.sp))
+              //   ]),
+              //   textAlign: TextAlign.center,
+              // )),
+              child: Image.asset(
+                'assets/images/splash.png',
+                fit: BoxFit.contain,
+              ),
             ),
-            const SizedBox(
-              height: 50,
+            SizedBox(
+              height: 50.h,
             )
           ],
         ),

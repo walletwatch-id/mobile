@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
+import 'package:wallet_watch/views/home/home_chat.dart';
+import 'package:wallet_watch/views/home/home_hotline.dart';
 import 'package:wallet_watch/views/home/home_monitor.dart';
 
 class Home extends StatefulWidget {
@@ -32,6 +35,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         }
       },
     );
+
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.light,
+    ));
     super.initState();
   }
 
@@ -94,24 +101,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               physics: const BouncingScrollPhysics(),
               children: [
                 HomeMonitor(controller: controller),
-                ListView(
-                  controller: controller,
-                  children: [
-                    Container(
-                      height: 600,
-                      color: primaryColor,
-                    ),
-                    Container(
-                      height: 600,
-                      color: secondaryColor,
-                    ),
-                  ],
-                ),
+                HomeChat(controller: controller),
+                HomeHotline(controller: controller),
                 Container(
-                  color: secondaryColor,
-                ),
-                Container(
-                  color: darkColor,
+                  color: primaryColor,
                 ),
               ]),
           child: Stack(

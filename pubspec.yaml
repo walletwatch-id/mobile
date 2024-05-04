@@ -24,6 +24,11 @@ dependencies:
   custom_sliding_segmented_control: ^1.8.1
   flutter_floating_bottom_bar: ^1.2.0
   flutter_chat_ui: ^1.6.12
+  googleapis: ^13.1.0  
+  googleapis_auth: ^1.6.0
+  firebase_auth: ^4.19.4
+  firebase_core: ^2.30.1
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -31,11 +36,13 @@ dev_dependencies:
   flutter_lints: ^3.0.2
 
 flutter_launcher_icons:
-  android: true
-  ios: true
   remove_alpha_ios: true
   image_path: "assets/icons/ic_launcher.png"
-  adaptive_icon_background: "assets/icons/ic_launcher_background.png"
+  adaptive_icon_foreground: "assets/icons/ic_launcher_foreground.png"
+  android: true
+  ios: true
+  adaptive_icon_background: "#FFFFFF"
+  # adaptive_icon_background: "assets/icons/ic_launcher_background.png"
 
 flutter_native_splash:
   android: false

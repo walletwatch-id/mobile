@@ -44,7 +44,7 @@ class AppFontStyle {
       color: Colors.black);
 
         static TextStyle homeSubTitleText = TextStyle(
-      fontSize: 20.sp,
+      fontSize: 18.sp,
       fontFamily: 'Nunito',
       fontWeight: FontWeight.bold,
       height: .8,
