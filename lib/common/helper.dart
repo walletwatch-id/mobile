@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wallet_watch/common/data/user.dart';
-import 'package:wallet_watch/common/enum/paylater_state.dart';
+import 'package:wallet_watch/common/enum/item_state.dart';
 import 'package:intl/intl.dart';
 
 final User user = User(
@@ -17,21 +16,31 @@ final User user = User(
   image: "assets/images/user_default.png",
 );
 
-Widget getPaylaterImage(PaylaterState state, {double size = 1}) {
-  if (state == PaylaterState.akulaku) {
+Widget getStateImage(ItemState? state, {double size = 1}) {
+  if (state == ItemState.akulaku) {
     return SizedBox(
       height: 55.h * size,
       child: Image.asset("assets/images/paylater/akulaku.png"),
     );
-  } else if (state == PaylaterState.kredivo) {
+  } else if (state == ItemState.kredivo) {
     return SizedBox(
       height: 32.h * size,
       child: Image.asset("assets/images/paylater/kredivo.png"),
     );
-  } else if (state == PaylaterState.shopee) {
+  } else if (state == ItemState.shopee) {
     return SizedBox(
       height: 28.h * size,
       child: Image.asset("assets/images/paylater/shopee.png"),
+    );
+  } else if (state == ItemState.ojk) {
+    return SizedBox(
+      height: 55.h * size,
+      child: Image.asset("assets/images/government/ojk.png"),
+    );
+  } else if (state == ItemState.kominfo) {
+    return SizedBox(
+      height: 55.h * size,
+      child: Image.asset("assets/images/government/kominfo.png"),
     );
   }
 

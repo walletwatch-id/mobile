@@ -30,6 +30,8 @@ dependencies:
   firebase_core: ^2.30.1
   google_sign_in: ^6.2.1
 
+  intl: any
+  flutter_chat_types: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -55,6 +57,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/images/paylater/
+    - assets/images/government/
   fonts:
     - family: Baloo
       fonts:

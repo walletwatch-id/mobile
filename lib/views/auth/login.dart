@@ -4,11 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
-import 'package:wallet_watch/common/utils/transtition_fade.dart';
 import 'package:wallet_watch/common/widgets/custom_text_field.dart';
-import 'package:wallet_watch/views/auth/register.dart';
 import 'package:wallet_watch/views/home/home.dart';
-import 'package:wallet_watch/views/home/home_monitor.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

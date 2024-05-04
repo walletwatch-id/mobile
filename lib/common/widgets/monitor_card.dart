@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wallet_watch/common/enum/paylater_state.dart';
+import 'package:wallet_watch/common/enum/item_state.dart';
 import 'package:wallet_watch/common/helper.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
 
 class MonitorCard extends StatefulWidget {
-  final PaylaterState state;
+  final ItemState state;
   final double value;
   final String unit;
   const MonitorCard(
@@ -46,7 +46,7 @@ class _MonitorCardState extends State<MonitorCard> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            child: Center(child: getPaylaterImage(widget.state)),
+            child: Center(child: getStateImage(widget.state)),
             
           ),
           Padding(

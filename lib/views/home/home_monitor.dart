@@ -1,14 +1,13 @@
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wallet_watch/common/data/chart_data.dart';
 import 'package:wallet_watch/common/enum/home_state.dart';
-import 'package:wallet_watch/common/enum/paylater_state.dart';
+import 'package:wallet_watch/common/enum/item_state.dart';
 import 'package:wallet_watch/common/helper.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
@@ -329,13 +328,13 @@ class _HomeMonitorState extends State<HomeMonitor>
                                           ),
                                         ),
                                         const MonitorCard(
-                                            state: PaylaterState.shopee,
+                                            state: ItemState.shopee,
                                             value: 958125),
                                         const MonitorCard(
-                                            state: PaylaterState.kredivo,
+                                            state: ItemState.kredivo,
                                             value: 958125),
                                         const MonitorCard(
-                                            state: PaylaterState.akulaku,
+                                            state: ItemState.akulaku,
                                             value: 958125),
                                       ],
                                     ),

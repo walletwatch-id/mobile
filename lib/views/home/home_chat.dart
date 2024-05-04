@@ -1,21 +1,12 @@
-import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
-import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wallet_watch/common/data/chart_data.dart';
 import 'package:wallet_watch/common/enum/home_state.dart';
-import 'package:wallet_watch/common/enum/paylater_state.dart';
 import 'package:wallet_watch/common/helper.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
-import 'package:wallet_watch/common/widgets/area_chart.dart';
 import 'package:wallet_watch/common/widgets/home_navigator.dart';
-import 'package:wallet_watch/common/widgets/monitor_card.dart';
 import 'package:wallet_watch/common/widgets/top_bar.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 

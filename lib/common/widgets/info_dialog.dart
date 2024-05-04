@@ -36,7 +36,7 @@ class _InfoDialogState extends State<InfoDialog> {
           child: Container(
             color: Colors.black.withOpacity(0.5),
             child: AlertDialog(
-              insetPadding: EdgeInsets.all(16),
+              insetPadding: const EdgeInsets.all(16),
               backgroundColor: Colors.transparent,
               contentPadding: EdgeInsets.zero,
               shape: RoundedRectangleBorder(

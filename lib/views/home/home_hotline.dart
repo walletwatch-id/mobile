@@ -1,21 +1,15 @@
-import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
-import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wallet_watch/common/data/chart_data.dart';
 import 'package:wallet_watch/common/enum/home_state.dart';
-import 'package:wallet_watch/common/enum/paylater_state.dart';
+import 'package:wallet_watch/common/enum/hotline_state.dart';
+import 'package:wallet_watch/common/enum/item_state.dart';
 import 'package:wallet_watch/common/helper.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
-import 'package:wallet_watch/common/widgets/area_chart.dart';
 import 'package:wallet_watch/common/widgets/home_navigator.dart';
-import 'package:wallet_watch/common/widgets/monitor_card.dart';
+import 'package:wallet_watch/common/widgets/hotline_card.dart';
 import 'package:wallet_watch/common/widgets/top_bar.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
@@ -28,53 +22,16 @@ class HomeHotline extends StatefulWidget {
 }
 
 class _HomeHotlineState extends State<HomeHotline> {
-  final List<types.Message> _messages = [];
-  final _user = const types.User(id: '82091008-a484-4a89-ae75-a22bf8d6f3ac');
   final _advancedDrawerController = AdvancedDrawerController();
   bool isSettingVisible = false;
 
   @override
   void initState() {
     super.initState();
-
-    final textMessage = types.TextMessage(
-        author: const types.User(id: '92091008-a484-4a89-ae75-a22bf8d6f3ac'),
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-        id: randomString(),
-        text:
-            "Hi, ${user.name}!\n\nIni Chatbot dan senang bisa ngobrol dengan kamu! Kalau ada pertanyaan, kamu bisa tulis di bawah yaa. I would love to answer :)");
-
-    _messages.insert(0, textMessage);
   }
 
   void refresh() {
     setState(() {});
-  }
-
-  void _addMessage(types.Message message) {
-    setState(() {
-      _messages.insert(0, message);
-    });
-  }
-
-  void _handleSendPressed(types.PartialText message) {
-    final textMessage = types.TextMessage(
-      author: _user,
-      createdAt: DateTime.now().millisecondsSinceEpoch,
-      id: randomString(),
-      text: message.text,
-    );
-
-    _addMessage(textMessage);
-
-    final textMessage1 = types.TextMessage(
-      author: const types.User(id: '92091008-a484-4a89-ae75-a22bf8d6f3ac'),
-      createdAt: DateTime.now().millisecondsSinceEpoch,
-      id: randomString(),
-      text: message.text,
-    );
-
-    _addMessage(textMessage1);
   }
 
   @override
@@ -151,59 +108,30 @@ class _HomeHotlineState extends State<HomeHotline> {
                       alignment: Alignment.center,
                       children: [
                         Positioned(
-                          top: 46.h,
+                          top: 0.h,
                           right: 0,
                           bottom: 70.h,
                           left: 0,
                           child: SizedBox(
-                            height: double.infinity,
-                            
-                            child: Chat(
-                              messages: _messages,
-                              onSendPressed: _handleSendPressed,
-                              user: _user,
-                              // customBottomWidget: SizedBox(
-                              //   height: 0,
-                              // ),
-                              theme: DefaultChatTheme(
-                                backgroundColor: lightColor,
-                                primaryColor: primaryColor,
-                                secondaryColor: secondaryColor,
-                                sentMessageBodyTextStyle: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'Nunito',
-                                  color: lightColor,
-                                ),
-                                receivedMessageBodyTextStyle: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'Nunito',
-                                  color: lightColor,
-                                ),
-                                inputBorderRadius: BorderRadius.circular(30.r),
-                                inputPadding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 0),
-                                inputBackgroundColor: lightColor,
-                                inputTextColor: darkColor,
-                                inputTextStyle: TextStyle(
-                                  fontSize: 12,
-                                  fontFamily: 'Nunito',
-                                  color: darkColor,
-                                ),
-                                // statusIconPadding: EdgeInsets.zero,
-                                sendButtonMargin: EdgeInsets.zero,
-                                sendButtonIcon: Image.asset('assets/icons/send_chat.png', width: 40.w, height: 40.h, fit: BoxFit.fill,),
-                                // inputTextDecoration: InputDecoration(
-                                //   focusColor: primaryColor,
-                                //   fillColor: primaryColor,
-                                //   hoverColor: primaryColor
-                                // ),
-                                inputContainerDecoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30.r),
-                                  border: Border.all(color: darkBorderColor, width: 2.w),
-                                  
-                                )
-                              ),
-                            ),
-                          ),
+                              height: double.infinity,
+                              child: Column(
+                                children: [
+                                  const HotlineCard(
+                                    state: HotlineState.paylater,
+                                    title: "Hotline paylater yang kamu gunakan", hotlines: [
+                                    {ItemState.shopee: "1500739"},
+                                    {ItemState.kredivo: "1500590"},
+                                    {ItemState.akulaku: "1500920"},
+                                  ]),
+                                  SizedBox(height: 20.h,),
+                                   const HotlineCard(
+                                    state: HotlineState.government,
+                                    title: "Hotline Pemerintah", hotlines: [
+                                    {ItemState.ojk: "157"},
+                                    {ItemState.kominfo: "150"},
+                                  ])
+                                ],
+                              )),
                         ),
                       ],
                     )),

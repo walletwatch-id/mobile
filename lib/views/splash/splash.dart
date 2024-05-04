@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
-import 'package:wallet_watch/common/theme/app_font_style.dart';
 import 'package:wallet_watch/common/utils/transtition_fade.dart';
-import 'package:wallet_watch/views/auth/intro.dart';
 import 'package:wallet_watch/views/splash/splash_auth.dart';
 
 class Splash extends StatefulWidget {
