@@ -1,7 +1,9 @@
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,6 +37,11 @@ class _HomeMonitorState extends State<HomeMonitor>
   @override
   void initState() {
     super.initState();
+        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.light,
+      statusBarColor: darkColor
+    ));
+
     _data = [
       ChartData("Januari", 1.52),
       ChartData("Februari", 4.54),
@@ -118,7 +125,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                       Container(
                         margin: EdgeInsets.symmetric(
                             vertical: 10.h, horizontal: 20.w),
-                        padding: EdgeInsets.symmetric( horizontal: 10.w),
+                        padding: EdgeInsets.symmetric(horizontal: 10.w),
                         height: 260.h,
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -173,16 +180,18 @@ class _HomeMonitorState extends State<HomeMonitor>
                                   widthShadow: 0,
                                 ),
                                 percent: 73),
-                                SizedBox(height: 11.h,),
-                                Center(
-                                  child: SizedBox(
-                                    height: 7.h,
-                                    child: Image.asset(
-                                                    'assets/images/monitor_indicator.png',
-                                                    fit: BoxFit.contain,
-                                                  ),
-                                  ),
+                            SizedBox(
+                              height: 11.h,
+                            ),
+                            Center(
+                              child: SizedBox(
+                                height: 7.h,
+                                child: Image.asset(
+                                  'assets/images/monitor_indicator.png',
+                                  fit: BoxFit.contain,
                                 ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -211,7 +220,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                   ],
                 ),
                 child: Container(
-                    margin: EdgeInsets.all(16.h),
+                    margin: EdgeInsets.symmetric(vertical: 16.h),
                     alignment: Alignment.bottomCenter,
                     child: Stack(
                       alignment: Alignment.center,
@@ -294,60 +303,294 @@ class _HomeMonitorState extends State<HomeMonitor>
                             child: TabBarView(
                               controller: _tabController,
                               children: [
-                                ListView(
-                                  controller: widget.controller,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(top: 8.h),
-                                          height: 280.h,
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                              color: lightColor,
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                Radius.circular(16),
-                                              ),
-                                              border: Border.all(
-                                                color: borderColor,
-                                                width: 1.5.w,
-                                              ),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: borderColor,
-                                                  spreadRadius: -1.h,
-                                                  blurRadius: 5.w,
-                                                  offset: Offset(0, 5.h),
+                                Padding(
+                                   padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                  child: ListView(
+                                    controller: widget.controller,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(top: 8.h),
+                                            height: 280.h,
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                                color: lightColor,
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(16),
                                                 ),
-                                              ]),
-                                          child: AreaChart(
-                                            title: "Penggunaan Paylater",
-                                            color: primaryColor,
-                                            data: _data,
+                                                border: Border.all(
+                                                  color: borderColor,
+                                                  width: 1.5.w,
+                                                ),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: borderColor,
+                                                    spreadRadius: -1.h,
+                                                    blurRadius: 5.w,
+                                                    offset: Offset(0, 5.h),
+                                                  ),
+                                                ]),
+                                            child: AreaChart(
+                                              title:
+                                                  "Penggunaan Paylater Bulanan",
+                                              color: primaryColor,
+                                              data: _data,
+                                            ),
                                           ),
-                                        ),
-                                        const MonitorCard(
-                                            state: ItemState.shopee,
-                                            value: 958125),
-                                        const MonitorCard(
-                                            state: ItemState.kredivo,
-                                            value: 958125),
-                                        const MonitorCard(
-                                            state: ItemState.akulaku,
-                                            value: 958125),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              .3,
-                                    )
-                                  ],
+                                          const MonitorCard(
+                                              state: ItemState.shopee,
+                                              value: 958125),
+                                          const MonitorCard(
+                                              state: ItemState.kredivo,
+                                              value: 638750),
+                                          const MonitorCard(
+                                              state: ItemState.akulaku,
+                                              value: 532291),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                .3,
+                                      )
+                                    ],
+                                  ),
                                 ),
                                 // Content for Pendapatan tab
-                                const Center(
-                                  child: Text('Pendapatan'),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                  child: ListView(
+                                    controller: widget.controller,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(top: 8.h),
+                                            height: 280.h,
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                                color: lightColor,
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(16),
+                                                ),
+                                                border: Border.all(
+                                                  color: borderColor,
+                                                  width: 1.5.w,
+                                                ),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: borderColor,
+                                                    spreadRadius: -1.h,
+                                                    blurRadius: 5.w,
+                                                    offset: Offset(0, 5.h),
+                                                  ),
+                                                ]),
+                                            child: AreaChart(
+                                              title: "Pendapatan Bulanan",
+                                              color: primaryColor,
+                                              data: _data,
+                                            ),
+                                          ),
+                                          Container(
+                                              margin: EdgeInsets.only(top: 20.h),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 24.w,
+                                                  vertical: 10.h),
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                  color: lightColor,
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                    Radius.circular(16),
+                                                  ),
+                                                  border: Border.all(
+                                                    color: borderColor,
+                                                    width: 1.5.w,
+                                                  ),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: borderColor,
+                                                      spreadRadius: -1.h,
+                                                    blurRadius: 5.w,
+                                                    offset: Offset(0, 5.h),
+                                                  ),
+                                                ]),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                        'Total pendapatan bulan ini:',
+                                                        style: AppFontStyle
+                                                            .homeSubTitleText
+                                                            .copyWith(
+                                                                color:
+                                                                    darkColor)),
+                                                    Icon(
+                                                      Icons.edit_outlined,
+                                                      size: 25.h,
+                                                    )
+                                                  ],
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 20.h),
+                                                  child: Column(
+                                                    children: [
+                                                      Text(
+                                                        formatCurrency(9462962),
+                                                        style: AppFontStyle
+                                                            .homeCardTitleText
+                                                            .copyWith(
+                                                                color:
+                                                                    darkColor,
+                                                                fontSize:
+                                                                    28.sp),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 16.h, horizontal: 12.w),
+                                            child: Divider(
+                                              color: borderColor,
+                                              thickness: 2.w,
+                                            ),
+                                          ),
+                                          Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 24.w,
+                                                  vertical: 10.h),
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                  color: lightColor,
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                    Radius.circular(16),
+                                                  ),
+                                                  border: Border.all(
+                                                    color: borderColor,
+                                                    width: 1.5.w,
+                                                  ),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: borderColor,
+                                                      spreadRadius: -1.h,
+                                                    blurRadius: 5.w,
+                                                    offset: Offset(0, 5.h),
+                                                  ),
+                                                ]),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                        'Historis',
+                                                        style: AppFontStyle
+                                                            .homeSubTitleText
+                                                            .copyWith(
+                                                              fontSize: 24.sp,
+                                                            decoration: TextDecoration.underline,
+                                                            decorationColor: primaryColor,
+                                                            decorationThickness: 2.h,
+                                                                color:
+                                                                    primaryColor)),
+                                                    Icon(
+                                                      Icons.keyboard_arrow_down,
+                                                      color: darkBorderColor,
+                                                      size: 28.h,
+                                                    )
+                                                  ],
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 14.h),
+                                                  child: Column(
+                                                    children: [
+
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            "Bulan Mei",
+                                                            style: AppFontStyle
+                                                                .homeCardTitleText
+                                                                .copyWith(
+                                                                    color:
+                                                                        darkColor,
+                                                                    fontSize:
+                                                                        18.sp),
+                                                                        
+                                                          ),
+                                                          Text(
+                                                            formatCurrency(9254000),
+                                                            style: AppFontStyle
+                                                                .homeCardTitleText
+                                                                .copyWith(
+                                                                    color:
+                                                                        darkColor,
+                                                                    fontSize:
+                                                                        18.sp),),
+                                                        ],
+                                                      ),
+                                                      SizedBox(height: 8.h,),
+                                                                                                            Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            "Bulan April",
+                                                            style: AppFontStyle
+                                                                .homeCardTitleText
+                                                                .copyWith(
+                                                                    color:
+                                                                        darkColor,
+                                                                    fontSize:
+                                                                        18.sp),
+                                                                        
+                                                          ),
+                                                          Text(
+                                                            formatCurrency(9350000),
+                                                            style: AppFontStyle
+                                                                .homeCardTitleText
+                                                                .copyWith(
+                                                                    color:
+                                                                        darkColor,
+                                                                    fontSize:
+                                                                        18.sp),),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                .3,
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

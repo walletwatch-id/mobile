@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wallet_watch/common/enum/home_state.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
+import 'package:wallet_watch/common/utils/transition_vertical_top.dart';
+import 'package:wallet_watch/views/home/home_notification.dart';
 
 class TopBar extends StatefulWidget {
   final String? title;
   final VoidCallback settingAction;
   final VoidCallback? popAction;
   final AdvancedDrawerController? controller;
+  final HomeState? state;
   const TopBar(
       {super.key,
       this.title,
       required this.settingAction,
       this.popAction,
+      this.state,
       this.controller});
 
   @override
@@ -26,6 +31,7 @@ class _TopBarState extends State<TopBar> {
     return Container(
       margin: EdgeInsets.only(left: 8.w, right: 16.w),
       height: 50.h,
+      color: Colors.transparent,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -48,26 +54,30 @@ class _TopBarState extends State<TopBar> {
                     },
                   ),
                 )
-              : GestureDetector(
-                  onTap: () {
-                    if (widget.popAction != null) {
-                      widget.popAction!();
-                    }
-                    // setState(() {
-                    //   isSettingAlertVisible = false;
-                    // });
-                    Navigator.pop(context);
-                  },
-                  child: Semantics(
-                    label: "Kembali ke halaman sebelumnya!",
-                    child: Image.asset(
-                      'assets/icons/back.png',
-                      color: primaryColor,
-                      width: 32.w,
-                      fit: BoxFit.cover,
+              : SizedBox(
+                width: 58.w,
+                child: GestureDetector(
+                    onTap: () {
+                      if (widget.popAction != null) {
+                        widget.popAction!();
+                      }
+                      // setState(() {
+                      //   isSettingAlertVisible = false;
+                      // });
+                      Navigator.pop(context);
+                    },
+                    child: Semantics(
+                      label: "Kembali ke halaman sebelumnya!",
+                      child: Icon(Icons.close_rounded, color: primaryColor, size: 32.w,)
+                      // child: Image.asset(
+                      //   'assets/icons/back.png',
+                      //   color: primaryColor,
+                      //   width: 32.w,
+                      //   fit: BoxFit.cover,
+                      // ),
                     ),
                   ),
-                ),
+              ),
           Expanded(
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 12.w),
@@ -80,8 +90,8 @@ class _TopBarState extends State<TopBar> {
                     padding: EdgeInsets.only(right: 16.w),
                     child: Center(
                       child: Text(widget.title ?? '',
-                          style: AppFontStyle.topBarTitleText.copyWith(
-                              color: lightColor)),
+                          style: AppFontStyle.topBarTitleText
+                              .copyWith(color: lightColor)),
                     ),
                   ),
                 ],
@@ -90,14 +100,18 @@ class _TopBarState extends State<TopBar> {
           ),
           GestureDetector(
             onTap: () {
-              setState(() {
-                widget.settingAction();
-              });
+              widget.settingAction();
+              if (widget.state != HomeState.notification) {
+                Navigator.of(context).push(
+                    TransitionVerticalTop(child: const HomeNotification()));
+              }
             },
             child: Semantics(
-              label: "Notification",
-              child: Icon(Icons.notifications_outlined, color: primaryColor,)
-            ),
+                label: "Notification",
+                child: Icon(
+                  widget.state == HomeState.notification ? Icons.notifications : Icons.notifications_outlined,
+                  color: primaryColor,
+                )),
           ),
         ],
       ),

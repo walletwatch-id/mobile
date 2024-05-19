@@ -6,12 +6,15 @@ class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final bool obscureText;
+  final double height;
+  final double fontSize;
   final TextInputType keyboardType;
   final bool readOnly;
   final Widget? startIcon;
   final Color? color;
   final Color? backColor;
-  final VoidCallback? onFocus;
+  final FocusNode? focusNode;
+  final Function(bool)? onFocusChange;
   const CustomTextField(
       {super.key,
       required this.controller,
@@ -19,9 +22,12 @@ class CustomTextField extends StatefulWidget {
       this.obscureText = false,
       this.readOnly = false,
       this.startIcon,
-      this.onFocus,
+      this.height = 50,
+      this.fontSize = 18,
+      this.onFocusChange,
       this.color,
       this.backColor,
+      this.focusNode,
       required this.keyboardType});
 
   @override
@@ -29,22 +35,21 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  final FocusNode _focusNode = FocusNode();
+  late FocusNode _focusNode;
   bool _isFocused = false;
   late bool _isVisible = !widget.obscureText;
 
   @override
   void initState() {
     super.initState();
+    _focusNode = widget.focusNode ?? FocusNode();
     _focusNode.addListener(_onFocusChange);
   }
 
   void _onFocusChange() {
     setState(() {
       _isFocused = _focusNode.hasFocus;
-      if (_isFocused) {
-        widget.onFocus!();
-      }
+      widget.onFocusChange?.call(_isFocused);
     });
   }
 
@@ -54,7 +59,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(radius),
       child: Container(
-        height: 50.h,
+        height: widget.height.h,
         width: double.maxFinite,
         color: widget.backColor ?? const Color(0xFFFFFFFF).withOpacity(0.7),
         child: TextField(
@@ -66,7 +71,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           focusNode: _focusNode,
           controller: widget.controller,
           style: AppFontStyle.customInputText
-              .copyWith(color: widget.color ?? Colors.black),
+              .copyWith(color: widget.color ?? Colors.black, height: 1.9.h, fontSize: widget.fontSize.sp),
           decoration: InputDecoration(
             prefixIcon: widget.startIcon,
             suffixIcon: Visibility(
@@ -77,25 +82,25 @@ class _CustomTextFieldState extends State<CustomTextField> {
                         _isVisible = !_isVisible;
                       });
                     },
-                    child: Icon(_isVisible ? Icons.visibility_off : Icons.visibility, color: widget.color,))),
+                    child: Icon(
+                      _isVisible ? Icons.visibility_off : Icons.visibility,
+                      color: widget.color,
+                    ))),
             contentPadding: EdgeInsets.only(left: 18.w, right: 18.w),
             hintText: widget.hintText,
             hintStyle: AppFontStyle.authHintText
-                .copyWith(color: widget.color?.withOpacity(.7)),
+                .copyWith(color: widget.color?.withOpacity(.7), height: 1.7.h, fontSize: (widget.fontSize - 2).sp),
             border: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: widget.color ??
-                        const Color(0xFF9EA3A2)),
+                borderSide:
+                    BorderSide(color: widget.color ?? const Color(0xFF9EA3A2)),
                 borderRadius: BorderRadius.circular(radius)),
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: widget.color ??
-                        const Color(0xFF9EA3A2)),
+                borderSide:
+                    BorderSide(color: widget.color ?? const Color(0xFF9EA3A2)),
                 borderRadius: BorderRadius.circular(radius)),
             focusedBorder: OutlineInputBorder(
-              
-                borderSide:
-                    BorderSide(color: widget.color ?? const Color(0xFF9EA3A2), width: 2.w),
+                borderSide: BorderSide(
+                    color: widget.color ?? const Color(0xFF9EA3A2), width: 2.w),
                 borderRadius: BorderRadius.circular(radius)),
           ),
         ),

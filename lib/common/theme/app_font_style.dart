@@ -14,6 +14,10 @@ class AppFontStyle {
     color: const Color(0xFF007bd9),
     fontFamily: 'EduTAS',
   );
+      static TextStyle classLabelText = TextStyle(
+    fontSize: 18.sp,
+    fontFamily: "Baloo",
+  );
 
         static TextStyle chartLabelText = const TextStyle(
     fontSize: 12,

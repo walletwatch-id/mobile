@@ -4,6 +4,7 @@ import 'package:wallet_watch/common/theme/app_font_style.dart';
 import 'package:wallet_watch/common/utils/transtition_fade.dart';
 import 'package:wallet_watch/common/widgets/custom_text_field.dart';
 import 'package:wallet_watch/views/auth/login.dart';
+
 class Register extends StatefulWidget {
   const Register({super.key});
 
@@ -38,7 +39,7 @@ class _RegisterState extends State<Register> {
             width: double.infinity,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color:backColor,
+              color: backColor,
             ),
             child: ListView(children: [
               Column(
@@ -49,12 +50,12 @@ class _RegisterState extends State<Register> {
                     height: 10,
                   ),
                   Text('Sign Up',
-                      style: AppFontStyle.authTitleText.copyWith(
-                          color: darkColor)),
+                      style: AppFontStyle.authTitleText
+                          .copyWith(color: darkColor)),
                   const SizedBox(height: 20),
                   Text('Username',
-                      style: AppFontStyle.authLabelText.copyWith(
-                          color: darkColor)),
+                      style: AppFontStyle.authLabelText
+                          .copyWith(color: darkColor)),
                   CustomTextField(
                     controller: _usernameController,
                     hintText: "Username..",
@@ -63,8 +64,8 @@ class _RegisterState extends State<Register> {
                   ),
                   const SizedBox(height: 8),
                   Text('Password',
-                      style: AppFontStyle.authLabelText.copyWith(
-                          color: darkColor)),
+                      style: AppFontStyle.authLabelText
+                          .copyWith(color: darkColor)),
                   CustomTextField(
                     controller: _passwordController,
                     hintText: "Password..",
@@ -73,8 +74,8 @@ class _RegisterState extends State<Register> {
                   ),
                   const SizedBox(height: 8),
                   Text('Re-type Password',
-                      style: AppFontStyle.authLabelText.copyWith(
-                          color: darkColor)),
+                      style: AppFontStyle.authLabelText
+                          .copyWith(color: darkColor)),
                   CustomTextField(
                     controller: _passwordConfController,
                     hintText: "Password..",
@@ -122,9 +123,8 @@ class _RegisterState extends State<Register> {
                                   },
                                   child: Text(
                                     'Tanggal Lahir',
-                                    style: AppFontStyle.authLabelText.copyWith(
-                                      color: darkColor
-                                    ),
+                                    style: AppFontStyle.authLabelText
+                                        .copyWith(color: darkColor),
                                   ),
                                 ),
                                 CustomTextField(
@@ -133,10 +133,12 @@ class _RegisterState extends State<Register> {
                                   readOnly: true,
                                   obscureText: false,
                                   keyboardType: TextInputType.datetime,
-                                  onFocus: () {
-                                    setState(() {
-                                      isDateSelectorVisible = true;
-                                    });
+                                  onFocusChange: (isFocused) {
+                                    if (isFocused) {
+                                      setState(() {
+                                        isDateSelectorVisible = true;
+                                      });
+                                    }
                                   },
                                 ),
                               ],
@@ -199,8 +201,8 @@ class _RegisterState extends State<Register> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("Sudah punya akun?",
-                          style: AppFontStyle.authSmallText.copyWith(
-                              color: darkColor)),
+                          style: AppFontStyle.authSmallText
+                              .copyWith(color: darkColor)),
                       const SizedBox(
                         width: 2,
                       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,6 +28,11 @@ class _HomeChatState extends State<HomeChat> {
   @override
   void initState() {
     super.initState();
+
+            SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.light,
+      statusBarColor: darkColor
+    ));
 
     final textMessage = types.TextMessage(
         author: const types.User(id: '92091008-a484-4a89-ae75-a22bf8d6f3ac'),

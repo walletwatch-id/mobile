@@ -14,21 +14,21 @@ import 'package:wallet_watch/common/widgets/hotline_card.dart';
 import 'package:wallet_watch/common/widgets/top_bar.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
-class HomeHotline extends StatefulWidget {
+class HomeProfile extends StatefulWidget {
   final ScrollController controller;
-  const HomeHotline({super.key, required this.controller});
+  const HomeProfile({super.key, required this.controller});
 
   @override
-  State<HomeHotline> createState() => _HomeHotlineState();
+  State<HomeProfile> createState() => _HomeProfileState();
 }
 
-class _HomeHotlineState extends State<HomeHotline> {
+class _HomeProfileState extends State<HomeProfile> {
   final _advancedDrawerController = AdvancedDrawerController();
   bool isSettingVisible = false;
 
   @override
   void initState() {
-        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+            SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarIconBrightness: Brightness.light,
       statusBarColor: darkColor
     ));
@@ -53,7 +53,7 @@ class _HomeHotlineState extends State<HomeHotline> {
                 left: 0,
                 child: TopBar(
                     controller: _advancedDrawerController,
-                    title: "Hotline",
+                    title: "Profile",
                     settingAction: () {
                       // setState(() {
                       //   isSettingAlertVisible = true;
@@ -80,7 +80,7 @@ class _HomeHotlineState extends State<HomeHotline> {
                         alignment: Alignment.centerLeft,
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 40.w),
-                          child: Text('Informasi Hotline Terkait Paylater!',
+                          child: Text('Mengatur Preferensi Anda!',
                               style: AppFontStyle.homeSubTitleText
                                   .copyWith(color: lightColor)),
                         ),
@@ -121,20 +121,7 @@ class _HomeHotlineState extends State<HomeHotline> {
                               height: double.infinity,
                               child: Column(
                                 children: [
-                                  const HotlineCard(
-                                    state: HotlineState.paylater,
-                                    title: "Hotline paylater yang kamu gunakan", hotlines: [
-                                    {ItemState.shopee: "1500739"},
-                                    {ItemState.kredivo: "1500590"},
-                                    {ItemState.akulaku: "1500920"},
-                                  ]),
-                                  SizedBox(height: 20.h,),
-                                   const HotlineCard(
-                                    state: HotlineState.government,
-                                    title: "Hotline Pemerintah", hotlines: [
-                                    {ItemState.ojk: "157"},
-                                    {ItemState.kominfo: "150"},
-                                  ])
+                                
                                 ],
                               )),
                         ),

@@ -30,12 +30,12 @@ void _configLoading() {
     ..indicatorType = EasyLoadingIndicatorType.dualRing
     ..loadingStyle = EasyLoadingStyle.custom
     ..maskType = EasyLoadingMaskType.custom
-    ..radius = 20
+    ..radius = 22
     ..progressColor = Colors.white
     ..backgroundColor = secondaryColor
     ..indicatorColor = Colors.white
     ..textColor = Colors.white
-    ..maskColor = Colors.white.withOpacity(.3);
+    ..maskColor = darkColor.withOpacity(.3);
 }
 
 class MainApp extends StatefulWidget {
@@ -48,7 +48,6 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   @override
   void initState() {
-    EasyLoading.init();
     super.initState();
   }
 
@@ -64,6 +63,7 @@ class _MainAppState extends State<MainApp> {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF000000)),
           home: const Splash(),
+          builder: EasyLoading.init(),
         );
       },
     );

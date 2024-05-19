@@ -2,5 +2,7 @@ enum HomeState {
   monitor,
   chat,
   hotline,
-  profil
+  profil,
+  add,
+  notification
 }
