@@ -12,6 +12,8 @@ class TopBar extends StatefulWidget {
   final VoidCallback settingAction;
   final VoidCallback? popAction;
   final AdvancedDrawerController? controller;
+  final Color? backgroundColor;
+  final Color? textColor;
   final HomeState? state;
   const TopBar(
       {super.key,
@@ -19,6 +21,8 @@ class TopBar extends StatefulWidget {
       required this.settingAction,
       this.popAction,
       this.state,
+      this.backgroundColor,
+      this.textColor,
       this.controller});
 
   @override
@@ -31,7 +35,7 @@ class _TopBarState extends State<TopBar> {
     return Container(
       margin: EdgeInsets.only(left: 8.w, right: 16.w),
       height: 50.h,
-      color: Colors.transparent,
+      color: widget.backgroundColor ?? Colors.transparent,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -91,7 +95,7 @@ class _TopBarState extends State<TopBar> {
                     child: Center(
                       child: Text(widget.title ?? '',
                           style: AppFontStyle.topBarTitleText
-                              .copyWith(color: lightColor)),
+                              .copyWith(color: widget.textColor ?? lightColor)),
                     ),
                   ),
                 ],

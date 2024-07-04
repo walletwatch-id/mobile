@@ -5,6 +5,7 @@ Color secondaryColor = const Color(0xFF30744a);
 Color backColor = const Color(0xFFFCFCFC);
 Color bottomBarColor = const Color(0x770C0C0C);
 Color monitorColor = const Color(0xFFFEFAF6);
+Color monitorBackgroundColor = const Color(0xFFD9D9D9);
 Color borderColor = const Color(0xFF4F4F4F).withOpacity(.31);
 Color darkBorderColor = const Color(0xFF4B4343).withOpacity(.5);
 Color subColor = const Color(0xFF4B4343).withOpacity(.83);

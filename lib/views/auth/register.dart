@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
 import 'package:wallet_watch/common/utils/transtition_fade.dart';
@@ -13,21 +14,19 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordConfController = TextEditingController();
-  final TextEditingController _namaLengkapController = TextEditingController();
-  final TextEditingController _tanggalLahirController = TextEditingController();
   bool isDateSelectorVisible = false;
 
   @override
   void dispose() {
     super.dispose();
-    _usernameController.dispose();
+    _nameController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     _passwordConfController.dispose();
-    _namaLengkapController.dispose();
-    _tanggalLahirController.dispose();
   }
 
   @override
@@ -52,102 +51,111 @@ class _RegisterState extends State<Register> {
                   Text('Sign Up',
                       style: AppFontStyle.authTitleText
                           .copyWith(color: darkColor)),
-                  const SizedBox(height: 20),
-                  Text('Username',
+                  SizedBox(height: 22.h),
+                  Text('Nama',
                       style: AppFontStyle.authLabelText
-                          .copyWith(color: darkColor)),
+                          .copyWith(color: primaryColor)),
                   CustomTextField(
-                    controller: _usernameController,
-                    hintText: "Username..",
+                    controller: _nameController,
+                    hintText: "Nama..",
                     obscureText: false,
                     keyboardType: TextInputType.name,
+                    color: secondaryColor,
+                    startIcon: Icon(
+                      Icons.person,
+                      color: secondaryColor,
+                    ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 16.h),
+                  Text('Email',
+                      style: AppFontStyle.authLabelText
+                          .copyWith(color: primaryColor)),
+                  CustomTextField(
+                    controller: _emailController,
+                    hintText: "Email..",
+                    obscureText: false,
+                    keyboardType: TextInputType.emailAddress,
+                    color: secondaryColor,
+                    startIcon: Icon(
+                      Icons.email,
+                      color: secondaryColor,
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
                   Text('Password',
                       style: AppFontStyle.authLabelText
-                          .copyWith(color: darkColor)),
+                          .copyWith(color: primaryColor)),
                   CustomTextField(
                     controller: _passwordController,
                     hintText: "Password..",
                     obscureText: true,
                     keyboardType: TextInputType.visiblePassword,
-                  ),
-                  const SizedBox(height: 8),
-                  Text('Re-type Password',
-                      style: AppFontStyle.authLabelText
-                          .copyWith(color: darkColor)),
-                  CustomTextField(
-                    controller: _passwordConfController,
-                    hintText: "Password..",
-                    obscureText: true,
-                    keyboardType: TextInputType.visiblePassword,
-                  ),
-                  const SizedBox(height: 8),
-                  SingleChildScrollView(
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Nama Lengkap',
-                                  style: AppFontStyle.authLabelText.copyWith(
-                                    color: darkColor,
-                                  ),
-                                ),
-                                CustomTextField(
-                                  controller: _namaLengkapController,
-                                  hintText: "Nama..",
-                                  obscureText: false,
-                                  keyboardType: TextInputType.name,
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 30,
-                          ),
-                          Flexible(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      isDateSelectorVisible = true;
-                                    });
-                                  },
-                                  child: Text(
-                                    'Tanggal Lahir',
-                                    style: AppFontStyle.authLabelText
-                                        .copyWith(color: darkColor),
-                                  ),
-                                ),
-                                CustomTextField(
-                                  controller: _tanggalLahirController,
-                                  hintText: "Tanggal..",
-                                  readOnly: true,
-                                  obscureText: false,
-                                  keyboardType: TextInputType.datetime,
-                                  onFocusChange: (isFocused) {
-                                    if (isFocused) {
-                                      setState(() {
-                                        isDateSelectorVisible = true;
-                                      });
-                                    }
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                    color: secondaryColor,
+                    startIcon: Icon(
+                      Icons.lock,
+                      color: secondaryColor,
                     ),
                   ),
+                  SizedBox(height: 16.h),
+                  Text('Konfirmasi Password',
+                      style: AppFontStyle.authLabelText
+                          .copyWith(color: primaryColor)),
+                  CustomTextField(
+                    controller: _passwordConfController,
+                    hintText: "Konfirmasi Password..",
+                    obscureText: true,
+                    keyboardType: TextInputType.visiblePassword,
+                    color: secondaryColor,
+                    startIcon: Icon(
+                      Icons.lock_person,
+                      color: secondaryColor,
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  // SingleChildScrollView(
+                  //   child: SizedBox(
+                  //     width: double.infinity,
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+
+                  //         Flexible(
+                  //           child: Column(
+                  //             crossAxisAlignment: CrossAxisAlignment.start,
+                  //             children: [
+                  //               GestureDetector(
+                  //                 onTap: () {
+                  //                   setState(() {
+                  //                     isDateSelectorVisible = true;
+                  //                   });
+                  //                 },
+                  //                 child: Text(
+                  //                   'Tanggal Lahir',
+                  //                   style: AppFontStyle.authLabelText
+                  //                       .copyWith(color: darkColor),
+                  //                 ),
+                  //               ),
+                  //               CustomTextField(
+                  //                 controller: _tanggalLahirController,
+                  //                 hintText: "Tanggal..",
+                  //                 readOnly: true,
+                  //                 obscureText: false,
+                  //                 keyboardType: TextInputType.datetime,
+                  //                 onFocusChange: (isFocused) {
+                  //                   if (isFocused) {
+                  //                     setState(() {
+                  //                       isDateSelectorVisible = true;
+                  //                     });
+                  //                   }
+                  //                 },
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   const SizedBox(
                     height: 30,
                   ),
@@ -166,28 +174,24 @@ class _RegisterState extends State<Register> {
                         },
                         style: ButtonStyle(
                           shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                              WidgetStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16.0),
                             ),
                           ),
-                          padding: MaterialStateProperty.all(EdgeInsets.zero),
+                          padding: WidgetStateProperty.all(EdgeInsets.zero),
                         ),
                         child: Container(
                           height: 42.0,
                           decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFF3CEAC1), Color(0xFF00C0DA)],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                            ),
+                            color: secondaryColor,
                             borderRadius: BorderRadius.circular(16.0),
                           ),
                           child: Center(
                             child: Text(
-                              "Sign Up",
+                              "Sign Up/Daftar",
                               style: AppFontStyle.authLabelText
-                                  .copyWith(color: Colors.black),
+                                  .copyWith(color: darkColor, fontSize: 20.sp),
                             ),
                           ),
                         ),
@@ -197,26 +201,7 @@ class _RegisterState extends State<Register> {
                   const SizedBox(
                     height: 12,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Sudah punya akun?",
-                          style: AppFontStyle.authSmallText
-                              .copyWith(color: darkColor)),
-                      const SizedBox(
-                        width: 2,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushReplacement(
-                            TransitionFade(child: const Login()),
-                          );
-                        },
-                        child: Text("Log in",
-                            style: AppFontStyle.authSmallBoldText),
-                      ),
-                    ],
-                  ),
+
                   const SizedBox(
                     height: 50,
                   )

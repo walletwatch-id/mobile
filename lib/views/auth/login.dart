@@ -5,7 +5,7 @@ import 'package:sign_in_button/sign_in_button.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
 import 'package:wallet_watch/common/widgets/custom_text_field.dart';
-import 'package:wallet_watch/views/home/home.dart';
+import 'package:wallet_watch/views/home2/home.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -85,7 +85,7 @@ class _LoginState extends State<Login> {
                 keyboardType: TextInputType.emailAddress,
                 color: secondaryColor,
                 startIcon: Icon(
-                  Icons.person,
+                  Icons.email,
                   color: secondaryColor,
                 ),
               ),
@@ -133,12 +133,12 @@ class _LoginState extends State<Login> {
                       EasyLoading.dismiss();
                     },
                     style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16.0),
                         ),
                       ),
-                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                      padding: WidgetStateProperty.all(EdgeInsets.zero),
                     ),
                     child: Container(
                       height: 48.h,
