@@ -13,10 +13,13 @@ import 'package:wallet_watch/common/enum/item_state.dart';
 import 'package:wallet_watch/common/helper.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
+import 'package:wallet_watch/common/utils/transition_vertical_bottom.dart';
+import 'package:wallet_watch/common/utils/transtition_fade.dart';
 import 'package:wallet_watch/common/widgets/area_chart.dart';
 import 'package:wallet_watch/common/widgets/home_navigator.dart';
 import 'package:wallet_watch/common/widgets/monitor_card.dart';
 import 'package:wallet_watch/common/widgets/top_bar.dart';
+import 'package:wallet_watch/views/home/home_self_discovery.dart';
 
 class HomeMonitor extends StatefulWidget {
   final ScrollController controller;
@@ -37,10 +40,8 @@ class _HomeMonitorState extends State<HomeMonitor>
   @override
   void initState() {
     super.initState();
-        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.light,
-      statusBarColor: darkColor
-    ));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.light, statusBarColor: darkColor));
 
     _data = [
       ChartData("Januari", 1.52),
@@ -304,7 +305,8 @@ class _HomeMonitorState extends State<HomeMonitor>
                               controller: _tabController,
                               children: [
                                 Padding(
-                                   padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 16.w),
                                   child: ListView(
                                     controller: widget.controller,
                                     children: [
@@ -339,6 +341,43 @@ class _HomeMonitorState extends State<HomeMonitor>
                                               data: _data,
                                             ),
                                           ),
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                          Container(
+                                            height: 40.h,
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color: primaryColor,
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(12.r),
+                                              ),
+                                              border: Border.all(
+                                                color: borderColor,
+                                                width: 1.5.w,
+                                              ),
+                                            ),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(12.r),
+                                              child: MaterialButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    Navigator.of(context).push(
+                                                        TransitionVerticalBottom(
+                                                            child:
+                                                                HomeSelfDiscovery()));
+                                                  });
+                                                },
+                                                child: Text(
+                                                    "Cek Money Personality Kamu",
+                                                    style: AppFontStyle
+                                                        .homeSubTitleText
+                                                        .copyWith(
+                                                            color: lightColor)),
+                                              ),
+                                            ),
+                                          ),
                                           const MonitorCard(
                                               state: ItemState.shopee,
                                               value: 958125),
@@ -360,7 +399,8 @@ class _HomeMonitorState extends State<HomeMonitor>
                                 ),
                                 // Content for Pendapatan tab
                                 Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 16.w),
                                   child: ListView(
                                     controller: widget.controller,
                                     children: [
@@ -395,25 +435,25 @@ class _HomeMonitorState extends State<HomeMonitor>
                                             ),
                                           ),
                                           Container(
-                                              margin: EdgeInsets.only(top: 20.h),
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 24.w,
-                                                  vertical: 10.h),
-                                              width: double.infinity,
-                                              decoration: BoxDecoration(
-                                                  color: lightColor,
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                    Radius.circular(16),
-                                                  ),
-                                                  border: Border.all(
+                                            margin: EdgeInsets.only(top: 20.h),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 24.w,
+                                                vertical: 10.h),
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                                color: lightColor,
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(16),
+                                                ),
+                                                border: Border.all(
+                                                  color: borderColor,
+                                                  width: 1.5.w,
+                                                ),
+                                                boxShadow: [
+                                                  BoxShadow(
                                                     color: borderColor,
-                                                    width: 1.5.w,
-                                                  ),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: borderColor,
-                                                      spreadRadius: -1.h,
+                                                    spreadRadius: -1.h,
                                                     blurRadius: 5.w,
                                                     offset: Offset(0, 5.h),
                                                   ),
@@ -463,31 +503,32 @@ class _HomeMonitorState extends State<HomeMonitor>
                                           ),
                                           Padding(
                                             padding: EdgeInsets.symmetric(
-                                                vertical: 16.h, horizontal: 12.w),
+                                                vertical: 16.h,
+                                                horizontal: 12.w),
                                             child: Divider(
                                               color: borderColor,
                                               thickness: 2.w,
                                             ),
                                           ),
                                           Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 24.w,
-                                                  vertical: 10.h),
-                                              width: double.infinity,
-                                              decoration: BoxDecoration(
-                                                  color: lightColor,
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                    Radius.circular(16),
-                                                  ),
-                                                  border: Border.all(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 24.w,
+                                                vertical: 10.h),
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                                color: lightColor,
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(16),
+                                                ),
+                                                border: Border.all(
+                                                  color: borderColor,
+                                                  width: 1.5.w,
+                                                ),
+                                                boxShadow: [
+                                                  BoxShadow(
                                                     color: borderColor,
-                                                    width: 1.5.w,
-                                                  ),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: borderColor,
-                                                      spreadRadius: -1.h,
+                                                    spreadRadius: -1.h,
                                                     blurRadius: 5.w,
                                                     offset: Offset(0, 5.h),
                                                   ),
@@ -501,15 +542,18 @@ class _HomeMonitorState extends State<HomeMonitor>
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Text(
-                                                        'Historis',
+                                                    Text('Historis',
                                                         style: AppFontStyle
                                                             .homeSubTitleText
                                                             .copyWith(
-                                                              fontSize: 24.sp,
-                                                            decoration: TextDecoration.underline,
-                                                            decorationColor: primaryColor,
-                                                            decorationThickness: 2.h,
+                                                                fontSize: 24.sp,
+                                                                decoration:
+                                                                    TextDecoration
+                                                                        .underline,
+                                                                decorationColor:
+                                                                    primaryColor,
+                                                                decorationThickness:
+                                                                    2.h,
                                                                 color:
                                                                     primaryColor)),
                                                     Icon(
@@ -524,9 +568,10 @@ class _HomeMonitorState extends State<HomeMonitor>
                                                       vertical: 14.h),
                                                   child: Column(
                                                     children: [
-
                                                       Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
                                                         children: [
                                                           Text(
                                                             "Bulan Mei",
@@ -537,22 +582,27 @@ class _HomeMonitorState extends State<HomeMonitor>
                                                                         darkColor,
                                                                     fontSize:
                                                                         18.sp),
-                                                                        
                                                           ),
                                                           Text(
-                                                            formatCurrency(9254000),
+                                                            formatCurrency(
+                                                                9254000),
                                                             style: AppFontStyle
                                                                 .homeCardTitleText
                                                                 .copyWith(
                                                                     color:
                                                                         darkColor,
                                                                     fontSize:
-                                                                        18.sp),),
+                                                                        18.sp),
+                                                          ),
                                                         ],
                                                       ),
-                                                      SizedBox(height: 8.h,),
-                                                                                                            Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      SizedBox(
+                                                        height: 8.h,
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
                                                         children: [
                                                           Text(
                                                             "Bulan April",
@@ -563,17 +613,18 @@ class _HomeMonitorState extends State<HomeMonitor>
                                                                         darkColor,
                                                                     fontSize:
                                                                         18.sp),
-                                                                        
                                                           ),
                                                           Text(
-                                                            formatCurrency(9350000),
+                                                            formatCurrency(
+                                                                9350000),
                                                             style: AppFontStyle
                                                                 .homeCardTitleText
                                                                 .copyWith(
                                                                     color:
                                                                         darkColor,
                                                                     fontSize:
-                                                                        18.sp),),
+                                                                        18.sp),
+                                                          ),
                                                         ],
                                                       ),
                                                     ],

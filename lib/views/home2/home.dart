@@ -42,6 +42,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 screen: const HomeMonitor(),
                 item: ItemConfig(
                   activeForegroundColor: primaryColor,
+                  inactiveForegroundColor: darkColor,
                   icon: const ImageIcon(AssetImage('assets/icons/home.png')),
                   title: "Beranda",
                 ),
@@ -50,6 +51,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 screen: const HomeChat(),
                 item: ItemConfig(
                   activeForegroundColor: primaryColor,
+                  inactiveForegroundColor: darkColor,
                   icon: const ImageIcon(AssetImage('assets/icons/chatbot.png')),
                   title: "ChatBot",
                 ),
@@ -58,6 +60,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 screen: const HomeHotline(),
                 item: ItemConfig(
                   activeForegroundColor: primaryColor,
+                  inactiveForegroundColor: darkColor,
                   icon: const ImageIcon(AssetImage('assets/icons/hotline.png')),
                   title: "Hotline",
                 ),
@@ -66,6 +69,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 screen: const HomeProfile(),
                 item: ItemConfig(
                   activeForegroundColor: primaryColor,
+                  inactiveForegroundColor: darkColor,
                   icon: const ImageIcon(AssetImage('assets/icons/profile.png')),
                   title: "Profile",
                 ),

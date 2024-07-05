@@ -123,23 +123,23 @@ class _HomeNotificationState extends State<HomeNotification> {
                                     state: NotificationState.transaction,
                                     content:
                                         "Kamu baru saja menambahkan transaksi paylater baru"),
-                                        NotificationItem(
+                                NotificationItem(
                                     state: NotificationState.transaction,
                                     content:
                                         "Data pendapatan kamu sudah di-update"),
-                                        NotificationItem(
+                                NotificationItem(
                                     state: NotificationState.personal,
                                     content:
                                         "Password kamu telah diperbaharui"),
-                                        NotificationItem(
+                                NotificationItem(
                                     state: NotificationState.personal,
                                     content:
                                         "Nomor HP kamu telah diperbaharui"),
-                                        NotificationItem(
+                                NotificationItem(
                                     state: NotificationState.warning,
                                     content:
                                         "Kamu akan mencapai batas wajar pinjaman"),
-                                        NotificationItem(
+                                NotificationItem(
                                     state: NotificationState.danger,
                                     content:
                                         "Kamu telah mencapai batas wajar pinjaman"),

@@ -33,7 +33,14 @@ class AppFontStyle {
       TextStyle(fontSize: 24.sp, fontFamily: "Baloo",
                               height: .1);
 
-  static TextStyle homeSubHeaderText = TextStyle(
+                                static TextStyle homeSubHeaderText = TextStyle(
+      fontSize: 20.sp,
+      fontFamily: 'Nunito',
+      fontWeight: FontWeight.bold,
+      height: 1.1,
+      color: Colors.black);
+
+  static TextStyle monitorSubHeaderText = TextStyle(
       fontSize: 28.sp,
       fontFamily: 'Nunito',
       fontWeight: FontWeight.bold,
@@ -130,9 +137,10 @@ class AppFontStyle {
     height: 1.1,
   );
 
-    static TextStyle accountNameText = const TextStyle(
-    fontSize: 18,
-    fontFamily: "Baloo",
+    static TextStyle accountNameText = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.bold,
+    fontFamily: "Nunito",
     height: 1.1,
   );
 

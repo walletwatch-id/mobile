@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wallet_watch/common/enum/home_state.dart';
@@ -59,8 +60,8 @@ class _TopBarState extends State<TopBar> {
                   ),
                 )
               : SizedBox(
-                width: 58.w,
-                child: GestureDetector(
+                  width: 58.w,
+                  child: GestureDetector(
                     onTap: () {
                       if (widget.popAction != null) {
                         widget.popAction!();
@@ -71,17 +72,21 @@ class _TopBarState extends State<TopBar> {
                       Navigator.pop(context);
                     },
                     child: Semantics(
-                      label: "Kembali ke halaman sebelumnya!",
-                      child: Icon(Icons.close_rounded, color: primaryColor, size: 32.w,)
-                      // child: Image.asset(
-                      //   'assets/icons/back.png',
-                      //   color: primaryColor,
-                      //   width: 32.w,
-                      //   fit: BoxFit.cover,
-                      // ),
-                    ),
+                        label: "Kembali ke halaman sebelumnya!",
+                        child: Icon(
+                          Icons.close_rounded,
+                          color: primaryColor,
+                          size: 32.w,
+                        )
+                        // child: Image.asset(
+                        //   'assets/icons/back.png',
+                        //   color: primaryColor,
+                        //   width: 32.w,
+                        //   fit: BoxFit.cover,
+                        // ),
+                        ),
                   ),
-              ),
+                ),
           Expanded(
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 12.w),
@@ -113,7 +118,9 @@ class _TopBarState extends State<TopBar> {
             child: Semantics(
                 label: "Notification",
                 child: Icon(
-                  widget.state == HomeState.notification ? Icons.notifications : Icons.notifications_outlined,
+                  widget.state == HomeState.notification
+                      ? Icons.notifications
+                      : Icons.notifications_outlined,
                   color: primaryColor,
                 )),
           ),

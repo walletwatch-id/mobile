@@ -132,8 +132,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                             children: [
                               Text(
                                 user.name,
-                                style: AppFontStyle.accountNameText.copyWith(
-                                    color: darkColor, fontSize: 20.sp),
+                                style: AppFontStyle.accountNameText,
                               ),
                               SizedBox(
                                 height: 4.h,
@@ -246,416 +245,530 @@ class _HomeMonitorState extends State<HomeMonitor>
               ),
               Positioned(
                 top: 400.h,
-                bottom: 0.h,
+                right: 0,
+                left: 0,
+                bottom: 0,
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 16.h),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 16.h, horizontal: 20.w),
                   alignment: Alignment.bottomCenter,
                   child: ListView(
                     children: [
-                      Container(
-                        height: 300.h,
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              top: 0.h,
-                              right: 0.w,
-                              left: 0.w,
-                              child: Center(
-                                child: CustomSlidingSegmentedControl<int>(
-                                  initialValue: _segmentedControlValue,
-                                  children: {
-                                    0: SizedBox(
-                                        width: 140.w,
-                                        child: Center(
-                                            child: Text(
-                                          'Pinjaman',
-                                          style: AppFontStyle.homeTabText
-                                              .copyWith(
-                                                  color:
-                                                      _segmentedControlValue ==
-                                                              0
-                                                          ? lightColor
-                                                          : darkColor),
-                                        ))),
-                                    1: SizedBox(
-                                        width: 140.w,
-                                        child: Center(
-                                            child: Text(
-                                          'Pendapatan',
-                                          style: AppFontStyle.homeTabText
-                                              .copyWith(
-                                                  color:
-                                                      _segmentedControlValue ==
-                                                              1
-                                                          ? lightColor
-                                                          : darkColor),
-                                        ))),
-                                  },
-                                  decoration: BoxDecoration(
-                                    color: CupertinoColors.lightBackgroundGray,
-                                    borderRadius: BorderRadius.circular(8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Money Personality Kamu',
+                              style: AppFontStyle.monitorSubHeaderText
+                                  .copyWith(color: darkColor, fontSize: 20.sp)),
+                          SizedBox(
+                            height: 30.h,
+                            width: 100.w,
+                            child: ElevatedButton(
+                              onPressed: () {
+                              },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    WidgetStateProperty.all(Colors.white),
+                                shape: WidgetStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.r),
                                   ),
-                                  height: 35.h,
-                                  thumbDecoration: BoxDecoration(
-                                    color: primaryColor,
-                                    borderRadius: BorderRadius.circular(6),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(.3),
-                                        blurRadius: 4.0,
-                                        spreadRadius: 1.0,
-                                        offset: const Offset(
-                                          0.0,
-                                          2.0,
-                                        ),
+                                ),
+                                padding:
+                                    WidgetStateProperty.all(EdgeInsets.zero),
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(8.r),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(width: 8.w,),
+                                      Text(
+                                        "Cari Tahu",
+                                        style: AppFontStyle.homeNormalText.copyWith(
+                                            color: darkColor, fontSize: 14.sp),
                                       ),
+                                      Icon(Icons.arrow_right, color: darkColor,)
                                     ],
                                   ),
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeInToLinear,
-                                  onValueChanged: (v) async {
-                                    setState(() {
-                                      _tabController.index = v;
-                                    });
-
-                                    // await Future.delayed(
-                                    //     const Duration(milliseconds: 3000), () async {
-
-                                    // });
-                                    // setState(() {
-                                    //     _segmentedControlValue =
-                                    //         _tabController.index;
-                                    //   });
-                                  },
-                                ),
                               ),
                             ),
-                            Positioned(
-                              top: 46.h,
-                              right: 0,
-                              bottom: 0,
-                              left: 0,
-                              child: SizedBox(
-                                height: double.infinity,
-                                child: TabBarView(
-                                  controller: _tabController,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 16.w),
-                                      child: ListView(
-                                        children: [
-                                          Column(
-                                            children: [
-                                              Container(
-                                                margin:
-                                                    EdgeInsets.only(top: 8.h),
-                                                height: 280.h,
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                    color: lightColor,
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                      Radius.circular(16),
-                                                    ),
-                                                    border: Border.all(
-                                                      color: borderColor,
-                                                      width: 1.5.w,
-                                                    ),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: borderColor,
-                                                        spreadRadius: -1.h,
-                                                        blurRadius: 5.w,
-                                                        offset: Offset(0, 5.h),
-                                                      ),
-                                                    ]),
-                                                child: AreaChart(
-                                                  title:
-                                                      "Penggunaan Paylater Bulanan",
-                                                  color: primaryColor,
-                                                  data: _data,
-                                                ),
-                                              ),
-                                              const MonitorCard(
-                                                  state: ItemState.shopee,
-                                                  value: 958125),
-                                              const MonitorCard(
-                                                  state: ItemState.kredivo,
-                                                  value: 638750),
-                                              const MonitorCard(
-                                                  state: ItemState.akulaku,
-                                                  value: 532291),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                .3,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    // Content for Pendapatan tab
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 16.w),
-                                      child: ListView(
-                                        children: [
-                                          Column(
-                                            children: [
-                                              Container(
-                                                margin:
-                                                    EdgeInsets.only(top: 8.h),
-                                                height: 280.h,
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                    color: lightColor,
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                      Radius.circular(16),
-                                                    ),
-                                                    border: Border.all(
-                                                      color: borderColor,
-                                                      width: 1.5.w,
-                                                    ),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: borderColor,
-                                                        spreadRadius: -1.h,
-                                                        blurRadius: 5.w,
-                                                        offset: Offset(0, 5.h),
-                                                      ),
-                                                    ]),
-                                                child: AreaChart(
-                                                  title: "Pendapatan Bulanan",
-                                                  color: primaryColor,
-                                                  data: _data,
-                                                ),
-                                              ),
-                                              Container(
-                                                margin:
-                                                    EdgeInsets.only(top: 20.h),
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 24.w,
-                                                    vertical: 10.h),
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                    color: lightColor,
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                      Radius.circular(16),
-                                                    ),
-                                                    border: Border.all(
-                                                      color: borderColor,
-                                                      width: 1.5.w,
-                                                    ),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: borderColor,
-                                                        spreadRadius: -1.h,
-                                                        blurRadius: 5.w,
-                                                        offset: Offset(0, 5.h),
-                                                      ),
-                                                    ]),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                            'Total pendapatan bulan ini:',
-                                                            style: AppFontStyle
-                                                                .homeSubTitleText
-                                                                .copyWith(
-                                                                    color:
-                                                                        darkColor)),
-                                                        Icon(
-                                                          Icons.edit_outlined,
-                                                          size: 25.h,
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 20.h),
-                                                      child: Column(
-                                                        children: [
-                                                          Text(
-                                                            formatCurrency(
-                                                                9462962),
-                                                            style: AppFontStyle
-                                                                .homeCardTitleText
-                                                                .copyWith(
-                                                                    color:
-                                                                        darkColor,
-                                                                    fontSize:
-                                                                        28.sp),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 16.h,
-                                                    horizontal: 12.w),
-                                                child: Divider(
-                                                  color: borderColor,
-                                                  thickness: 2.w,
-                                                ),
-                                              ),
-                                              Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 24.w,
-                                                    vertical: 10.h),
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                    color: lightColor,
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                      Radius.circular(16),
-                                                    ),
-                                                    border: Border.all(
-                                                      color: borderColor,
-                                                      width: 1.5.w,
-                                                    ),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: borderColor,
-                                                        spreadRadius: -1.h,
-                                                        blurRadius: 5.w,
-                                                        offset: Offset(0, 5.h),
-                                                      ),
-                                                    ]),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text('Historis',
-                                                            style: AppFontStyle
-                                                                .homeSubTitleText
-                                                                .copyWith(
-                                                                    fontSize:
-                                                                        24.sp,
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .underline,
-                                                                    decorationColor:
-                                                                        primaryColor,
-                                                                    decorationThickness:
-                                                                        2.h,
-                                                                    color:
-                                                                        primaryColor)),
-                                                        Icon(
-                                                          Icons
-                                                              .keyboard_arrow_down,
-                                                          color:
-                                                              darkBorderColor,
-                                                          size: 28.h,
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 14.h),
-                                                      child: Column(
-                                                        children: [
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                "Bulan Mei",
-                                                                style: AppFontStyle
-                                                                    .homeCardTitleText
-                                                                    .copyWith(
-                                                                        color:
-                                                                            darkColor,
-                                                                        fontSize:
-                                                                            18.sp),
-                                                              ),
-                                                              Text(
-                                                                formatCurrency(
-                                                                    9254000),
-                                                                style: AppFontStyle
-                                                                    .homeCardTitleText
-                                                                    .copyWith(
-                                                                        color:
-                                                                            darkColor,
-                                                                        fontSize:
-                                                                            18.sp),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          SizedBox(
-                                                            height: 8.h,
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                "Bulan April",
-                                                                style: AppFontStyle
-                                                                    .homeCardTitleText
-                                                                    .copyWith(
-                                                                        color:
-                                                                            darkColor,
-                                                                        fontSize:
-                                                                            18.sp),
-                                                              ),
-                                                              Text(
-                                                                formatCurrency(
-                                                                    9350000),
-                                                                style: AppFontStyle
-                                                                    .homeCardTitleText
-                                                                    .copyWith(
-                                                                        color:
-                                                                            darkColor,
-                                                                        fontSize:
-                                                                            18.sp),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                .3,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      Container(
+                        width: 300.w,
+                        
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(width: 1.w, color: borderColor)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              color: Colors.black.withOpacity(.05),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+Text(
+                              'Self-Discovery',
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
                               ),
+                            ),
+                            SizedBox(height: 8),
+                            Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 40,
+                                  backgroundColor: Colors.pinkAccent,
+                                  child: CircleAvatar(
+                                    radius: 38,
+                                    backgroundImage: AssetImage(
+                                        'assets/personality.png'), // Add your image asset here
+                                  ),
+                                ),
+                                SizedBox(width: 16),
+                                Expanded(
+                                  child: Text(
+                                    'Untuk pengontrolan lebih baik, mari kita mencari tahu tipe personalitas keuangan kamu!',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                              ],)),
+                            Padding(
+                              padding: EdgeInsets.all(8.w),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                              Text(
+                              'Kamu tipe:',
+                              style: AppFontStyle.homeNormalText.copyWith(color: primaryColor)
+                            ),
+                            SizedBox(height: 6.h),
+                            Text(
+                              'Melati Binger',
+                              style: AppFontStyle.homeSubHeaderText
+                            ),
+                              ],),
                             ),
                           ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      SizedBox(
+                        height: 800.h,
+                        child: Center(
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                top: 0.h,
+                                right: 0.w,
+                                left: 0.w,
+                                child: Center(
+                                  child: CustomSlidingSegmentedControl<int>(
+                                    initialValue: _segmentedControlValue,
+                                    children: {
+                                      0: SizedBox(
+                                          width: 150.w,
+                                          child: Center(
+                                              child: Text(
+                                            'Pinjaman',
+                                            style: AppFontStyle.homeTabText
+                                                .copyWith(
+                                                    color:
+                                                        _segmentedControlValue ==
+                                                                0
+                                                            ? lightColor
+                                                            : darkColor),
+                                          ))),
+                                      1: SizedBox(
+                                          width: 150.w,
+                                          child: Center(
+                                              child: Text(
+                                            'Pendapatan',
+                                            style: AppFontStyle.homeTabText
+                                                .copyWith(
+                                                    color:
+                                                        _segmentedControlValue ==
+                                                                1
+                                                            ? lightColor
+                                                            : darkColor),
+                                          ))),
+                                    },
+                                    decoration: BoxDecoration(
+                                      color:
+                                          CupertinoColors.lightBackgroundGray,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    height: 35.h,
+                                    thumbDecoration: BoxDecoration(
+                                      color: primaryColor,
+                                      borderRadius: BorderRadius.circular(6),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(.3),
+                                          blurRadius: 4.0,
+                                          spreadRadius: 1.0,
+                                          offset: const Offset(
+                                            0.0,
+                                            2.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInToLinear,
+                                    onValueChanged: (v) async {
+                                      setState(() {
+                                        _tabController.index = v;
+                                      });
+
+                                      // await Future.delayed(
+                                      //     const Duration(milliseconds: 3000), () async {
+
+                                      // });
+                                      // setState(() {
+                                      //     _segmentedControlValue =
+                                      //         _tabController.index;
+                                      //   });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: 46.h,
+                                right: 0,
+                                bottom: 0,
+                                left: 0,
+                                child: SizedBox(
+                                  height: double.infinity,
+                                  child: TabBarView(
+                                    controller: _tabController,
+                                    children: [
+                                      Column(
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Container(
+                                                  margin:
+                                                      EdgeInsets.only(top: 8.h),
+                                                  height: 280.h,
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                      color: lightColor,
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .all(
+                                                        Radius.circular(16),
+                                                      ),
+                                                      border: Border.all(
+                                                        color: borderColor,
+                                                        width: 1.5.w,
+                                                      ),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: borderColor,
+                                                          spreadRadius: -1.h,
+                                                          blurRadius: 5.w,
+                                                          offset:
+                                                              Offset(0, 5.h),
+                                                        ),
+                                                      ]),
+                                                  child: AreaChart(
+                                                    title:
+                                                        "Penggunaan Paylater Bulanan",
+                                                    color: primaryColor,
+                                                    data: _data,
+                                                  ),
+                                                ),
+                                                const MonitorCard(
+                                                    state: ItemState.shopee,
+                                                    value: 958125),
+                                                const MonitorCard(
+                                                    state: ItemState.kredivo,
+                                                    value: 638750),
+                                                const MonitorCard(
+                                                    state: ItemState.akulaku,
+                                                    value: 532291),
+                                              ],
+                                            ),
+                                          ],
+                                        
+                                      ),
+                                      // Content for Pendapatan tab
+                                       Column(
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Container(
+                                                  margin:
+                                                      EdgeInsets.only(top: 8.h),
+                                                  height: 280.h,
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                      color: lightColor,
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .all(
+                                                        Radius.circular(16),
+                                                      ),
+                                                      border: Border.all(
+                                                        color: borderColor,
+                                                        width: 1.5.w,
+                                                      ),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: borderColor,
+                                                          spreadRadius: -1.h,
+                                                          blurRadius: 5.w,
+                                                          offset:
+                                                              Offset(0, 5.h),
+                                                        ),
+                                                      ]),
+                                                  child: AreaChart(
+                                                    title: "Pendapatan Bulanan",
+                                                    color: primaryColor,
+                                                    data: _data,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      top: 20.h),
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 24.w,
+                                                      vertical: 10.h),
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                      color: lightColor,
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .all(
+                                                        Radius.circular(16),
+                                                      ),
+                                                      border: Border.all(
+                                                        color: borderColor,
+                                                        width: 1.5.w,
+                                                      ),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: borderColor,
+                                                          spreadRadius: -1.h,
+                                                          blurRadius: 5.w,
+                                                          offset:
+                                                              Offset(0, 5.h),
+                                                        ),
+                                                      ]),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                              'Total pendapatan bulan ini:',
+                                                              style: AppFontStyle
+                                                                  .homeSubTitleText
+                                                                  .copyWith(
+                                                                      color:
+                                                                          darkColor)),
+                                                          Icon(
+                                                            Icons.edit_outlined,
+                                                            size: 25.h,
+                                                          )
+                                                        ],
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 20.h),
+                                                        child: Column(
+                                                          children: [
+                                                            Text(
+                                                              formatCurrency(
+                                                                  9462962),
+                                                              style: AppFontStyle
+                                                                  .homeCardTitleText
+                                                                  .copyWith(
+                                                                      color:
+                                                                          darkColor,
+                                                                      fontSize:
+                                                                          28.sp),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 16.h,
+                                                      horizontal: 12.w),
+                                                  child: Divider(
+                                                    color: borderColor,
+                                                    thickness: 2.w,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 24.w,
+                                                      vertical: 10.h),
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                      color: lightColor,
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .all(
+                                                        Radius.circular(16),
+                                                      ),
+                                                      border: Border.all(
+                                                        color: borderColor,
+                                                        width: 1.5.w,
+                                                      ),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: borderColor,
+                                                          spreadRadius: -1.h,
+                                                          blurRadius: 5.w,
+                                                          offset:
+                                                              Offset(0, 5.h),
+                                                        ),
+                                                      ]),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text('Historis',
+                                                              style: AppFontStyle.homeSubTitleText.copyWith(
+                                                                  fontSize:
+                                                                      24.sp,
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .underline,
+                                                                  decorationColor:
+                                                                      primaryColor,
+                                                                  decorationThickness:
+                                                                      2.h,
+                                                                  color:
+                                                                      primaryColor)),
+                                                          Icon(
+                                                            Icons
+                                                                .keyboard_arrow_down,
+                                                            color:
+                                                                darkBorderColor,
+                                                            size: 28.h,
+                                                          )
+                                                        ],
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 14.h),
+                                                        child: Column(
+                                                          children: [
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                  "Bulan Mei",
+                                                                  style: AppFontStyle
+                                                                      .homeCardTitleText
+                                                                      .copyWith(
+                                                                          color:
+                                                                              darkColor,
+                                                                          fontSize:
+                                                                              18.sp),
+                                                                ),
+                                                                Text(
+                                                                  formatCurrency(
+                                                                      9254000),
+                                                                  style: AppFontStyle
+                                                                      .homeCardTitleText
+                                                                      .copyWith(
+                                                                          color:
+                                                                              darkColor,
+                                                                          fontSize:
+                                                                              18.sp),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            SizedBox(
+                                                              height: 8.h,
+                                                            ),
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                  "Bulan April",
+                                                                  style: AppFontStyle
+                                                                      .homeCardTitleText
+                                                                      .copyWith(
+                                                                          color:
+                                                                              darkColor,
+                                                                          fontSize:
+                                                                              18.sp),
+                                                                ),
+                                                                Text(
+                                                                  formatCurrency(
+                                                                      9350000),
+                                                                  style: AppFontStyle
+                                                                      .homeCardTitleText
+                                                                      .copyWith(
+                                                                          color:
+                                                                              darkColor,
+                                                                          fontSize:
+                                                                              18.sp),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

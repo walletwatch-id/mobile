@@ -73,9 +73,12 @@ class _HomeAddState extends State<HomeAdd> {
                     controller: _advancedDrawerController,
                     title: "Tambah Transaksi",
                     settingAction: () {
-                      // setState(() {
-                      //   isSettingAlertVisible = true;
-                      // });
+                      //
+                    },
+                    popAction: () {
+                      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                          statusBarIconBrightness: Brightness.dark,
+                          statusBarColor: lightColor));
                     }),
               ),
               Positioned(

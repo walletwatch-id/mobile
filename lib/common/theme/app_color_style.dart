@@ -8,6 +8,7 @@ Color monitorColor = const Color(0xFFFEFAF6);
 Color monitorBackgroundColor = const Color(0xFFD9D9D9);
 Color borderColor = const Color(0xFF4F4F4F).withOpacity(.31);
 Color darkBorderColor = const Color(0xFF4B4343).withOpacity(.5);
+Color personalityCardColor = const Color(0xFFF2F2F2);
 Color subColor = const Color(0xFF4B4343).withOpacity(.83);
 Color darkColor = const Color(0xFF0C0C0C);
 Color lightColor = const Color(0xFFFCFCFC);
@@ -19,3 +20,4 @@ Color transactionColor = const Color(0xFFD9D9D9);
 Color personalColor = const Color(0xFFD9D9D9);
 
 void loadColor() {}
+

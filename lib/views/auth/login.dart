@@ -5,7 +5,7 @@ import 'package:sign_in_button/sign_in_button.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
 import 'package:wallet_watch/common/widgets/custom_text_field.dart';
-import 'package:wallet_watch/views/home2/home.dart';
+import 'package:wallet_watch/views/home/home.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
