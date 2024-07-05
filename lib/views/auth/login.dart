@@ -17,6 +17,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isChecked = false;
 
   @override
   void initState() {
@@ -64,13 +65,43 @@ class _LoginState extends State<Login> {
                 textAlign: TextAlign.center,
               )),
               SizedBox(
+                height: 20.h,
+              ),
+              Center(
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    height: 130.h,
+                    padding: EdgeInsets.all(40.h),
+                    decoration: BoxDecoration(
+                      color: thirdColor,
+                      borderRadius: BorderRadius.circular(100.r),
+                    ),
+                    child: Image.asset(
+                      "assets/images/walletwatch.png",
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 22.h,
+              ),
+              Center(
+                child: Text(
+                  'Login',
+                  style: AppFontStyle.authTitleText
+                      .copyWith(color: darkColor, fontSize: 28.sp),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(
                 height: 8.h,
               ),
               Center(
                 child: Text(
-                  'Selamat datang kembali! Silahkan mengisi email dan password kamu di bawah',
-                  style:
-                      AppFontStyle.authSubTitleText.copyWith(color: darkColor),
+                  'Selamat datang kembali di WalletWatch!',
+                  style: AppFontStyle.normalText
+                      .copyWith(color: darkColor, fontSize: 14.sp),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -105,11 +136,35 @@ class _LoginState extends State<Login> {
                 ),
               ),
               SizedBox(height: 14.h),
-              Text('Lupa password?',
-                  style: AppFontStyle.authSubLabelText.copyWith(
-                      color: primaryColor,
-                      decoration: TextDecoration.underline,
-                      decorationColor: primaryColor)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: CheckboxListTile(
+                      contentPadding: EdgeInsets.zero,
+                      dense: true,
+                      visualDensity:
+                          const VisualDensity(horizontal: -4, vertical: -4),
+                      title: const Text('Ingat saya',
+                          style: TextStyle(color: Colors.grey)),
+                      value: _isChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isChecked = value ?? false;
+                        });
+                      },
+                      controlAffinity: ListTileControlAffinity.leading,
+                      activeColor: Colors.green,
+                      checkColor: Colors.white,
+                    ),
+                  ),
+                  Text('Lupa password?',
+                      style: AppFontStyle.authSubLabelText.copyWith(
+                          color: primaryColor,
+                          decoration: TextDecoration.underline,
+                          decorationColor: primaryColor)),
+                ],
+              ),
               SizedBox(
                 height: 30.h,
               ),

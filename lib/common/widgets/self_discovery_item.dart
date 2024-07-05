@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wallet_watch/common/data/self_discovery.dart';
+import 'package:wallet_watch/common/theme/app_color_style.dart';
 
 class SelfDiscoveryItem extends StatefulWidget {
   final int number;
@@ -41,13 +42,13 @@ class _SelfDiscoveryItemState extends State<SelfDiscoveryItem> {
             children: [
               CircleAvatar(
                 backgroundColor: Colors.grey[200],
-                radius: 12,
+                radius: 16.r,
                 child: Text(
                   '${widget.number}',
                   style: TextStyle(color: Colors.black),
                 ),
               ),
-              SizedBox(width: 8),
+              SizedBox(width: 8.w),
               Expanded(
                 child: Text(
                   widget.selfDiscovery.content,
@@ -56,7 +57,7 @@ class _SelfDiscoveryItemState extends State<SelfDiscoveryItem> {
               ),
             ],
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -76,7 +77,7 @@ class _SelfDiscoveryItemState extends State<SelfDiscoveryItem> {
                             _selectedValue = value!;
                           });
                         },
-                        activeColor: Colors.blue,
+                        activeColor: primaryColor,
                       ),
                     ],
                   );

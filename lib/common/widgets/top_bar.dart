@@ -16,6 +16,7 @@ class TopBar extends StatefulWidget {
   final Color? backgroundColor;
   final Color? textColor;
   final HomeState? state;
+  final bool isLight;
   const TopBar(
       {super.key,
       this.title,
@@ -24,7 +25,8 @@ class TopBar extends StatefulWidget {
       this.state,
       this.backgroundColor,
       this.textColor,
-      this.controller});
+      this.controller,
+      this.isLight = false});
 
   @override
   State<TopBar> createState() => _TopBarState();
@@ -66,9 +68,13 @@ class _TopBarState extends State<TopBar> {
                       if (widget.popAction != null) {
                         widget.popAction!();
                       }
-                      // setState(() {
-                      //   isSettingAlertVisible = false;
-                      // });
+
+                      if (widget.isLight) {
+                        SystemChrome.setSystemUIOverlayStyle(
+                            SystemUiOverlayStyle(
+                                statusBarIconBrightness: Brightness.light,
+                                statusBarColor: darkColor));
+                      }
                       Navigator.pop(context);
                     },
                     child: Semantics(
@@ -111,8 +117,10 @@ class _TopBarState extends State<TopBar> {
             onTap: () {
               widget.settingAction();
               if (widget.state != HomeState.notification) {
-                Navigator.of(context).push(
-                    TransitionVerticalTop(child: const HomeNotification()));
+                Navigator.of(context).push(TransitionVerticalTop(
+                    child: HomeNotification(
+                  isLight: widget.isLight,
+                )));
               }
             },
             child: Semantics(

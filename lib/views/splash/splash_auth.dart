@@ -26,8 +26,8 @@ class _SplashAuthState extends State<SplashAuth>
     // googleSignIn.signInSilently();
 
     Future.delayed(const Duration(seconds: 3), () async {
-              await Navigator.of(context)
-            .pushReplacement(TransitionFade(child: const Intro()));
+      await Navigator.of(context)
+          .pushReplacement(TransitionFade(child: const Intro()));
       // signedIn = await storage.read(key: "signedIn") == "true" ? true : false;
       // GoogleSignInAccount? account = googleSignIn.currentUser;
       // bool isAuthorized = account != null;
@@ -47,8 +47,8 @@ class _SplashAuthState extends State<SplashAuth>
       //       });
       //     });
       //   }
-      // } 
-      
+      // }
+
       // setState(() {
       //   googleSignInAccount = account;
       //   isAuthorized = isAuthorized;
@@ -113,7 +113,7 @@ class _SplashAuthState extends State<SplashAuth>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.7,
+              width: MediaQuery.of(context).size.width * 0.4,
               child: Image.asset(
                 'assets/images/splash-auth.png',
                 fit: BoxFit.contain,

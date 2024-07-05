@@ -366,7 +366,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                                                     Navigator.of(context).push(
                                                         TransitionVerticalBottom(
                                                             child:
-                                                                HomeSelfDiscovery()));
+                                                                const HomeSelfDiscovery()));
                                                   });
                                                 },
                                                 child: Text(

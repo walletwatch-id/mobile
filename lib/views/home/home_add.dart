@@ -70,16 +70,13 @@ class _HomeAddState extends State<HomeAdd> {
                 right: 0,
                 left: 0,
                 child: TopBar(
-                    controller: _advancedDrawerController,
-                    title: "Tambah Transaksi",
-                    settingAction: () {
-                      //
-                    },
-                    popAction: () {
-                      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-                          statusBarIconBrightness: Brightness.dark,
-                          statusBarColor: lightColor));
-                    }),
+                  controller: _advancedDrawerController,
+                  title: "Tambah Transaksi",
+                  isLight: true,
+                  settingAction: () {
+                    //
+                  },
+                ),
               ),
               Positioned(
                 top: 55.h,

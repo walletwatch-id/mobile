@@ -14,26 +14,21 @@ class AppFontStyle {
     color: const Color(0xFF007bd9),
     fontFamily: 'EduTAS',
   );
-      static TextStyle classLabelText = TextStyle(
+  static TextStyle classLabelText = TextStyle(
     fontSize: 18.sp,
     fontFamily: "Baloo",
   );
 
-        static TextStyle chartLabelText = const TextStyle(
-    fontSize: 12,
-    fontFamily: 'Baloo2', fontWeight: FontWeight.bold
-  );
+  static TextStyle chartLabelText = const TextStyle(
+      fontSize: 12, fontFamily: 'Baloo2', fontWeight: FontWeight.bold);
 
-        static TextStyle chartAxisText = const TextStyle(
-    fontSize: 14,
-    fontFamily: 'Baloo2', fontWeight: FontWeight.bold
-  );
+  static TextStyle chartAxisText = const TextStyle(
+      fontSize: 14, fontFamily: 'Baloo2', fontWeight: FontWeight.bold);
 
-    static TextStyle topBarTitleText =
-      TextStyle(fontSize: 24.sp, fontFamily: "Baloo",
-                              height: .1);
+  static TextStyle topBarTitleText =
+      TextStyle(fontSize: 24.sp, fontFamily: "Baloo", height: .1);
 
-                                static TextStyle homeSubHeaderText = TextStyle(
+  static TextStyle homeSubHeaderText = TextStyle(
       fontSize: 20.sp,
       fontFamily: 'Nunito',
       fontWeight: FontWeight.bold,
@@ -47,36 +42,32 @@ class AppFontStyle {
       height: 1.1,
       color: Colors.black);
 
-        static TextStyle homeMonitorIndicatorText = TextStyle(
+  static TextStyle homeMonitorIndicatorText = TextStyle(
       fontSize: 42.sp,
       fontFamily: 'Nunito',
       fontWeight: FontWeight.bold,
       height: 1.1,
       color: Colors.black);
 
-        static TextStyle homeSubTitleText = TextStyle(
+  static TextStyle homeSubTitleText = TextStyle(
       fontSize: 18.sp,
       fontFamily: 'Nunito',
       fontWeight: FontWeight.bold,
       height: .8,
       color: Colors.black);
 
-              static TextStyle homeCardTitleText = TextStyle(
+  static TextStyle homeCardTitleText = TextStyle(
       fontSize: 22.sp,
       fontFamily: 'Nunito',
       fontWeight: FontWeight.bold,
       height: 1.1,
       color: Colors.black);
 
-    static TextStyle homeNormalText = TextStyle(
-      fontSize: 14.sp,
-      fontFamily: 'Nunito',
-      color: Colors.black);
+  static TextStyle homeNormalText =
+      TextStyle(fontSize: 14.sp, fontFamily: 'Nunito', color: Colors.black);
 
-          static TextStyle homeTabText = TextStyle(
-      fontSize: 18.sp,
-      fontFamily: 'Nunito',
-      color: Colors.black);
+  static TextStyle homeTabText =
+      TextStyle(fontSize: 18.sp, fontFamily: 'Nunito', color: Colors.black);
 
   static TextStyle homeListHeaderText = TextStyle(
       fontSize: 22.sp,
@@ -137,7 +128,7 @@ class AppFontStyle {
     height: 1.1,
   );
 
-    static TextStyle accountNameText = TextStyle(
+  static TextStyle accountNameText = TextStyle(
     fontSize: 20.sp,
     fontWeight: FontWeight.bold,
     fontFamily: "Nunito",
@@ -145,29 +136,24 @@ class AppFontStyle {
   );
 
   static TextStyle authTitleText = TextStyle(
-    fontSize: 22.sp,
-    fontFamily: "Baloo2",
-    fontWeight: FontWeight.bold,
-    height: 1.1
-  );
+      fontSize: 28.sp,
+      fontFamily: "Nunito",
+      fontWeight: FontWeight.bold,
+      height: 1.1);
 
-    static TextStyle authSubTitleText = TextStyle(
-    fontSize: 16.sp,
-    fontFamily: "Nunito",
-    fontWeight: FontWeight.bold,
-    height: 1.1
-  );
+  static TextStyle authSubTitleText = TextStyle(
+      fontSize: 16.sp,
+      fontFamily: "Nunito",
+      fontWeight: FontWeight.bold,
+      height: 1.1);
 
   static TextStyle authLabelText = TextStyle(
     fontSize: 18.sp,
     fontFamily: "Baloo",
   );
 
-    static TextStyle authSubLabelText = TextStyle(
-    fontSize: 14.sp,
-    fontFamily: "Nunito",
-    fontWeight: FontWeight.bold
-  );
+  static TextStyle authSubLabelText = TextStyle(
+      fontSize: 14.sp, fontFamily: "Nunito", fontWeight: FontWeight.bold);
 
   static TextStyle customInputText = TextStyle(
     fontSize: 15.sp,
@@ -184,7 +170,6 @@ class AppFontStyle {
     fontSize: 15.sp,
     fontFamily: "Baloo2",
   );
-
 
   static TextStyle authSmallBoldText = TextStyle(
       fontSize: 12.sp,

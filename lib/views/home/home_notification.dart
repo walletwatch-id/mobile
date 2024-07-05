@@ -18,7 +18,8 @@ import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:wallet_watch/views/home/home.dart';
 
 class HomeNotification extends StatefulWidget {
-  const HomeNotification({super.key});
+  final bool isLight;
+  const HomeNotification({super.key, this.isLight = true});
 
   @override
   State<HomeNotification> createState() => _HomeNotificationState();
@@ -50,13 +51,21 @@ class _HomeNotificationState extends State<HomeNotification> {
               right: 0,
               left: 0,
               child: TopBar(
-                  title: "Notifikasi",
-                  state: HomeState.notification,
-                  settingAction: () {
-                    // setState(() {
-                    //   isSettingAlertVisible = true;
-                    // });
-                  }),
+                title: "Notifikasi",
+                state: HomeState.notification,
+                settingAction: () {
+                  // setState(() {
+                  //   isSettingAlertVisible = true;
+                  // });
+                },
+                popAction: () {
+                  if (widget.isLight) {
+                    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                        statusBarIconBrightness: Brightness.dark,
+                        statusBarColor: lightColor));
+                  }
+                },
+              ),
             ),
             Positioned(
               top: 55.h,

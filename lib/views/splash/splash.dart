@@ -12,8 +12,7 @@ class Splash extends StatefulWidget {
   State<Splash> createState() => _SplashState();
 }
 
-class _SplashState extends State<Splash>
-    with SingleTickerProviderStateMixin {
+class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
@@ -36,14 +35,14 @@ class _SplashState extends State<Splash>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-       width: double.infinity,
+        width: double.infinity,
         padding: const EdgeInsets.all(16),
         color: lightColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.7,
+              width: MediaQuery.of(context).size.width * 0.4,
               // child:               Center(
               //     child: RichText(
               //   text: TextSpan(children: [

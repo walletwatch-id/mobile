@@ -51,6 +51,19 @@ class _MainAppState extends State<MainApp> {
     super.initState();
   }
 
+  final Map<int, Color> colorSwatch = {
+    50: const Color.fromRGBO(0, 0, 0, .1),
+    100: const Color.fromRGBO(0, 0, 0, .2),
+    200: const Color.fromRGBO(0, 0, 0, .3),
+    300: const Color.fromRGBO(0, 0, 0, .4),
+    400: const Color.fromRGBO(0, 0, 0, .5),
+    500: const Color.fromRGBO(0, 0, 0, .6),
+    600: const Color.fromRGBO(0, 0, 0, .7),
+    700: const Color.fromRGBO(0, 0, 0, .8),
+    800: const Color.fromRGBO(0, 0, 0, .9),
+    900: const Color.fromRGBO(0, 0, 0, 1),
+  };
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -61,7 +74,16 @@ class _MainAppState extends State<MainApp> {
         return MaterialApp(
           title: 'WalletWatch',
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(scaffoldBackgroundColor: const Color(0xFF000000)),
+          theme: ThemeData(
+            scaffoldBackgroundColor: const Color(0xFF000000),
+            primaryColor: primaryColor,
+            primarySwatch: MaterialColor(primaryColor.value, colorSwatch),
+            textSelectionTheme: TextSelectionThemeData(
+              cursorColor: Colors.black,
+              selectionHandleColor: primaryColor,
+              selectionColor: const Color.fromARGB(255, 233, 232, 232),
+            ),
+          ),
           home: const Splash(),
           builder: EasyLoading.init(),
         );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -64,14 +65,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
         color: widget.backColor ?? const Color(0xFFFFFFFF).withOpacity(0.7),
         child: TextField(
           showCursor: true,
-          cursorColor: widget.color ?? Colors.black,
+          cursorColor: primaryColor,
           obscureText: !_isVisible && widget.obscureText,
           keyboardType: widget.keyboardType,
           readOnly: widget.readOnly,
           focusNode: _focusNode,
           controller: widget.controller,
-          style: AppFontStyle.customInputText
-              .copyWith(color: widget.color ?? Colors.black, height: 1.9.h, fontSize: widget.fontSize.sp),
+          style: AppFontStyle.customInputText.copyWith(
+              color: widget.color ?? Colors.black,
+              height: 1.9.h,
+              fontSize: widget.fontSize.sp),
           decoration: InputDecoration(
             prefixIcon: widget.startIcon,
             suffixIcon: Visibility(
@@ -88,8 +91,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     ))),
             contentPadding: EdgeInsets.only(left: 18.w, right: 18.w),
             hintText: widget.hintText,
-            hintStyle: AppFontStyle.authHintText
-                .copyWith(color: widget.color?.withOpacity(.7), height: 1.7.h, fontSize: (widget.fontSize - 2).sp),
+            hintStyle: AppFontStyle.authHintText.copyWith(
+                color: widget.color?.withOpacity(.7),
+                height: 1.7.h,
+                fontSize: (widget.fontSize - 2).sp),
             border: OutlineInputBorder(
                 borderSide:
                     BorderSide(color: widget.color ?? const Color(0xFF9EA3A2)),
