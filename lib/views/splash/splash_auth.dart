@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/utils/transtition_fade.dart';
 import 'package:wallet_watch/views/auth/intro.dart';
+import 'package:wallet_watch/views/auth/login.dart';
 
 class SplashAuth extends StatefulWidget {
   const SplashAuth({super.key});
@@ -27,7 +28,7 @@ class _SplashAuthState extends State<SplashAuth>
 
     Future.delayed(const Duration(seconds: 3), () async {
       await Navigator.of(context)
-          .pushReplacement(TransitionFade(child: const Intro()));
+          .pushReplacement(TransitionFade(child: const Login()));
       // signedIn = await storage.read(key: "signedIn") == "true" ? true : false;
       // GoogleSignInAccount? account = googleSignIn.currentUser;
       // bool isAuthorized = account != null;

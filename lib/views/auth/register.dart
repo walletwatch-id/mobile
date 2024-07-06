@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
@@ -45,13 +46,48 @@ class _RegisterState extends State<Register> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: 18.h,
                   ),
-                  Text('Sign Up',
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: 130.h,
+                        padding: EdgeInsets.all(40.h),
+                        decoration: BoxDecoration(
+                          color: thirdColor,
+                          borderRadius: BorderRadius.circular(100.r),
+                        ),
+                        child: Image.asset(
+                          "assets/images/walletwatch.png",
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 22.h,
+                  ),
+                  Center(
+                    child: Text(
+                      'Register',
                       style: AppFontStyle.authTitleText
-                          .copyWith(color: darkColor)),
-                  SizedBox(height: 22.h),
+                          .copyWith(color: darkColor, fontSize: 28.sp),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 8.h,
+                  ),
+                  Center(
+                    child: Text(
+                      'Selamat bergabung di WalletWatch!',
+                      style: AppFontStyle.normalText
+                          .copyWith(color: darkColor, fontSize: 14.sp),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(height: 30.h),
                   Text('Nama',
                       style: AppFontStyle.authLabelText
                           .copyWith(color: primaryColor)),
@@ -111,7 +147,7 @@ class _RegisterState extends State<Register> {
                       color: secondaryColor,
                     ),
                   ),
-                  SizedBox(height: 16.h),
+                  SizedBox(height: 14.h),
                   // SingleChildScrollView(
                   //   child: SizedBox(
                   //     width: double.infinity,
@@ -156,52 +192,81 @@ class _RegisterState extends State<Register> {
                   //     ),
                   //   ),
                   // ),
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: 30.h,
                   ),
                   Center(
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: ElevatedButton(
-                        onPressed: () {
-                          // register(
-                          //     context,
-                          //     _usernameController.text,
-                          //     _passwordController.text,
-                          //     _passwordConfController.text,
-                          //     _namaLengkapController.text,
-                          //     _tanggalLahirController.text);
+                        onPressed: () async {
+                          //  login(context, _usernameController.text, _passwordController.text);
+                          // Navigator.pushReplacement(context,
+                          //     MaterialPageRoute(builder: (context) {
+                          //   return const Home();
+                          // }));
+                          EasyLoading.show(status: 'Loading...');
+                          Future.delayed(const Duration(seconds: 2), () {
+                            Navigator.pushReplacement(context,
+                                MaterialPageRoute(builder: (context) {
+                              return const Login();
+                            }));
+                          });
+                          EasyLoading.dismiss();
                         },
                         style: ButtonStyle(
                           shape:
                               WidgetStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0),
+                              borderRadius: BorderRadius.circular(30.r),
                             ),
                           ),
                           padding: WidgetStateProperty.all(EdgeInsets.zero),
                         ),
                         child: Container(
-                          height: 42.0,
+                          height: 48.h,
                           decoration: BoxDecoration(
-                            color: secondaryColor,
-                            borderRadius: BorderRadius.circular(16.0),
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(30.r),
                           ),
                           child: Center(
                             child: Text(
-                              "Sign Up/Daftar",
+                              "Buat Akun",
                               style: AppFontStyle.authLabelText
-                                  .copyWith(color: darkColor, fontSize: 20.sp),
+                                  .copyWith(color: lightColor, fontSize: 20.sp),
                             ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 12,
+                  SizedBox(
+                    height: 22.h,
                   ),
-
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Sudah memiliki akun?',
+                          style: AppFontStyle.normalText
+                              .copyWith(color: subColor, fontSize: 15.sp)),
+                      SizedBox(
+                        width: 4.w,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          EasyLoading.show(status: 'Loading...');
+                          Navigator.of(context).pushReplacement(
+                              TransitionFade(child: const Login()));
+                          EasyLoading.dismiss();
+                        },
+                        child: Text('Masuk',
+                            style: AppFontStyle.authSubLabelText.copyWith(
+                                color: primaryColor,
+                                decoration: TextDecoration.underline,
+                                decorationColor: primaryColor)),
+                      ),
+                    ],
+                  ),
                   const SizedBox(
                     height: 50,
                   )

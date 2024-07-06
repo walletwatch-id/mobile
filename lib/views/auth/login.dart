@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
+import 'package:wallet_watch/common/utils/transtition_fade.dart';
 import 'package:wallet_watch/common/widgets/custom_text_field.dart';
+import 'package:wallet_watch/views/auth/register.dart';
 import 'package:wallet_watch/views/home/home.dart';
 
 class Login extends StatefulWidget {
@@ -145,8 +147,9 @@ class _LoginState extends State<Login> {
                       dense: true,
                       visualDensity:
                           const VisualDensity(horizontal: -4, vertical: -4),
-                      title: const Text('Ingat saya',
-                          style: TextStyle(color: Colors.grey)),
+                      title: Text('Ingat saya',
+                          style: AppFontStyle.authSubLabelText
+                              .copyWith(color: subColor)),
                       value: _isChecked,
                       onChanged: (bool? value) {
                         setState(() {
@@ -190,7 +193,7 @@ class _LoginState extends State<Login> {
                     style: ButtonStyle(
                       shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
+                          borderRadius: BorderRadius.circular(30.r),
                         ),
                       ),
                       padding: WidgetStateProperty.all(EdgeInsets.zero),
@@ -199,13 +202,13 @@ class _LoginState extends State<Login> {
                       height: 48.h,
                       decoration: BoxDecoration(
                         color: primaryColor,
-                        borderRadius: BorderRadius.circular(16.0),
+                        borderRadius: BorderRadius.circular(30.r),
                       ),
                       child: Center(
                         child: Text(
-                          "Login/Masuk",
+                          "Masuk",
                           style: AppFontStyle.authLabelText
-                              .copyWith(color: darkColor, fontSize: 20.sp),
+                              .copyWith(color: lightColor, fontSize: 20.sp),
                         ),
                       ),
                     ),
@@ -215,22 +218,29 @@ class _LoginState extends State<Login> {
               SizedBox(
                 height: 22.h,
               ),
-              Center(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  height: 42,
-                  child: SignInButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      side: const BorderSide(color: Color(0xFF4285F4)),
-                    ),
-                    Buttons.googleDark,
-                    text: "Masuk dengan Google",
-                    onPressed: () {
-                      // signIn();
-                    },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Belum memiliki akun?',
+                      style: AppFontStyle.normalText
+                          .copyWith(color: subColor, fontSize: 15.sp)),
+                  SizedBox(
+                    width: 4.w,
                   ),
-                ),
+                  GestureDetector(
+                    onTap: () {
+                      EasyLoading.show(status: 'Loading...');
+                      Navigator.of(context).pushReplacement(
+                          TransitionFade(child: const Register()));
+                      EasyLoading.dismiss();
+                    },
+                    child: Text('Buat Akun',
+                        style: AppFontStyle.authSubLabelText.copyWith(
+                            color: primaryColor,
+                            decoration: TextDecoration.underline,
+                            decorationColor: primaryColor)),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 50.h,
