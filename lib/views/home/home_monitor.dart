@@ -19,7 +19,7 @@ import 'package:wallet_watch/common/widgets/area_chart.dart';
 import 'package:wallet_watch/common/widgets/home_navigator.dart';
 import 'package:wallet_watch/common/widgets/monitor_card.dart';
 import 'package:wallet_watch/common/widgets/top_bar.dart';
-import 'package:wallet_watch/views/home/home_self_discovery.dart';
+import 'package:wallet_watch/views/monitor/self_discovery.dart';
 
 class HomeMonitor extends StatefulWidget {
   final ScrollController controller;
@@ -366,7 +366,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                                                     Navigator.of(context).push(
                                                         TransitionVerticalBottom(
                                                             child:
-                                                                const HomeSelfDiscovery()));
+                                                                const SelfDiscovery()));
                                                   });
                                                 },
                                                 child: Text(

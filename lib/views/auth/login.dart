@@ -17,7 +17,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isChecked = false;
 
@@ -31,7 +31,7 @@ class _LoginState extends State<Login> {
   @override
   void dispose() {
     super.dispose();
-    _usernameController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
   }
 
@@ -112,7 +112,7 @@ class _LoginState extends State<Login> {
                   style:
                       AppFontStyle.authLabelText.copyWith(color: primaryColor)),
               CustomTextField(
-                controller: _usernameController,
+                controller: _emailController,
                 hintText: "Email..",
                 obscureText: false,
                 keyboardType: TextInputType.emailAddress,
@@ -176,7 +176,7 @@ class _LoginState extends State<Login> {
                   width: MediaQuery.of(context).size.width * 0.7,
                   child: ElevatedButton(
                     onPressed: () async {
-                      //  login(context, _usernameController.text, _passwordController.text);
+                      //  login(context, _emailController.text, _passwordController.text);
                       // Navigator.pushReplacement(context,
                       //     MaterialPageRoute(builder: (context) {
                       //   return const Home();

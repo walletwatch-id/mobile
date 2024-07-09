@@ -72,6 +72,7 @@ class _HomeAddState extends State<HomeAdd> {
                 child: TopBar(
                   controller: _advancedDrawerController,
                   title: "Tambah Transaksi",
+                  textColor: darkColor,
                   isLight: true,
                   settingAction: () {
                     //

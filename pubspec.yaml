@@ -1,10 +1,10 @@
 name: wallet_watch
 description: "WalletWatch"
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.2.3 <4.0.0'
+  sdk: ">=3.2.3 <4.0.0"
 
 dependencies:
   flutter:
@@ -25,7 +25,7 @@ dependencies:
   custom_sliding_segmented_control: ^1.8.1
   flutter_floating_bottom_bar: ^1.2.0
   flutter_chat_ui: ^1.6.12
-  googleapis: ^13.1.0  
+  googleapis: ^13.1.0
   googleapis_auth: ^1.6.0
   firebase_auth: ^4.19.4
   firebase_core: ^2.30.1
@@ -33,6 +33,7 @@ dependencies:
   animated_custom_dropdown: ^3.0.0
   dropdown_button2: ^2.3.9
   persistent_bottom_nav_bar_v2: ^5.2.3
+  image_picker: ^1.1.2
 
   intl: any
   flutter_chat_types: any

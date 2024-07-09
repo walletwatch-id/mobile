@@ -13,6 +13,7 @@ import 'package:wallet_watch/common/enum/notification_state.dart';
 import 'package:wallet_watch/common/helper.dart';
 import 'package:wallet_watch/common/theme/app_color_style.dart';
 import 'package:wallet_watch/common/theme/app_font_style.dart';
+import 'package:wallet_watch/common/utils/transtition_fade.dart';
 import 'package:wallet_watch/common/widgets/home_navigator.dart';
 import 'package:wallet_watch/common/widgets/hotline_card.dart';
 import 'package:wallet_watch/common/widgets/notification_item.dart';
@@ -20,16 +21,16 @@ import 'package:wallet_watch/common/widgets/self_discovery_item.dart';
 import 'package:wallet_watch/common/widgets/top_bar.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:wallet_watch/views/home/home.dart';
+import 'package:wallet_watch/views/monitor/self_discovery_finish.dart';
 
-class HomeSelfDiscoveryFinish extends StatefulWidget {
-  const HomeSelfDiscoveryFinish({super.key});
+class SelfDiscovery extends StatefulWidget {
+  const SelfDiscovery({super.key});
 
   @override
-  State<HomeSelfDiscoveryFinish> createState() =>
-      _HomeSelfDiscoveryFinishState();
+  State<SelfDiscovery> createState() => _SelfDiscoveryState();
 }
 
-class _HomeSelfDiscoveryFinishState extends State<HomeSelfDiscoveryFinish> {
+class _SelfDiscoveryState extends State<SelfDiscovery> {
   bool isSettingVisible = false;
 
   @override
@@ -123,9 +124,52 @@ class _HomeSelfDiscoveryFinishState extends State<HomeSelfDiscoveryFinish> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 60.h,
+                  Container(
+                    height: 40.h,
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: CupertinoColors.lightBackgroundGray,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12.r),
+                      ),
+                      border: Border.all(
+                        color: borderColor,
+                        width: 1.5.w,
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12.r),
+                      child: MaterialButton(
+                        onPressed: () {
+                          setState(() {});
+                        },
+                        child: Text("Silahkan menjawab pertanyaan di bawah ini",
+                            style: AppFontStyle.homeSubTitleText
+                                .copyWith(color: darkColor, fontSize: 17.sp)),
+                      ),
+                    ),
                   ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: 180.h,
+              right: 0,
+              left: 0,
+              bottom: 0,
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  ...selfDiscoveries.asMap().entries.map((entry) {
+                    int index = entry.key;
+                    var item = entry.value;
+                    return SelfDiscoveryItem(
+                      number: index + 1,
+                      selfDiscovery: item,
+                    );
+                  }),
                   Container(
                     height: 40.h,
                     margin: EdgeInsets.all(16.w),
@@ -144,103 +188,18 @@ class _HomeSelfDiscoveryFinishState extends State<HomeSelfDiscoveryFinish> {
                       borderRadius: BorderRadius.circular(12.r),
                       child: MaterialButton(
                         onPressed: () {
-                          setState(() {});
+                          Navigator.of(context).pushReplacement(TransitionFade(
+                              child: const SelfDiscoveryFinish()));
                         },
-                        child: Text("Kamu telah menjawab semua pertanyaan",
+                        child: Text("Selesai",
                             style: AppFontStyle.homeSubTitleText
                                 .copyWith(color: lightColor)),
                       ),
                     ),
                   ),
-                  Container(
-                    height: 200.h,
-                    width: double.infinity,
-                    margin: EdgeInsets.symmetric(horizontal: 16.w),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                        border: Border.all(color: borderColor, width: 1.5.w)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        Text("Selesai",
-                            style: AppFontStyle.homeSubTitleText.copyWith(
-                                color: primaryColor, fontSize: 28.sp)),
-                        Container(
-                          height: 40.h,
-                          width: 120.w,
-                          margin: EdgeInsets.all(16.w),
-                          decoration: BoxDecoration(
-                            color: CupertinoColors.lightBackgroundGray,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(12.r),
-                            ),
-                            border: Border.all(
-                              color: borderColor,
-                              width: 1.5.w,
-                            ),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12.r),
-                            child: MaterialButton(
-                              onPressed: () {
-                                setState(() {});
-                              },
-                              child: Text("Coba ulang",
-                                  style: AppFontStyle.homeNormalText
-                                      .copyWith(color: darkColor)),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),
-            Positioned(
-                bottom: 120.h,
-                right: 0,
-                left: 0,
-                child: Column(
-                  children: [
-                    Text("Money Personality Kamu",
-                        style: AppFontStyle.homeSubTitleText.copyWith(
-                            color: darkColor, fontSize: 28.sp, height: 1.4)),
-                    Text(
-                      "Berdasarkan jawaban kamu",
-                      style: AppFontStyle.homeListHeaderText.copyWith(
-                          color: subColor, fontSize: 16.sp, height: 1.4),
-                    ),
-                    Container(
-                      height: 100.h,
-                      width: double.infinity,
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                          border: Border.all(color: borderColor, width: 1.5.w)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Personality Type",
-                            style: AppFontStyle.homeListHeaderText.copyWith(
-                                color: subColor, fontSize: 20.sp, height: 1.4),
-                          ),
-                          SizedBox(
-                            height: 12.h,
-                          ),
-                          Text("Binger",
-                              style: AppFontStyle.homeSubTitleText
-                                  .copyWith(color: darkColor, fontSize: 28.sp)),
-                        ],
-                      ),
-                    )
-                  ],
-                )),
           ],
         ),
       ),
