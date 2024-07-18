@@ -1,18 +1,14 @@
-import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:googleapis/connectors/v1.dart';
-import 'package:wallet_watch/common/data/provider.dart';
-import 'package:wallet_watch/common/data/period.dart';
-import 'package:wallet_watch/common/enum/item_state.dart';
-import 'package:wallet_watch/common/enum/transaction_field_state.dart';
-import 'package:wallet_watch/common/helper.dart';
-import 'package:wallet_watch/common/theme/app_color_style.dart';
-import 'package:wallet_watch/common/theme/app_font_style.dart';
-import 'package:wallet_watch/common/widgets/custom_text_field.dart';
-import 'package:wallet_watch/common/widgets/dynamic_text.dart';
+import 'package:walletwatch_mobile/common/data/provider.dart';
+import 'package:walletwatch_mobile/common/data/period.dart';
+import 'package:walletwatch_mobile/common/enum/transaction_field_state.dart';
+import 'package:walletwatch_mobile/common/helper.dart';
+import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
+import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
+import 'package:walletwatch_mobile/common/widgets/custom_text_field.dart';
+import 'package:walletwatch_mobile/common/widgets/dynamic_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TransactionTextField extends StatefulWidget {

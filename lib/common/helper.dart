@@ -3,9 +3,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wallet_watch/common/data/user.dart';
-import 'package:wallet_watch/common/enum/item_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:walletwatch_mobile/common/data/preference.dart';
+import 'package:walletwatch_mobile/common/data/user.dart';
+import 'package:walletwatch_mobile/common/enum/item_state.dart';
 import 'package:intl/intl.dart';
+import 'package:walletwatch_mobile/views/splash/splash.dart';
 
 final User user = User(
   id: 1,
@@ -15,6 +18,48 @@ final User user = User(
   role: 'Student',
   image: "assets/images/user_default.png",
 );
+
+@pragma('vm:entry-point')
+String? emptyNull(String? text) {
+  return text == '' ? null : text;
+}
+
+@pragma('vm:entry-point')
+Future<void> savePrefs({String? accessToken}) async {
+  final prefs = await SharedPreferences.getInstance();
+
+  if (accessToken != null) {
+    prefs.setString('access_token', accessToken);
+  }
+}
+
+@pragma('vm:entry-point')
+Future<void> resetPrefs() async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.clear();
+  // final service = FlutterBackgroundService();
+  // service.invoke("resetService");
+}
+
+@pragma('vm:entry-point')
+Future<Preference> getPrefs() async {
+  final prefs = await SharedPreferences.getInstance();
+  return Preference(
+    accessToken: emptyNull(prefs.getString('access_token')),
+  );
+}
+
+Future<void> signOut(BuildContext context) async {
+  resetPrefs();
+
+  // final service = FlutterBackgroundService();
+  // service.invoke('stopService');
+  // ignore: use_build_context_synchronously
+  Navigator.of(context).pushAndRemoveUntil(
+    MaterialPageRoute(builder: (context) => const Splash()),
+    (Route<dynamic> route) => false,
+  );
+}
 
 Widget getStateImage(ItemState? state, {double size = 1}) {
   if (state == ItemState.akulaku) {
@@ -50,6 +95,22 @@ Widget getStateImage(ItemState? state, {double size = 1}) {
   );
 }
 
+String getStateTitle(ItemState state) {
+  if (state == ItemState.akulaku) {
+    return "Akulaku";
+  } else if (state == ItemState.kredivo) {
+    return "Kredivo";
+  } else if (state == ItemState.shopee) {
+    return "SpayLater";
+  } else if (state == ItemState.ojk) {
+    return "Otoritas Jasa Keuangan";
+  } else if (state == ItemState.kominfo) {
+    return "Kominfo";
+  }
+
+  return "";
+}
+
 String summarizeDigits(int number) {
   if (number < 1000) {
     return number.toString();
@@ -76,4 +137,3 @@ String randomString() {
   final values = List<int>.generate(16, (i) => random.nextInt(255));
   return base64UrlEncode(values);
 }
-

@@ -1,4 +1,4 @@
-# wallet_watch
+# WalletWatch Mobile
 
 A new Flutter project.
 

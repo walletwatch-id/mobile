@@ -3,10 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wallet_watch/common/theme/app_color_style.dart';
-import 'package:wallet_watch/common/utils/transtition_fade.dart';
-import 'package:wallet_watch/views/auth/intro.dart';
-import 'package:wallet_watch/views/auth/login.dart';
+import 'package:walletwatch_mobile/common/helper.dart';
+import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
+import 'package:walletwatch_mobile/common/utils/transtition_fade.dart';
+import 'package:walletwatch_mobile/views/auth/login.dart';
+import 'package:walletwatch_mobile/views/home/home.dart';
 
 class SplashAuth extends StatefulWidget {
   const SplashAuth({super.key});
@@ -17,6 +18,7 @@ class SplashAuth extends StatefulWidget {
 
 class _SplashAuthState extends State<SplashAuth>
     with SingleTickerProviderStateMixin {
+      
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
@@ -24,48 +26,20 @@ class _SplashAuthState extends State<SplashAuth>
       statusBarIconBrightness: Brightness.light,
     ));
     super.initState();
-    // googleSignIn.signInSilently();
 
     Future.delayed(const Duration(seconds: 3), () async {
-      await Navigator.of(context)
-          .pushReplacement(TransitionFade(child: const Login()));
-      // signedIn = await storage.read(key: "signedIn") == "true" ? true : false;
-      // GoogleSignInAccount? account = googleSignIn.currentUser;
-      // bool isAuthorized = account != null;
+      final prefs = await getPrefs();
 
-      // if (kIsWeb && account != null) {
-      //   _afterGoogleLogin(googleSignInAccount!);
-      //   isAuthorized = await googleSignIn.canAccessScopes(scopes);
-      // }
+      if (prefs.accessToken != null) {
 
-      // if (signedIn) {
-      //   try {
-      //     googleSignIn.signInSilently().whenComplete(() => () {});
-      //   } catch (e) {
-      //     storage.write(key: "signedIn", value: "false").then((value) {
-      //       setState(() {
-      //         signedIn = false;
-      //       });
-      //     });
-      //   }
-      // }
-
-      // setState(() {
-      //   googleSignInAccount = account;
-      //   isAuthorized = isAuthorized;
-      // });
-
-      // if (isAuthorized) {
-      //   loadPrefs();
-      // //  unawaited(handleGetContact(account!));
-      //   // ignore: use_build_context_synchronously
-      //   await Navigator.of(context)
-      //       .pushReplacement(TransitionFade(child: const Home()));
-      // } else {
-      //   // ignore: use_build_context_synchronously
-      //   await Navigator.of(context)
-      //       .pushReplacement(TransitionFade(child: const Login()));
-      // }
+        // ignore: use_build_context_synchronously
+        await Navigator.of(context)
+            .pushReplacement(TransitionFade(child: const Home()));
+      } else {
+        // ignore: use_build_context_synchronously
+        await Navigator.of(context)
+            .pushReplacement(TransitionFade(child: const Login()));
+      }
     });
   }
 

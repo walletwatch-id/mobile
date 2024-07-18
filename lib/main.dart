@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wallet_watch/common/theme/app_color_style.dart';
-import 'package:wallet_watch/views/splash/splash.dart';
+import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
+import 'package:walletwatch_mobile/views/splash/splash.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +40,9 @@ void _configLoading() {
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
+
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
 
   @override
   State<MainApp> createState() => _MainAppState();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:wallet_watch/common/data/chart_data.dart';
-import 'package:wallet_watch/common/theme/app_font_style.dart';
+import 'package:walletwatch_mobile/common/data/chart_data.dart';
+import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
 
 class ColumnChart extends StatefulWidget {
   final String title;

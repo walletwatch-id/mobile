@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wallet_watch/common/enum/home_state.dart';
-import 'package:wallet_watch/common/enum/hotline_state.dart';
-import 'package:wallet_watch/common/enum/item_state.dart';
-import 'package:wallet_watch/common/helper.dart';
-import 'package:wallet_watch/common/theme/app_color_style.dart';
-import 'package:wallet_watch/common/theme/app_font_style.dart';
-import 'package:wallet_watch/common/widgets/home_navigator.dart';
-import 'package:wallet_watch/common/widgets/hotline_card.dart';
-import 'package:wallet_watch/common/widgets/top_bar.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:walletwatch_mobile/common/enum/home_state.dart';
+import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
+import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
+import 'package:walletwatch_mobile/common/widgets/home_navigator.dart';
+import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
 
 class HomeProfile extends StatefulWidget {
   const HomeProfile({super.key});
@@ -114,7 +108,7 @@ SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
                           right: 0,
                           bottom: 70.h,
                           left: 0,
-                          child: SizedBox(
+                          child: const SizedBox(
                               height: double.infinity,
                               child: Column(
                                 children: [

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wallet_watch/common/theme/app_font_style.dart';
+import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
 
 class InfoDialog extends StatefulWidget {
   final String title;
@@ -81,14 +81,14 @@ class _InfoDialogState extends State<InfoDialog> {
                                 widget.onDismiss();
                               },
                               style: ButtonStyle(
-                                shape: MaterialStateProperty.all<
+                                shape: WidgetStateProperty.all<
                                     RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16.0),
                                   ),
                                 ),
                                 padding:
-                                    MaterialStateProperty.all(EdgeInsets.zero),
+                                    WidgetStateProperty.all(EdgeInsets.zero),
                               ),
                               child: Container(
                                 height: 42.0,

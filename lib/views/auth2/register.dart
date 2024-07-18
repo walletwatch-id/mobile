@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wallet_watch/common/theme/app_color_style.dart';
-import 'package:wallet_watch/common/theme/app_font_style.dart';
-import 'package:wallet_watch/common/utils/transtition_fade.dart';
-import 'package:wallet_watch/common/widgets/custom_text_field.dart';
-import 'package:wallet_watch/views/auth/login.dart';
+import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
+import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
+import 'package:walletwatch_mobile/common/utils/transtition_fade.dart';
+import 'package:walletwatch_mobile/common/widgets/custom_text_field.dart';
+import 'package:walletwatch_mobile/views/auth/login.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});

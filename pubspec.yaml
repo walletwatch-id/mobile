@@ -1,4 +1,4 @@
-name: wallet_watch
+name: walletwatch_mobile
 description: "WalletWatch"
 publish_to: "none"
 version: 0.1.0
@@ -24,6 +24,7 @@ dependencies:
   flutter_rounded_progress_bar: ^0.3.2
   custom_sliding_segmented_control: ^1.8.1
   flutter_floating_bottom_bar: ^1.2.0
+  http: ^1.2.1
   flutter_chat_ui: ^1.6.12
   googleapis: ^13.1.0
   googleapis_auth: ^1.6.0
@@ -34,6 +35,11 @@ dependencies:
   dropdown_button2: ^2.3.9
   persistent_bottom_nav_bar_v2: ^5.2.3
   image_picker: ^1.1.2
+  flutter_appauth: ^6.0.6
+  awesome_notifications: ^0.9.3+1
+  permission_handler: ^11.3.1
+  awesome_notifications_fcm: ^0.9.3+1
+  toggle_list: ^0.3.1
 
   intl: any
   flutter_chat_types: any

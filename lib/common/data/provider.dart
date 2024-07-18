@@ -1,4 +1,4 @@
-import 'package:wallet_watch/common/enum/item_state.dart';
+import 'package:walletwatch_mobile/common/enum/item_state.dart';
 
 class Paylater {
   final String id;

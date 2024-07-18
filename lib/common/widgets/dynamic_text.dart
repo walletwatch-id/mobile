@@ -5,7 +5,7 @@ class DynamicText extends StatelessWidget {
   final TextStyle textStyle;
   final Color textColor;
 
-  DynamicText({required this.text, required this.textStyle, required this.textColor});
+  const DynamicText({super.key, required this.text, required this.textStyle, required this.textColor});
 
   @override
   Widget build(BuildContext context) {

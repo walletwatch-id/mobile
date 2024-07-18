@@ -1,23 +1,14 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:wallet_watch/common/enum/home_state.dart';
-import 'package:wallet_watch/common/enum/hotline_state.dart';
-import 'package:wallet_watch/common/enum/item_state.dart';
-import 'package:wallet_watch/common/helper.dart';
-import 'package:wallet_watch/common/theme/app_color_style.dart';
-import 'package:wallet_watch/common/theme/app_font_style.dart';
-import 'package:wallet_watch/common/widgets/custom_text_field.dart';
-import 'package:wallet_watch/common/widgets/home_navigator.dart';
-import 'package:wallet_watch/common/widgets/hotline_card.dart';
-import 'package:wallet_watch/common/widgets/top_bar.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:walletwatch_mobile/common/helper.dart';
+import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
+import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
+import 'package:walletwatch_mobile/common/widgets/custom_text_field.dart';
+import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
 
 class EditProfile extends StatefulWidget {
   final ScrollController controller;
@@ -80,16 +71,16 @@ class _EditProfileState extends State<EditProfile> {
           child: Wrap(
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.photo_library),
-                title: Text('Gallery'),
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Gallery'),
                 onTap: () {
                   _pickImage(ImageSource.gallery);
                   Navigator.of(context).pop();
                 },
               ),
               ListTile(
-                leading: Icon(Icons.photo_camera),
-                title: Text('Camera'),
+                leading: const Icon(Icons.photo_camera),
+                title: const Text('Camera'),
                 onTap: () {
                   _pickImage(ImageSource.camera);
                   Navigator.of(context).pop();

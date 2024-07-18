@@ -1,4 +1,4 @@
-package com.example.wallet_watch
+package id.walletwatch.mobile
 
 import io.flutter.embedding.android.FlutterActivity
 

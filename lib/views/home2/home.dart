@@ -1,15 +1,11 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
-import 'package:wallet_watch/common/theme/app_color_style.dart';
-import 'package:wallet_watch/views/home2/home_add.dart';
-import 'package:wallet_watch/views/home2/home_chat.dart';
-import 'package:wallet_watch/views/home2/home_hotline.dart';
-import 'package:wallet_watch/views/home2/home_monitor.dart';
-import 'package:wallet_watch/views/home2/home_profile.dart';
+import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
+import 'package:walletwatch_mobile/views/home2/home_chat.dart';
+import 'package:walletwatch_mobile/views/home2/home_hotline.dart';
+import 'package:walletwatch_mobile/views/home2/home_monitor.dart';
+import 'package:walletwatch_mobile/views/home2/home_profile.dart';
 
 class Home extends StatefulWidget {
   final double height;

@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wallet_watch/common/theme/app_color_style.dart';
-import 'package:wallet_watch/views/home/home_add.dart';
-import 'package:wallet_watch/views/home/home_chat.dart';
-import 'package:wallet_watch/views/home/home_hotline.dart';
-import 'package:wallet_watch/views/home/home_monitor.dart';
-import 'package:wallet_watch/views/home/home_profile.dart';
+import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
+import 'package:walletwatch_mobile/views/home/home_add.dart';
+import 'package:walletwatch_mobile/views/home/home_chat.dart';
+import 'package:walletwatch_mobile/views/home/home_hotline.dart';
+import 'package:walletwatch_mobile/views/home/home_monitor.dart';
+import 'package:walletwatch_mobile/views/home/home_profile.dart';
 
 class Home extends StatefulWidget {
   final double height;
@@ -64,7 +64,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     final width = widget.width.w;
 
     return PopScope(
-      canPop: false,
+      canPop: true,
       child: SafeArea(
         child: Scaffold(
           backgroundColor: darkColor,
@@ -136,7 +136,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       )),
                     ),
                     Container(
-                      padding: EdgeInsets.only(),
+                      padding: const EdgeInsets.only(),
                       child: SizedBox(
                         height: height,
                         width: width,

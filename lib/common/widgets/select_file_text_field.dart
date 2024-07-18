@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wallet_watch/common/theme/app_font_style.dart';
-import 'package:wallet_watch/common/widgets/custom_text_field.dart';
+import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
+import 'package:walletwatch_mobile/common/widgets/custom_text_field.dart';
 
 class SelectFileTextField extends StatelessWidget {
   final String labelText;

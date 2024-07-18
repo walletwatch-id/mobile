@@ -1,21 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wallet_watch/common/enum/home_state.dart';
-import 'package:wallet_watch/common/enum/hotline_state.dart';
-import 'package:wallet_watch/common/enum/item_state.dart';
-import 'package:wallet_watch/common/helper.dart';
-import 'package:wallet_watch/common/theme/app_color_style.dart';
-import 'package:wallet_watch/common/theme/app_font_style.dart';
-import 'package:wallet_watch/common/utils/transtition_fade.dart';
-import 'package:wallet_watch/common/widgets/home_navigator.dart';
-import 'package:wallet_watch/common/widgets/hotline_card.dart';
-import 'package:wallet_watch/common/widgets/top_bar.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:wallet_watch/views/profile/edit_profile.dart';
+import 'package:walletwatch_mobile/common/enum/home_state.dart';
+import 'package:walletwatch_mobile/common/helper.dart';
+import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
+import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
+import 'package:walletwatch_mobile/common/utils/transtition_fade.dart';
+import 'package:walletwatch_mobile/common/widgets/home_navigator.dart';
+import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
+import 'package:walletwatch_mobile/views/profile/edit_profile.dart';
+import 'package:http/http.dart' as http;
 
 class HomeProfile extends StatefulWidget {
   final ScrollController controller;
@@ -33,6 +29,8 @@ class _HomeProfileState extends State<HomeProfile> {
   void initState() {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark, statusBarColor: lightColor));
+
+    EasyLoading.init();
     super.initState();
   }
 
@@ -40,17 +38,39 @@ class _HomeProfileState extends State<HomeProfile> {
     setState(() {});
   }
 
-  Widget _buildListTile(BuildContext context, IconData icon, String title) {
+  Widget _buildListTile(BuildContext context, IconData icon, String title,
+      {Function()? onTap}) {
     return Column(
       children: [
         ListTile(
           leading: Icon(icon, color: Colors.black),
-          title: Text(title, style: TextStyle(color: Colors.black)),
-          onTap: () {},
+          title: Text(title, style: const TextStyle(color: Colors.black)),
+          onTap: onTap,
         ),
-        Divider(height: 1, color: Colors.grey),
+        const Divider(height: 1, color: Colors.grey),
       ],
     );
+  }
+
+  final String url = 'https://www.walletwatch.id/api/v1/users';
+
+  Future<void> fetchUsers() async {
+    final prefs = await getPrefs();
+
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer ${prefs.accessToken}',
+      },
+    );
+
+    print(prefs.accessToken);
+
+    if (response.statusCode == 200) {
+      print('Response body: ${response.body}');
+    } else {
+      print('Request failed with status: ${response.statusCode}');
+    }
   }
 
   @override
@@ -211,7 +231,16 @@ class _HomeProfileState extends State<HomeProfile> {
                         child: ListView(
                           padding: EdgeInsets.zero,
                           children: [
-                            _buildListTile(context, Icons.settings, 'Help'),
+                            _buildListTile(
+                              context,
+                              Icons.settings,
+                              'Help',
+                              onTap: () async {
+                                EasyLoading.show(status: 'loading...');
+                                await fetchUsers();
+                                EasyLoading.dismiss();
+                              },
+                            ),
                             _buildListTile(context, Icons.feedback, 'Feedback'),
                             _buildListTile(
                                 context, Icons.article, 'Terms of Service'),
@@ -220,8 +249,12 @@ class _HomeProfileState extends State<HomeProfile> {
                             _buildListTile(context, Icons.info, 'About'),
                             _buildListTile(context, Icons.security,
                                 'Data Security Protection'),
-                            _buildListTile(
-                                context, Icons.exit_to_app, 'Keluar'),
+                            _buildListTile(context, Icons.exit_to_app, 'Keluar',
+                                onTap: () {
+                              EasyLoading.show(status: 'loading...');
+                              signOut(context);
+                              EasyLoading.dismiss();
+                            }),
                           ],
                         ),
                       ),

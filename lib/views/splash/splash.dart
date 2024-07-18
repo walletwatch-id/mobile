@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wallet_watch/common/theme/app_color_style.dart';
-import 'package:wallet_watch/common/utils/transtition_fade.dart';
-import 'package:wallet_watch/views/splash/splash_auth.dart';
+import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
+import 'package:walletwatch_mobile/common/utils/transtition_fade.dart';
+import 'package:walletwatch_mobile/views/splash/splash_auth.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -18,10 +19,12 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     super.initState();
 
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.of(context)
-          .pushReplacement(TransitionFade(child: const SplashAuth()));
-    });
+    checkPermission();
+
+    // Future.delayed(const Duration(seconds: 2), () {
+    //   Navigator.of(context)
+    //       .pushReplacement(TransitionFade(child: const SplashAuth()));
+    // });
   }
 
   @override
@@ -29,6 +32,95 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: SystemUiOverlay.values);
     super.dispose();
+  }
+
+  Future<void> permissionIsGranted() async {
+    final startTime = DateTime.now();
+    final endTime = DateTime.now();
+    final elapsedTime = endTime.difference(startTime);
+
+    const minimumDelay = Duration(seconds: 2);
+    final remainingDelay =
+        elapsedTime.isNegative ? minimumDelay : (minimumDelay - elapsedTime);
+
+    if (remainingDelay.inMilliseconds > 0) {
+      await Future.delayed(remainingDelay);
+    }
+
+    // ignore: use_build_context_synchronously
+    Navigator.of(context)
+        .pushReplacement(TransitionFade(child: const SplashAuth()));
+  }
+
+  Future<void> checkPermission() async {
+    var backgroundStatus = await Permission.ignoreBatteryOptimizations.status;
+    var notificationStatus = await Permission.notification.status;
+    bool status = false;
+
+    if (notificationStatus.isGranted && backgroundStatus.isGranted) {
+      status = true;
+    }
+
+    requestPermission(status);
+  }
+
+  Future<void> requestPermission(bool status) async {
+    var backgroundStatus =
+        await Permission.ignoreBatteryOptimizations.request();
+    var notificationStatus = await Permission.notification.request();
+    // var scheduleStatus = await Permission.scheduleExactAlarm.request();
+    // var notificationPolicyStatus =
+    //     await Permission.accessNotificationPolicy.request();
+
+    if (backgroundStatus.isGranted && notificationStatus.isGranted
+        // && (scheduleStatus.isGranted || notificationPolicyStatus.isGranted)
+        ) {
+      // if (!status) {
+      //   await restartApp();
+      // }
+      permissionIsGranted();
+    } else {
+      permissionDeniedDialog();
+    }
+  }
+
+  // Future<void> restartApp() async {
+  //   IsolateNameServer.removePortNameMapping('isolate');
+  //   IsolateNameServer.registerPortWithName(ReceivePort().sendPort, 'isolate');
+  //   Isolate.spawn(restart, null);
+  // }
+
+  // static void restart(_) {
+  //   // Delay for a short time to allow the current isolate to exit
+  //   Future.delayed(Duration.zero, () {
+  //     // Retrieve the isolate port and send a message to restart the app
+  //     final SendPort send = IsolateNameServer.lookupPortByName('isolate')!;
+  //     send.send(null);
+  //   });
+  // }
+
+  Future<void> permissionDeniedDialog() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Permission is Required'),
+          content: const Text('Please grant permission to use this app next time.'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                // SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                permissionIsGranted();
+                // openAppSettings();
+                // Navigator.of(context)
+                //     .pushReplacement(TransitionFade(child: const Splash()));
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

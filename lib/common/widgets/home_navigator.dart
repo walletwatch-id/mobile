@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wallet_watch/common/enum/home_state.dart';
-import 'package:wallet_watch/common/helper.dart';
-import 'package:wallet_watch/common/theme/app_color_style.dart';
-import 'package:wallet_watch/common/theme/app_font_style.dart';
+import 'package:walletwatch_mobile/common/enum/home_state.dart';
+import 'package:walletwatch_mobile/common/helper.dart';
+import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
+import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
 
 class HomeNavigator extends StatefulWidget {
   final AdvancedDrawerController controller;

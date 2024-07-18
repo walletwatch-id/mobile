@@ -1,27 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:googleapis/datamigration/v1.dart';
-import 'package:wallet_watch/common/data/self_discovery.dart';
-import 'package:wallet_watch/common/enum/home_state.dart';
-import 'package:wallet_watch/common/enum/hotline_state.dart';
-import 'package:wallet_watch/common/enum/item_state.dart';
-import 'package:wallet_watch/common/enum/notification_state.dart';
-import 'package:wallet_watch/common/helper.dart';
-import 'package:wallet_watch/common/theme/app_color_style.dart';
-import 'package:wallet_watch/common/theme/app_font_style.dart';
-import 'package:wallet_watch/common/utils/transtition_fade.dart';
-import 'package:wallet_watch/common/widgets/home_navigator.dart';
-import 'package:wallet_watch/common/widgets/hotline_card.dart';
-import 'package:wallet_watch/common/widgets/notification_item.dart';
-import 'package:wallet_watch/common/widgets/self_discovery_item.dart';
-import 'package:wallet_watch/common/widgets/top_bar.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:wallet_watch/views/home/home.dart';
-import 'package:wallet_watch/views/monitor/self_discovery_finish.dart';
+import 'package:walletwatch_mobile/common/data/self_discovery.dart';
+import 'package:walletwatch_mobile/common/helper.dart';
+import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
+import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
+import 'package:walletwatch_mobile/common/utils/transtition_fade.dart';
+import 'package:walletwatch_mobile/common/widgets/self_discovery_item.dart';
+import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
+import 'package:walletwatch_mobile/views/monitor/self_discovery_finish.dart';
 
 class SelfDiscovery extends StatefulWidget {
   const SelfDiscovery({super.key});
@@ -46,8 +34,7 @@ class _SelfDiscoveryState extends State<SelfDiscovery> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 28.h),
+    return SafeArea(
       child: Scaffold(
         backgroundColor: lightColor,
         body: Stack(
@@ -147,7 +134,7 @@ class _SelfDiscoveryState extends State<SelfDiscovery> {
                         },
                         child: Text("Silahkan menjawab pertanyaan di bawah ini",
                             style: AppFontStyle.homeSubTitleText
-                                .copyWith(color: darkColor, fontSize: 17.sp)),
+                                .copyWith(color: darkColor, fontSize: 16.sp, height: 1.4)),
                       ),
                     ),
                   ),

@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wallet_watch/common/enum/home_state.dart';
-import 'package:wallet_watch/common/enum/hotline_state.dart';
-import 'package:wallet_watch/common/enum/item_state.dart';
-import 'package:wallet_watch/common/enum/notification_state.dart';
-import 'package:wallet_watch/common/helper.dart';
-import 'package:wallet_watch/common/theme/app_color_style.dart';
-import 'package:wallet_watch/common/theme/app_font_style.dart';
-import 'package:wallet_watch/common/widgets/home_navigator.dart';
-import 'package:wallet_watch/common/widgets/hotline_card.dart';
-import 'package:wallet_watch/common/widgets/notification_item.dart';
-import 'package:wallet_watch/common/widgets/top_bar.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:wallet_watch/views/home/home.dart';
+import 'package:walletwatch_mobile/common/enum/home_state.dart';
+import 'package:walletwatch_mobile/common/enum/notification_state.dart';
+import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
+import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
+import 'package:walletwatch_mobile/common/widgets/notification_item.dart';
+import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
 
 class HomeNotification extends StatefulWidget {
   final bool isLight;
@@ -41,10 +32,9 @@ class _HomeNotificationState extends State<HomeNotification> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(top: 28.h),
-        child: Stack(
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
           children: [
             Positioned(
               top: 0,

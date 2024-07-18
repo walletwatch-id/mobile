@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wallet_watch/common/data/self_discovery.dart';
-import 'package:wallet_watch/common/theme/app_color_style.dart';
+import 'package:walletwatch_mobile/common/data/self_discovery.dart';
+import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
 
 class SelfDiscoveryItem extends StatefulWidget {
   final int number;
@@ -30,7 +30,7 @@ class _SelfDiscoveryItemState extends State<SelfDiscoveryItem> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -45,7 +45,7 @@ class _SelfDiscoveryItemState extends State<SelfDiscoveryItem> {
                 radius: 16.r,
                 child: Text(
                   '${widget.number}',
-                  style: TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.black),
                 ),
               ),
               SizedBox(width: 8.w),

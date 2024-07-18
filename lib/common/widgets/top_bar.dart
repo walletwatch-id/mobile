@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wallet_watch/common/enum/home_state.dart';
-import 'package:wallet_watch/common/theme/app_color_style.dart';
-import 'package:wallet_watch/common/theme/app_font_style.dart';
-import 'package:wallet_watch/common/utils/transition_vertical_top.dart';
-import 'package:wallet_watch/views/home/home_notification.dart';
+import 'package:walletwatch_mobile/common/enum/home_state.dart';
+import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
+import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
+import 'package:walletwatch_mobile/common/utils/transition_vertical_top.dart';
+import 'package:walletwatch_mobile/views/home/home_notification.dart';
 
 class TopBar extends StatefulWidget {
   final String? title;
