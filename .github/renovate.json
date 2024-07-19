@@ -3,7 +3,8 @@
   "extends": [
     "config:base",
     "schedule:weekends",
-    ":semanticCommits"
+    ":semanticCommits",
+    ":pinAllExceptPeerDependencies"
   ],
   "baseBranches": [
     "develop"
