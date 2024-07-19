@@ -19,6 +19,7 @@ dependencies:
   sign_in_button: 3.2.0
   syncfusion_flutter_datepicker: 25.2.7
   syncfusion_flutter_charts: 25.2.7
+  syncfusion_flutter_pdfviewer: 26.1.42
   flutter_advanced_drawer: 1.3.6
   flutter_easyloading: 3.0.5
   flutter_rounded_progress_bar: 0.3.2
@@ -70,6 +71,7 @@ flutter:
     - assets/icons/
     - assets/images/paylater/
     - assets/images/government/
+    - assets/pdf/
   fonts:
     - family: Baloo
       fonts:

@@ -34,9 +34,9 @@ class _HomeMonitorState extends State<HomeMonitor>
     with SingleTickerProviderStateMixin {
   final _advancedDrawerController = AdvancedDrawerController();
   bool isSettingVisible = false;
-  List<ChartData> _installmentData = [];
-  List<ChartData> _incomeData = [];
-  List<Statistic> _statistics = [];
+  final List<ChartData> _installmentData = [];
+  final List<ChartData> _incomeData = [];
+  final List<Statistic> _statistics = [];
   late TabController _tabController;
   double _limitPercentage = 0;
   int _segmentedControlValue = 0;
@@ -81,22 +81,23 @@ class _HomeMonitorState extends State<HomeMonitor>
           _statistics.last.totalInstallment *
           100;
 
-          _incomeSummarizer = summarizeValues(_statistics
-          .reduce((current, next) => current.totalIncome > next.totalIncome ? current : next)
+      _incomeSummarizer = summarizeValues(_statistics
+          .reduce((current, next) =>
+              current.totalIncome > next.totalIncome ? current : next)
           .totalIncome);
 
-           _installmentSummarizer = summarizeValues(_statistics
-          .reduce((current, next) => current.totalInstallment > next.totalInstallment ? current : next)
+      _installmentSummarizer = summarizeValues(_statistics
+          .reduce((current, next) =>
+              current.totalInstallment > next.totalInstallment ? current : next)
           .totalInstallment);
 
       for (var statistic in _statistics) {
-        _incomeData.add(ChartData(
-            convertIntToMonth(statistic.month), statistic.totalIncome / _incomeSummarizer.keys.first));
+        _incomeData.add(ChartData(convertIntToMonth(statistic.month),
+            statistic.totalIncome / _incomeSummarizer.keys.first));
 
-            _installmentData.add(ChartData(
-            convertIntToMonth(statistic.month), statistic.totalInstallment / _installmentSummarizer.keys.first));
+        _installmentData.add(ChartData(convertIntToMonth(statistic.month),
+            statistic.totalInstallment / _installmentSummarizer.keys.first));
       }
-
     });
 
     EasyLoading.dismiss();
@@ -374,7 +375,8 @@ class _HomeMonitorState extends State<HomeMonitor>
                                           title: "Penggunaan Paylater Bulanan",
                                           color: primaryColor,
                                           data: _installmentData,
-                                          yName: _installmentSummarizer.values.first,
+                                          yName: _installmentSummarizer
+                                              .values.first,
                                         ),
                                       ),
                                       SizedBox(
@@ -518,7 +520,8 @@ class _HomeMonitorState extends State<HomeMonitor>
                                               child: Column(
                                                 children: [
                                                   Text(
-                                                    formatCurrency(_statistics.last.totalIncome),
+                                                    formatCurrency(_statistics.isNotEmpty ? _statistics
+                                                        .last.totalIncome : 0),
                                                     style: AppFontStyle
                                                         .homeCardTitleText
                                                         .copyWith(
@@ -605,45 +608,46 @@ class _HomeMonitorState extends State<HomeMonitor>
                                                     vertical: 14.h),
                                                 child: Column(
                                                   children: [
-                                                    for (var statistic in _statistics)
-                                                    Column(
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              "Bulan ${convertIntToMonth(statistic.month)}",
-                                                              style: AppFontStyle
-                                                                  .homeCardTitleText
-                                                                  .copyWith(
-                                                                      color:
-                                                                          darkColor,
-                                                                      fontSize:
-                                                                          18.sp),
+                                                    for (var statistic
+                                                        in _statistics)
+                                                      Column(
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                "Bulan ${convertIntToMonth(statistic.month)}",
+                                                                style: AppFontStyle
+                                                                    .homeCardTitleText
+                                                                    .copyWith(
+                                                                        color:
+                                                                            darkColor,
+                                                                        fontSize:
+                                                                            18.sp),
+                                                              ),
+                                                              Text(
+                                                                formatCurrency(
+                                                                    statistic
+                                                                        .totalIncome),
+                                                                style: AppFontStyle
+                                                                    .homeCardTitleText
+                                                                    .copyWith(
+                                                                        color:
+                                                                            darkColor,
+                                                                        fontSize:
+                                                                            18.sp),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          if (_statistics.isNotEmpty && statistic !=
+                                                              _statistics.last)
+                                                            SizedBox(
+                                                              height: 8.h,
                                                             ),
-                                                            Text(
-                                                              formatCurrency(
-                                                                  statistic.totalIncome),
-                                                              style: AppFontStyle
-                                                                  .homeCardTitleText
-                                                                  .copyWith(
-                                                                      color:
-                                                                          darkColor,
-                                                                      fontSize:
-                                                                          18.sp),
-                                                            ),
-                                                          ],
-                                                        ),
-
-                                                        if (statistic != _statistics.last)
-                                                    SizedBox(
-                                                      height: 8.h,
-                                                    ),
-                                                      ],
-                                                    ),
-
+                                                        ],
+                                                      ),
                                                   ],
                                                 ),
                                               ),
@@ -651,7 +655,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                                                   ? CrossFadeState.showSecond
                                                   : CrossFadeState.showFirst,
                                               duration:
-                                                  Duration(milliseconds: 300),
+                                                  const Duration(milliseconds: 300),
                                             ),
                                           ],
                                         ),

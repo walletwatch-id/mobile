@@ -10,8 +10,9 @@ import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
 import 'package:walletwatch_mobile/common/utils/transtition_fade.dart';
 import 'package:walletwatch_mobile/common/widgets/home_navigator.dart';
 import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
-import 'package:walletwatch_mobile/views/profile/edit_profile.dart';
+import 'package:walletwatch_mobile/views/profile/profile_edit.dart';
 import 'package:http/http.dart' as http;
+import 'package:walletwatch_mobile/views/profile/profile_pdf.dart';
 
 class HomeProfile extends StatefulWidget {
   final ScrollController controller;
@@ -124,9 +125,9 @@ class _HomeProfileState extends State<HomeProfile> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(50),
                                   child: SizedBox(
-                                width: 56.h,
-                                height: 56.h,
-                                child: user.image),
+                                      width: 56.h,
+                                      height: 56.h,
+                                      child: user.image),
                                 ),
                               ),
                             ),
@@ -179,10 +180,12 @@ class _HomeProfileState extends State<HomeProfile> {
                           child: MaterialButton(
                             onPressed: () {
                               Navigator.of(context).push(TransitionFade(
-                                  child: EditProfile(
-                                      controller: widget.controller, refresh: _refresh,)));
+                                  child: ProfileEdit(
+                                controller: widget.controller,
+                                refresh: _refresh,
+                              )));
                             },
-                            child: Text("Edit Profil",
+                            child: Text("Edit Profile",
                                 style: AppFontStyle.homeSubTitleText
                                     .copyWith(color: lightColor)),
                           ),
@@ -244,12 +247,52 @@ class _HomeProfileState extends State<HomeProfile> {
                             ),
                             _buildListTile(context, Icons.feedback, 'Feedback'),
                             _buildListTile(
-                                context, Icons.article, 'Terms of Service'),
+                              context,
+                              Icons.article,
+                              'Terms of Service',
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  TransitionFade(
+                                    child: const ProfilePdf(
+                                      title: "Terms of Service",
+                                      path: "assets/pdf/terms_of_service.pdf",
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                             _buildListTile(
-                                context, Icons.lock, 'Privacy Policy'),
-                            _buildListTile(context, Icons.info, 'About'),
+                                context, Icons.lock, 'Privacy Policy',  onTap: () {
+                                Navigator.of(context).push(
+                                  TransitionFade(
+                                    child: const ProfilePdf(
+                                      title: "Privacy Policy",
+                                      path: "assets/pdf/privacy_policy.pdf",
+                                    ),
+                                  ),
+                                );
+                              },),
+                            _buildListTile(context, Icons.info, 'About',  onTap: () {
+                                Navigator.of(context).push(
+                                  TransitionFade(
+                                    child: const ProfilePdf(
+                                      title: "About",
+                                      path: "assets/pdf/about.pdf",
+                                    ),
+                                  ),
+                                );
+                              },),
                             _buildListTile(context, Icons.security,
-                                'Data Security Protection'),
+                                'Data Security Protection',  onTap: () {
+                                Navigator.of(context).push(
+                                  TransitionFade(
+                                    child: const ProfilePdf(
+                                      title: "Data Security Protection",
+                                      path: "assets/pdf/data_security.pdf",
+                                    ),
+                                  ),
+                                );
+                              },),
                             _buildListTile(context, Icons.exit_to_app, 'Keluar',
                                 onTap: () {
                               EasyLoading.show(status: 'loading...');
