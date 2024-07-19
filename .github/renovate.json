@@ -22,6 +22,12 @@
   },
   "packageRules": [
     {
+      "matchDepNames": [
+        "dev.flutter.flutter-plugin-loader"
+      ],
+      "enabled": false
+    },
+    {
       "groupName": "non-major dependencies",
       "matchManagers": [
         "pub"
