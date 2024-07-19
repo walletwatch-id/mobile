@@ -71,6 +71,7 @@ flutter:
     - assets/icons/
     - assets/images/paylater/
     - assets/images/government/
+    - assets/pdf/
   fonts:
     - family: Baloo
       fonts:

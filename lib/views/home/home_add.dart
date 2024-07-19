@@ -93,8 +93,8 @@ class _HomeAddState extends State<HomeAdd> {
                   },
                 ),
               ),
-              
-             
+
+
               Container(
                 margin: EdgeInsets.only(top: 40.h),
                 child: Container(
@@ -130,7 +130,7 @@ class _HomeAddState extends State<HomeAdd> {
                                     height: 65.h,
                                     width: 65.h,
                                     child: user.image),
-                                
+
                                 ),
                               ),
                             ),
@@ -174,7 +174,7 @@ class _HomeAddState extends State<HomeAdd> {
                       //   state: TransactionFieldState.provider,
                       // ),
                       SizedBox(height: 24.h),
-                      Text("Pilih Lembaga",
+                      Text("Pilih Lembaga:",
                           style: AppFontStyle.authLabelText
                               .copyWith(color: primaryColor, fontSize: 22.sp)),
                       SizedBox(height: 8.h),
@@ -342,7 +342,7 @@ class _HomeAddState extends State<HomeAdd> {
                   ),
                 ),
               ),
-             
+
               DateSelector(
                 visible: _isDateSelectorVisible,
                 onDismiss: (args) {
