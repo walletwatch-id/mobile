@@ -1,0 +1,75 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    "schedule:weekends",
+    ":semanticCommits"
+  ],
+  "baseBranches": [
+    "develop"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "extends": [
+      "schedule:weekends"
+    ],
+    "automerge": true,
+    "automergeStrategy": "fast-forward",
+    "labels": [
+      "dependencies"
+    ]
+  },
+  "packageRules": [
+    {
+      "groupName": "non-major dependencies",
+      "matchManagers": [
+        "pub"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true,
+      "automergeStrategy": "fast-forward",
+      "labels": [
+        "dependencies"
+      ]
+    },
+    {
+      "groupName": "major dependencies",
+      "matchManagers": [
+        "pub"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "labels": [
+        "dependencies",
+        "breaking"
+      ]
+    },
+    {
+      "groupName": "android dependencies",
+      "groupSlug": "android",
+      "matchManagers": [
+        "gradle",
+        "gradle-wrapper"
+      ],
+      "automerge": true,
+      "automergeStrategy": "fast-forward",
+      "labels": [
+        "dependencies",
+        "android"
+      ]
+    },
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "labels": [
+        "dependencies",
+        "github actions"
+      ]
+    }
+  ]
+}
