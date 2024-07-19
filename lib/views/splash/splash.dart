@@ -111,7 +111,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
               child: const Text('OK'),
               onPressed: () {
                 // SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                permissionIsGranted();
+                Navigator.of(context).pop();
                 // openAppSettings();
                 // Navigator.of(context)
                 //     .pushReplacement(TransitionFade(child: const Splash()));
@@ -121,6 +121,8 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
         );
       },
     );
+
+    permissionIsGranted();
   }
 
   @override

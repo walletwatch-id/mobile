@@ -35,6 +35,7 @@ void _configLoading() {
     ..backgroundColor = secondaryColor
     ..indicatorColor = Colors.white
     ..textColor = Colors.white
+    ..dismissOnTap = true
     ..maskColor = darkColor.withOpacity(.3);
 }
 

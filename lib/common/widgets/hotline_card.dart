@@ -64,16 +64,16 @@ class _HotlineCardState extends State<HotlineCard> {
           ),
           Expanded(
             child: ToggleList(
-              toggleAnimationDuration: const Duration(milliseconds: 50),
-              scrollDuration: const Duration(milliseconds: 50),
+              toggleAnimationDuration: const Duration(milliseconds: 200),
+              scrollDuration: const Duration(milliseconds: 200),
               scrollPosition: AutoScrollPosition.middle,
               divider: SizedBox(
                 height: 12.h,
               ),
               innerPadding: EdgeInsets.zero,
-              trailing: const Padding(
-                padding: EdgeInsets.all(10),
-                child: Icon(Icons.expand_more),
+              trailing: Padding(
+                padding: EdgeInsets.all(12.w),
+                child: const Icon(Icons.expand_more),
               ),
               viewPadding: EdgeInsets.symmetric(horizontal: 10.w),
               children: [
@@ -138,6 +138,7 @@ class _HotlineCardState extends State<HotlineCard> {
                       ),
                     ),
                   ),
+                  
               ],
             ),
           ),

@@ -10,10 +10,14 @@ import 'package:walletwatch_mobile/common/enum/item_state.dart';
 import 'package:intl/intl.dart';
 import 'package:walletwatch_mobile/views/splash/splash.dart';
 
-final User user = User(
-  id: 1,
+const _baseUrl = "https://www.walletwatch.id/";
+const apiUrl = "${_baseUrl}api/v1/";
+const oauthUrl = "${_baseUrl}oauth2/";
+const authUrl = "${_baseUrl}auth/";
+
+User user = User(
+  id: "1",
   name: "Agus Setiawan",
-  username: "Agusetiawan19",
   email: 'agussetiawan@gmail.com',
   role: 'Student',
   image: "assets/images/user_default.png",

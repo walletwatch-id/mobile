@@ -2,5 +2,6 @@ enum TransactionFieldState {
   installment,
   total,
   period,
-  provider
+  provider,
+  firstInstallmentDateTime
 }

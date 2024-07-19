@@ -1,12 +1,21 @@
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:walletwatch_mobile/common/data/hotline.dart';
+import 'package:walletwatch_mobile/common/data/period.dart';
 import 'package:walletwatch_mobile/common/enum/home_state.dart';
 import 'package:walletwatch_mobile/common/enum/transaction_field_state.dart';
 import 'package:walletwatch_mobile/common/helper.dart';
+import 'package:walletwatch_mobile/common/http/hotline.dart';
+import 'package:walletwatch_mobile/common/http/transaction.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
 import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
+import 'package:walletwatch_mobile/common/widgets/custom_text_field.dart';
+import 'package:walletwatch_mobile/common/widgets/date_selector.dart';
 import 'package:walletwatch_mobile/common/widgets/home_navigator.dart';
 import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
 import 'package:walletwatch_mobile/common/widgets/transaction_text_field.dart';
@@ -25,7 +34,9 @@ class _HomeAddState extends State<HomeAdd> {
   final _totalController = TextEditingController();
   final _periodController = TextEditingController();
   final _providerController = TextEditingController();
-
+  final _firstInstallmentController = TextEditingController();
+  final List<Hotline> _hotlines = [];
+  bool _isDateSelectorVisible = false;
   bool isSettingVisible = false;
 
   @override
@@ -33,6 +44,7 @@ class _HomeAddState extends State<HomeAdd> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark, statusBarColor: lightColor));
 
+    loadPage();
     super.initState();
   }
 
@@ -42,11 +54,19 @@ class _HomeAddState extends State<HomeAdd> {
     _totalController.dispose();
     _periodController.dispose();
     _providerController.dispose();
+    _firstInstallmentController.dispose();
     super.dispose();
   }
 
-  void refresh() {
-    setState(() {});
+  void loadPage() async {
+    EasyLoading.show(status: 'Loading...');
+    final hotlines = await fetchHotlines();
+    setState(() {
+      _hotlines.addAll(hotlines);
+    });
+    _providerController.text = _hotlines[0].id;
+
+    EasyLoading.dismiss();
   }
 
   @override
@@ -170,6 +190,70 @@ class _HomeAddState extends State<HomeAdd> {
                           ],
                         ),
                       ),
+                      SizedBox(height: 4.h),
+                      // TransactionTextField(
+                      //   label: "Lembaga Paylater:",
+                      //   hint: "Pilih Lembaga",
+                      //   controller: _providerController,
+                      //   state: TransactionFieldState.provider,
+                      // ),
+                      SizedBox(height: 24.h),
+                      Text("Pilih Lembaga",
+                          style: AppFontStyle.authLabelText
+                              .copyWith(color: primaryColor, fontSize: 22.sp)),
+                      SizedBox(height: 8.h),
+                      if (_hotlines.isNotEmpty)
+                        CustomDropdown<Hotline>.search(
+                          overlayHeight: 300.h,
+                          hintText: 'Pilih Chat...',
+                          closedHeaderPadding: EdgeInsets.symmetric(
+                              horizontal: 20.w, vertical: 16.h),
+                          decoration: CustomDropdownDecoration(
+                            closedFillColor: backColor,
+                            expandedFillColor: backColor,
+                            expandedBorder:
+                                Border.all(color: borderColor, width: 2.w),
+                            closedBorder:
+                                Border.all(color: borderColor, width: 2.w),
+                            searchFieldDecoration: SearchFieldDecoration(
+                              fillColor: backColor,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12.r),
+                                borderSide: BorderSide(
+                                  color: borderColor,
+                                  width: 2.w,
+                                ),
+                              ),
+                            ),
+                            listItemDecoration: const ListItemDecoration(
+                              selectedColor: Color(0xFFF4F1EC),
+                            ),
+                            headerStyle: AppFontStyle.classLabelText
+                                .copyWith(color: darkColor),
+                            listItemStyle: AppFontStyle.classLabelText
+                                .copyWith(color: darkColor),
+                          ),
+                          items: _hotlines,
+                          headerBuilder: (context, selectedItem, status) =>
+                              Text(
+                            selectedItem.name,
+                            style: AppFontStyle.homeCardTitleText,
+                          ),
+                          listItemBuilder:
+                              (context, item, isSelected, onItemSelect) => Text(
+                            item.name,
+                            style: AppFontStyle.homeCardTitleText
+                                .copyWith(fontSize: 16.sp),
+                          ),
+                          initialItem: _hotlines[0],
+                          onChanged: (value) {
+                            setState(() {
+                              if (value != null) {
+                                _providerController.text = value.id;
+                              }
+                            });
+                          },
+                        ),
                       TransactionTextField(
                         label: "Cicilan Paylater:",
                         hint: "Masukkan Cicilan..",
@@ -178,7 +262,7 @@ class _HomeAddState extends State<HomeAdd> {
                       ),
                       SizedBox(height: 4.h),
                       TransactionTextField(
-                        label: "Jumlah Paylater:",
+                        label: "Jumah Paylater (per Bulan):",
                         hint: "Masukkan Jumlah..",
                         controller: _totalController,
                         state: TransactionFieldState.total,
@@ -190,18 +274,50 @@ class _HomeAddState extends State<HomeAdd> {
                         controller: _periodController,
                         state: TransactionFieldState.period,
                       ),
-                      SizedBox(height: 4.h),
+                      SizedBox(
+                        height: 4.h,
+                      ),
                       TransactionTextField(
-                        label: "Lembaga Paylater:",
-                        hint: "Pilih Lembaga",
-                        controller: _providerController,
-                        state: TransactionFieldState.provider,
+                        label: "Tanggal Mulai Cicilan:",
+                        hint: "Pilih Tanggal Cicilan",
+                        controller: _firstInstallmentController,
+                        state: TransactionFieldState.firstInstallmentDateTime,
+                        callback: () {
+                          setState(() {
+                            _isDateSelectorVisible = true;
+                          });
+                        },
                       ),
                       SizedBox(
-                        height: 30.h,
+                        height: 35.h,
                       ),
+                      // Container(
+                      //   height: 40.h,
+                      //   width: double.infinity,
+                      //   decoration: BoxDecoration(
+                      //     color: primaryColor,
+                      //     borderRadius: BorderRadius.all(
+                      //       Radius.circular(12.r),
+                      //     ),
+                      //     border: Border.all(
+                      //       color: borderColor,
+                      //       width: 1.5.w,
+                      //     ),
+                      //   ),
+                      //   child: ClipRRect(
+                      //     borderRadius: BorderRadius.circular(12.r),
+                      //     child: MaterialButton(
+                      //       onPressed: () {
+                      //         setState(() {});
+                      //       },
+                      //       child: Text("Cek tingkat kebutuhanmu di sini",
+                      //           style: AppFontStyle.homeSubTitleText
+                      //               .copyWith(color: lightColor)),
+                      //     ),
+                      //   ),
+                      // ),
                       Container(
-                        height: 40.h,
+                        height: 45.h,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: primaryColor,
@@ -217,9 +333,27 @@ class _HomeAddState extends State<HomeAdd> {
                           borderRadius: BorderRadius.circular(12.r),
                           child: MaterialButton(
                             onPressed: () {
-                              setState(() {});
+                              try {
+                                DateTime parsedDate = DateFormat('yyyy-MM-dd')
+                                    .parse(_firstInstallmentController.text);
+                                String selectedDate =
+                                    DateFormat('yyyy-MM-ddTHH:mm:ss+00:00')
+                                        .format(parsedDate.toUtc());
+                                storeTransaction(
+                                    context: context,
+                                    paylaterId: _providerController.text,
+                                    monthlyInstallment:
+                                        double.tryParse(_totalController.text)!,
+                                    period: periodList[int.tryParse(
+                                                _periodController.text)! -
+                                            1]
+                                        .value,
+                                    firstInstallmentDateTime: selectedDate);
+                              } catch (e) {
+                                print(e);
+                              }
                             },
-                            child: Text("Cek tingkat kebutuhanmu di sini",
+                            child: Text("Tambahkan Transkasi",
                                 style: AppFontStyle.homeSubTitleText
                                     .copyWith(color: lightColor)),
                           ),
@@ -231,6 +365,15 @@ class _HomeAddState extends State<HomeAdd> {
                     ],
                   ),
                 ),
+              ),
+              DateSelector(
+                visible: _isDateSelectorVisible,
+                onDismiss: (args) {
+                  setState(() {
+                    _isDateSelectorVisible = false;
+                    _firstInstallmentController.text = args;
+                  });
+                },
               ),
             ],
           ),

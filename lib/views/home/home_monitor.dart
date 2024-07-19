@@ -72,6 +72,14 @@ class _HomeMonitorState extends State<HomeMonitor>
     setState(() {});
   }
 
+  bool _isExpanded = false;
+
+  void _toggleExpand() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return HomeNavigator(
@@ -395,7 +403,6 @@ class _HomeMonitorState extends State<HomeMonitor>
                                     ],
                                   ),
                                 ),
-                                // Content for Pendapatan tab
                                 Padding(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 16.w),
@@ -514,119 +521,138 @@ class _HomeMonitorState extends State<HomeMonitor>
                                                 vertical: 10.h),
                                             width: double.infinity,
                                             decoration: BoxDecoration(
-                                                color: lightColor,
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(16),
-                                                ),
-                                                border: Border.all(
+                                              color: lightColor,
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(16.r),
+                                              ),
+                                              border: Border.all(
+                                                color: borderColor,
+                                                width: 1.5,
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
                                                   color: borderColor,
-                                                  width: 1.5.w,
+                                                  spreadRadius: -1.0,
+                                                  blurRadius: 5.0,
+                                                  offset: Offset(0, 5.h),
                                                 ),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: borderColor,
-                                                    spreadRadius: -1.h,
-                                                    blurRadius: 5.w,
-                                                    offset: Offset(0, 5.h),
-                                                  ),
-                                                ]),
+                                              ],
+                                            ),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text('Historis',
-                                                        style: AppFontStyle
-                                                            .homeSubTitleText
-                                                            .copyWith(
-                                                                fontSize: 24.sp,
-                                                                decoration:
-                                                                    TextDecoration
-                                                                        .underline,
-                                                                decorationColor:
-                                                                    primaryColor,
-                                                                decorationThickness:
-                                                                    2.h,
-                                                                color:
-                                                                    primaryColor)),
-                                                    Icon(
-                                                      Icons.keyboard_arrow_down,
-                                                      color: darkBorderColor,
-                                                      size: 28.h,
-                                                    )
-                                                  ],
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 14.h),
-                                                  child: Column(
+                                                GestureDetector(
+                                                  onTap: _toggleExpand,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            "Bulan Mei",
-                                                            style: AppFontStyle
-                                                                .homeCardTitleText
-                                                                .copyWith(
-                                                                    color:
-                                                                        darkColor,
-                                                                    fontSize:
-                                                                        18.sp),
-                                                          ),
-                                                          Text(
-                                                            formatCurrency(
-                                                                9254000),
-                                                            style: AppFontStyle
-                                                                .homeCardTitleText
-                                                                .copyWith(
-                                                                    color:
-                                                                        darkColor,
-                                                                    fontSize:
-                                                                        18.sp),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: 8.h,
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            "Bulan April",
-                                                            style: AppFontStyle
-                                                                .homeCardTitleText
-                                                                .copyWith(
-                                                                    color:
-                                                                        darkColor,
-                                                                    fontSize:
-                                                                        18.sp),
-                                                          ),
-                                                          Text(
-                                                            formatCurrency(
-                                                                9350000),
-                                                            style: AppFontStyle
-                                                                .homeCardTitleText
-                                                                .copyWith(
-                                                                    color:
-                                                                        darkColor,
-                                                                    fontSize:
-                                                                        18.sp),
-                                                          ),
-                                                        ],
+                                                      Text('Historis',
+                                                          style: AppFontStyle
+                                                              .homeSubTitleText
+                                                              .copyWith(
+                                                                  fontSize:
+                                                                      24.sp,
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .underline,
+                                                                  decorationColor:
+                                                                      primaryColor,
+                                                                  decorationThickness:
+                                                                      2.h,
+                                                                  color:
+                                                                      primaryColor)),
+                                                      Icon(
+                                                        _isExpanded
+                                                            ? Icons
+                                                                .keyboard_arrow_up
+                                                            : Icons
+                                                                .keyboard_arrow_down,
+                                                        color: darkBorderColor,
+                                                        size: 28.h,
                                                       ),
                                                     ],
                                                   ),
+                                                ),
+                                                AnimatedCrossFade(
+                                                  firstChild: Container(),
+                                                  secondChild: Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 14.h),
+                                                    child: Column(
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              "Bulan Mei",
+                                                              style: AppFontStyle
+                                                                  .homeCardTitleText
+                                                                  .copyWith(
+                                                                      color:
+                                                                          darkColor,
+                                                                      fontSize:
+                                                                          18.sp),
+                                                            ),
+                                                            Text(
+                                                              formatCurrency(
+                                                                  9254000),
+                                                              style: AppFontStyle
+                                                                  .homeCardTitleText
+                                                                  .copyWith(
+                                                                      color:
+                                                                          darkColor,
+                                                                      fontSize:
+                                                                          18.sp),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: 8.h,
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              "Bulan April",
+                                                              style: AppFontStyle
+                                                                  .homeCardTitleText
+                                                                  .copyWith(
+                                                                      color:
+                                                                          darkColor,
+                                                                      fontSize:
+                                                                          18.sp),
+                                                            ),
+                                                            Text(
+                                                              formatCurrency(
+                                                                  9350000),
+                                                              style: AppFontStyle
+                                                                  .homeCardTitleText
+                                                                  .copyWith(
+                                                                      color:
+                                                                          darkColor,
+                                                                      fontSize:
+                                                                          18.sp),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  crossFadeState: _isExpanded
+                                                      ? CrossFadeState
+                                                          .showSecond
+                                                      : CrossFadeState
+                                                          .showFirst,
+                                                  duration: Duration(
+                                                      milliseconds: 300),
                                                 ),
                                               ],
                                             ),

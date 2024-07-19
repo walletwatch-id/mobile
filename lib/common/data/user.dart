@@ -1,7 +1,6 @@
 class User {
-  final int id;
+  final String id;
   final String name;
-  final String username;
   final String email;
   final String role;
   String image;
@@ -9,7 +8,6 @@ class User {
   User(
       {required this.id,
       required this.name,
-      required this.username,
       required this.email,
       required this.role,
       required this.image,});

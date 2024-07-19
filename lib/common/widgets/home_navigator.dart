@@ -122,7 +122,7 @@ class _HomeNavigatorState extends State<HomeNavigator> {
                               ),
                             ),
                             Text(
-                              '@${user.username}',
+                              '@${user.email}',
                               style: AppFontStyle.accountUsernameText.copyWith(
                                 color: lightColor,
                               ),

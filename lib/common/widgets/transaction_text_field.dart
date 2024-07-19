@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:googleapis/workflowexecutions/v1.dart';
 import 'package:walletwatch_mobile/common/data/provider.dart';
 import 'package:walletwatch_mobile/common/data/period.dart';
 import 'package:walletwatch_mobile/common/enum/transaction_field_state.dart';
@@ -16,12 +17,14 @@ class TransactionTextField extends StatefulWidget {
   final String hint;
   final TextEditingController controller;
   final TransactionFieldState state;
+  final VoidCallback? callback;
   const TransactionTextField(
       {super.key,
       required this.label,
       required this.hint,
       required this.controller,
-      required this.state});
+      required this.state,
+      this.callback});
 
   @override
   State<TransactionTextField> createState() => _TransactionTextFieldState();
@@ -257,14 +260,18 @@ class _TransactionTextFieldState extends State<TransactionTextField> {
               borderRadius: BorderRadius.circular(20.r),
               child: MaterialButton(
                 onPressed: () {
-                  setState(() {
-                    _isFocused = true;
-                  });
-                  _focusNode.requestFocus();
+                  if (widget.callback != null) {
+                    widget.callback!();
+                  } else {
+                    setState(() {
+                      _isFocused = true;
+                    });
+                    _focusNode.requestFocus();
+                  }
                 },
                 child: DynamicText(
                     text: (widget.controller.text.isNotEmpty)
-                        ? formatCurrency(
+                        ? widget.state == TransactionFieldState.firstInstallmentDateTime ? widget.controller.text : formatCurrency(
                             double.tryParse(widget.controller.text) ?? 0)
                         : widget.hint,
                     textStyle: AppFontStyle.homeCardTitleText,
@@ -319,6 +326,7 @@ class _TransactionTextFieldState extends State<TransactionTextField> {
                 color: secondaryColor,
               ),
             )
+          
           else
             CustomTextField(
               hintText: widget.hint,
