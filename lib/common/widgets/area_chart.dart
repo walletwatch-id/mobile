@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:walletwatch_mobile/common/data/chart_data.dart';
+import 'package:walletwatch_mobile/common/helper.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
 import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
 
@@ -14,7 +15,7 @@ class AreaChart extends StatefulWidget {
       required this.title,
       required this.color,
       required this.data,
-      this.yName });
+      this.yName});
 
   @override
   AreaChartState createState() => AreaChartState();

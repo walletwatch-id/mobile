@@ -115,15 +115,13 @@ String getStateTitle(ItemState state) {
   return "";
 }
 
-String summarizeDigits(int number) {
+Map<int, String> summarizeValues(double number) {
   if (number < 1000) {
-    return number.toString();
+    return {1: ''};
   } else if (number < 1000000) {
-    double result = number / 1000.0;
-    return '${result.toStringAsFixed(2)}K';
+    return {1000: 'ribu'};
   } else {
-    double result = number / 1000000.0;
-    return '${result.toStringAsFixed(2)}M';
+    return {1000000: 'juta'};
   }
 }
 
@@ -143,7 +141,6 @@ String randomString() {
 }
 
 String convertIntToMonth(int month) {
-
   List<String> months = [
     'Januari',
     'Februari',
