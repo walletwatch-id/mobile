@@ -17,6 +17,7 @@ import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
 import 'package:walletwatch_mobile/common/widgets/custom_text_field.dart';
 import 'package:walletwatch_mobile/common/widgets/date_selector.dart';
 import 'package:walletwatch_mobile/common/widgets/home_navigator.dart';
+import 'package:walletwatch_mobile/common/widgets/input_alert.dart';
 import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
 import 'package:walletwatch_mobile/common/widgets/transaction_text_field.dart';
 
@@ -92,35 +93,8 @@ class _HomeAddState extends State<HomeAdd> {
                   },
                 ),
               ),
-              Positioned(
-                top: 55.h,
-                right: 0,
-                left: 0,
-                bottom: 0,
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    color: lightColor,
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 40.w),
-                          child: Text('Mengatur Preferensi Anda!',
-                              style: AppFontStyle.homeSubTitleText
-                                  .copyWith(color: lightColor)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              
+             
               Container(
                 margin: EdgeInsets.only(top: 40.h),
                 child: Container(
@@ -152,9 +126,11 @@ class _HomeAddState extends State<HomeAdd> {
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(50),
-                                  child: Image.asset(
-                                    user.image,
-                                  ),
+                                  child:  SizedBox(
+                                    height: 65.h,
+                                    width: 65.h,
+                                    child: user.image),
+                                
                                 ),
                               ),
                             ),
@@ -366,6 +342,7 @@ class _HomeAddState extends State<HomeAdd> {
                   ),
                 ),
               ),
+             
               DateSelector(
                 visible: _isDateSelectorVisible,
                 onDismiss: (args) {

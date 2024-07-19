@@ -77,9 +77,11 @@ class _SelfDiscoveryState extends State<SelfDiscovery> {
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(50),
-                              child: Image.asset(
-                                user.image,
-                              ),
+                              child: SizedBox(
+                                width: 56.h,
+                                height: 56.h,
+                                child: user.image),
+                                
                             ),
                           ),
                         ),

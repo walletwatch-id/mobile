@@ -15,6 +15,7 @@ import 'package:walletwatch_mobile/common/http/chat.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
 import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
 import 'package:walletwatch_mobile/common/widgets/home_navigator.dart';
+import 'package:walletwatch_mobile/common/widgets/input_alert.dart';
 import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -41,6 +42,8 @@ class _HomeChatState extends State<HomeChat> {
   bool isSettingVisible = false;
   WebSocketChannel? _channel;
   Timer? _timer;
+  bool _isInputTitleVisible = false;
+  final _titleController = TextEditingController();
 
   @override
   void initState() {
@@ -56,17 +59,22 @@ class _HomeChatState extends State<HomeChat> {
   @override
   void dispose() {
     _timer?.cancel();
+    _channel?.sink.close(status.normalClosure);
+    _titleController.dispose();
     super.dispose();
   }
 
-  void loadPage() async {
+  void loadPage({bool isLoadChat = true}) async {
     EasyLoading.show(status: 'Loading...');
     final chatSessions = await fetchChats();
     setState(() {
-      _currentChatSession = chatSessions[0];
       _chatSessions.addAll(chatSessions);
+      _currentChatSession = chatSessions.last;
     });
-    loadChat();
+
+    if (isLoadChat) {
+      loadChat();
+    }
   }
 
   Future<void> connectWebSocket() async {
@@ -104,7 +112,6 @@ class _HomeChatState extends State<HomeChat> {
     });
   }
 
-
   void startFetchingMessages() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_currentChatSession != null) {
@@ -130,9 +137,12 @@ class _HomeChatState extends State<HomeChat> {
     });
   }
 
-    List<ChatMessage> _getNewMessages(List<ChatMessage> newMessages) {
-    final existingMessageIds = _chatMessages.map((message) => message.id).toSet();
-    return newMessages.where((message) => !existingMessageIds.contains(message.id)).toList();
+  List<ChatMessage> _getNewMessages(List<ChatMessage> newMessages) {
+    final existingMessageIds =
+        _chatMessages.map((message) => message.id).toSet();
+    return newMessages
+        .where((message) => !existingMessageIds.contains(message.id))
+        .toList();
   }
 
   void loadChat() async {
@@ -204,196 +214,256 @@ class _HomeChatState extends State<HomeChat> {
   @override
   Widget build(BuildContext context) {
     return HomeNavigator(
-        controller: _advancedDrawerController,
-        state: HomeState.monitor,
-        child: Scaffold(
-          body: Stack(
-            children: [
-              Positioned(
-                top: 0,
-                right: 0,
-                left: 0,
-                child: TopBar(
-                    controller: _advancedDrawerController,
-                    title: "Chatbot",
-                    settingAction: () {
-                      // setState(() {
-                      //   isSettingAlertVisible = true;
-                      // });
-                    }),
-              ),
-              Positioned(
-                top: 55.h,
-                right: 0,
-                left: 0,
-                bottom: 0,
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    color: darkColor,
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 2.h,
+      controller: _advancedDrawerController,
+      state: HomeState.monitor,
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              right: 0,
+              left: 0,
+              child: TopBar(
+                  controller: _advancedDrawerController,
+                  title: "Chatbot",
+                  settingAction: () {
+                    // setState(() {
+                    //   isSettingAlertVisible = true;
+                    // });
+                  }),
+            ),
+            Positioned(
+              top: 55.h,
+              right: 0,
+              left: 0,
+              bottom: 0,
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                  color: darkColor,
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 40.w),
+                        child: Text('Konsultasi Paylater dengan Chatbot!',
+                            style: AppFontStyle.homeSubTitleText
+                                .copyWith(color: lightColor)),
                       ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 40.w),
-                          child: Text('Konsultasi Paylater dengan Chatbot!',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 83.h),
+              decoration: BoxDecoration(
+                color: backColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30.r),
+                  topRight: Radius.circular(30.r),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(.3),
+                    spreadRadius: 1,
+                    blurRadius: 10,
+                    offset: const Offset(0, -1),
+                  ),
+                ],
+              ),
+              child: Container(
+                margin: EdgeInsets.all(16.h),
+                alignment: Alignment.bottomCenter,
+                child: Column(
+                  children: [
+                    if (_chatSessions.isNotEmpty)
+                      CustomDropdown<ChatSession>.search(
+                        overlayHeight: 300.h,
+                        hintText: 'Pilih Chat...',
+                        closedHeaderPadding: EdgeInsets.symmetric(
+                            horizontal: 20.w, vertical: 12.h),
+                        decoration: CustomDropdownDecoration(
+                          closedFillColor: backColor,
+                          expandedFillColor: backColor,
+                          expandedBorder:
+                              Border.all(color: borderColor, width: 2.w),
+                          closedBorder:
+                              Border.all(color: borderColor, width: 2.w),
+                          searchFieldDecoration: SearchFieldDecoration(
+                            fillColor: backColor,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                              borderSide: BorderSide(
+                                color: borderColor,
+                                width: 2.w,
+                              ),
+                            ),
+                          ),
+                          listItemDecoration: const ListItemDecoration(
+                            selectedColor: Color(0xFFF4F1EC),
+                          ),
+                          headerStyle: AppFontStyle.classLabelText
+                              .copyWith(color: darkColor),
+                          listItemStyle: AppFontStyle.classLabelText
+                              .copyWith(color: darkColor),
+                        ),
+                        items: _chatSessions,
+                        headerBuilder: (context, selectedItem, status) => Text(
+                          selectedItem.title,
+                          style: AppFontStyle.classLabelText
+                              .copyWith(color: const Color(0xFF3A2723)),
+                        ),
+                        listItemBuilder:
+                            (context, item, isSelected, onItemSelect) => Text(
+                          item.title,
+                          style: AppFontStyle.classLabelText
+                              .copyWith(color: const Color(0xFF3A2723)),
+                        ),
+                        initialItem: _chatSessions.last,
+                        onChanged: (value) {
+                          if (value != null) {
+                            setState(() {
+                              _currentChatSession = value;
+                            });
+                            loadChat();
+                          }
+                        },
+                      ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    Container(
+                      height: 45.h,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12.r),
+                        ),
+                        border: Border.all(
+                          color: borderColor,
+                          width: 1.5.w,
+                        ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12.r),
+                        child: MaterialButton(
+                          onPressed: () {
+                            setState(() {
+                              _isInputTitleVisible = true;
+                            });
+                          },
+                          child: Text("Chat Baru",
                               style: AppFontStyle.homeSubTitleText
                                   .copyWith(color: lightColor)),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 83.h),
-                decoration: BoxDecoration(
-                  color: backColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.r),
-                    topRight: Radius.circular(30.r),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(.3),
-                      spreadRadius: 1,
-                      blurRadius: 10,
-                      offset: const Offset(0, -1),
                     ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        height: double.infinity,
+                        child: Chat(
+                          messages: _messages,
+                          onSendPressed: _handleSendPressed,
+                          user: _user,
+                          // customBottomWidget: SizedBox(
+                          //   height: 0,
+                          // ),
+
+                          theme: DefaultChatTheme(
+                            backgroundColor: lightColor,
+                            primaryColor: primaryColor,
+                            secondaryColor: secondaryColor,
+                            sentMessageBodyTextStyle: TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Nunito',
+                              color: lightColor,
+                            ),
+                            receivedMessageBodyTextStyle: TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Nunito',
+                              color: lightColor,
+                            ),
+                            inputBorderRadius: BorderRadius.circular(30.r),
+                            inputPadding: EdgeInsets.symmetric(
+                                vertical: 10.h, horizontal: 0),
+                            inputBackgroundColor: lightColor,
+                            inputTextColor: darkColor,
+                            inputTextStyle: TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Nunito',
+                              color: darkColor,
+                            ),
+                            // statusIconPadding: EdgeInsets.zero,
+                            sendButtonMargin: EdgeInsets.zero,
+                            sendButtonIcon: Image.asset(
+                              'assets/icons/send_chat.png',
+                              width: 40.w,
+                              height: 40.h,
+                              fit: BoxFit.fill,
+                            ),
+                            // inputTextDecoration: InputDecoration(
+                            //   focusColor: primaryColor,
+                            //   fillColor: primaryColor,
+                            //   hoverColor: primaryColor
+                            // ),
+                            inputContainerDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30.r),
+                              border: Border.all(
+                                  color: darkBorderColor, width: 2.w),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 70.h),
                   ],
                 ),
-                child: Container(
-                    margin: EdgeInsets.all(16.h),
-                    alignment: Alignment.bottomCenter,
-                    child: Column(
-                      children: [
-                        if (_chatSessions.isNotEmpty)
-                          CustomDropdown<ChatSession>.search(
-                            overlayHeight: 300.h,
-                            hintText: 'Pilih Chat...',
-                            closedHeaderPadding: EdgeInsets.symmetric(
-                                horizontal: 20.w, vertical: 12.h),
-                            decoration: CustomDropdownDecoration(
-                              closedFillColor: backColor,
-                              expandedFillColor: backColor,
-                              expandedBorder:
-                                  Border.all(color: borderColor, width: 2.w),
-                              closedBorder:
-                                  Border.all(color: borderColor, width: 2.w),
-                              searchFieldDecoration: SearchFieldDecoration(
-                                fillColor: backColor,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12.r),
-                                  borderSide: BorderSide(
-                                    color: borderColor,
-                                    width: 2.w,
-                                  ),
-                                ),
-                              ),
-                              listItemDecoration: const ListItemDecoration(
-                                selectedColor: Color(0xFFF4F1EC),
-                              ),
-                              headerStyle: AppFontStyle.classLabelText
-                                  .copyWith(color: darkColor),
-                              listItemStyle: AppFontStyle.classLabelText
-                                  .copyWith(color: darkColor),
-                            ),
-                            items: _chatSessions,
-                            headerBuilder: (context, selectedItem, status) =>
-                                Text(
-                              selectedItem.title,
-                              style: AppFontStyle.classLabelText
-                                  .copyWith(color: const Color(0xFF3A2723)),
-                            ),
-                            listItemBuilder:
-                                (context, item, isSelected, onItemSelect) =>
-                                    Text(
-                              item.title,
-                              style: AppFontStyle.classLabelText
-                                  .copyWith(color: const Color(0xFF3A2723)),
-                            ),
-                            initialItem: _chatSessions[0],
-                            onChanged: (value) {
-                              if (value != null) {
-                                setState(() {
-                                  _currentChatSession = value;
-                                });
-                                loadChat();
-                              }
-                            },
-                          ),
-                        SizedBox(
-                          height: 12.h,
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            height: double.infinity,
-                            child: Chat(
-                              messages: _messages,
-                              onSendPressed: _handleSendPressed,
-                              user: _user,
-                              // customBottomWidget: SizedBox(
-                              //   height: 0,
-                              // ),
-
-                              theme: DefaultChatTheme(
-                                backgroundColor: lightColor,
-                                primaryColor: primaryColor,
-                                secondaryColor: secondaryColor,
-                                sentMessageBodyTextStyle: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'Nunito',
-                                  color: lightColor,
-                                ),
-                                receivedMessageBodyTextStyle: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'Nunito',
-                                  color: lightColor,
-                                ),
-                                inputBorderRadius: BorderRadius.circular(30.r),
-                                inputPadding: EdgeInsets.symmetric(
-                                    vertical: 10.h, horizontal: 0),
-                                inputBackgroundColor: lightColor,
-                                inputTextColor: darkColor,
-                                inputTextStyle: TextStyle(
-                                  fontSize: 12,
-                                  fontFamily: 'Nunito',
-                                  color: darkColor,
-                                ),
-                                // statusIconPadding: EdgeInsets.zero,
-                                sendButtonMargin: EdgeInsets.zero,
-                                sendButtonIcon: Image.asset(
-                                  'assets/icons/send_chat.png',
-                                  width: 40.w,
-                                  height: 40.h,
-                                  fit: BoxFit.fill,
-                                ),
-                                // inputTextDecoration: InputDecoration(
-                                //   focusColor: primaryColor,
-                                //   fillColor: primaryColor,
-                                //   hoverColor: primaryColor
-                                // ),
-                                inputContainerDecoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30.r),
-                                  border: Border.all(
-                                      color: darkBorderColor, width: 2.w),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 70.h),
-                      ],
-                    )),
               ),
-            ],
-          ),
-        ));
+            ),
+            InputAlert(
+              title: "Buat Chat Baru",
+              label: " Nama Chat",
+              hint: "Masukkan Nama Chat..",
+              submitText: "Buat",
+              colors: [secondaryColor, primaryColor, primaryColor],
+              visible: _isInputTitleVisible,
+              onSubmit: () async {
+                EasyLoading.show(status: 'loading...');
+
+                await storeChatSession(title: _titleController.text);
+
+                Future.delayed(const Duration(seconds: 2));
+
+                loadPage(isLoadChat: false);
+
+                setState(() {
+                  _isInputTitleVisible = false;
+                  _titleController.clear();
+                });
+
+                EasyLoading.dismiss();
+              },
+              onDismiss: () {
+                setState(() {
+                  _isInputTitleVisible = false;
+                });
+              },
+              controller: _titleController,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

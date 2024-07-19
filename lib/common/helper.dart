@@ -20,7 +20,7 @@ User user = User(
   name: "Agus Setiawan",
   email: 'agussetiawan@gmail.com',
   role: 'Student',
-  image: "assets/images/user_default.png",
+  image: Image.asset("assets/images/user_default.png"),
 );
 
 @pragma('vm:entry-point')

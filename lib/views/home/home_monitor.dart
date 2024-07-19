@@ -3,13 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:walletwatch_mobile/common/data/chart_data.dart';
+import 'package:walletwatch_mobile/common/data/statistic.dart';
 import 'package:walletwatch_mobile/common/enum/home_state.dart';
 import 'package:walletwatch_mobile/common/enum/item_state.dart';
 import 'package:walletwatch_mobile/common/helper.dart';
+import 'package:walletwatch_mobile/common/http/statistics.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
 import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
 import 'package:walletwatch_mobile/common/utils/transition_vertical_bottom.dart';
@@ -32,6 +35,7 @@ class _HomeMonitorState extends State<HomeMonitor>
   final _advancedDrawerController = AdvancedDrawerController();
   bool isSettingVisible = false;
   late List<ChartData> _data;
+  List<Statistic> _statistics = [];
   late TabController _tabController;
   int _segmentedControlValue = 0;
 
@@ -52,6 +56,7 @@ class _HomeMonitorState extends State<HomeMonitor>
 
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(_handleTabSelection);
+    loadPage();
   }
 
   void _handleTabSelection() {
@@ -68,8 +73,26 @@ class _HomeMonitorState extends State<HomeMonitor>
     _tabController.dispose();
   }
 
-  void refresh() {
-    setState(() {});
+  void loadPage() async {
+    EasyLoading.show(status: 'Loading...');
+    final statistics = await fetchStatistics();
+    setState(() {
+      _statistics.addAll(statistics);
+
+      for (var statistic in _statistics) {
+        _data.add(ChartData(statistic.month, statistic.ratio));
+      }
+          _data = [
+      ChartData("Januari", 1.52),
+      ChartData("Februari", 4.54),
+      ChartData("Maret", 3.51),
+      ChartData("April", 9.22),
+      ChartData("Mei", 6.23),
+      ChartData("Juni", 7.41),
+    ];
+    });
+
+    EasyLoading.dismiss();
   }
 
   bool _isExpanded = false;

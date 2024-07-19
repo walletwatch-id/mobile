@@ -34,7 +34,7 @@ class _HomeProfileState extends State<HomeProfile> {
     super.initState();
   }
 
-  void refresh() {
+  void _refresh() {
     setState(() {});
   }
 
@@ -123,9 +123,10 @@ class _HomeProfileState extends State<HomeProfile> {
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(50),
-                                  child: Image.asset(
-                                    user.image,
-                                  ),
+                                  child: SizedBox(
+                                width: 56.h,
+                                height: 56.h,
+                                child: user.image),
                                 ),
                               ),
                             ),
@@ -179,7 +180,7 @@ class _HomeProfileState extends State<HomeProfile> {
                             onPressed: () {
                               Navigator.of(context).push(TransitionFade(
                                   child: EditProfile(
-                                      controller: widget.controller)));
+                                      controller: widget.controller, refresh: _refresh,)));
                             },
                             child: Text("Edit Profil",
                                 style: AppFontStyle.homeSubTitleText

@@ -102,3 +102,35 @@ Future<bool> storeChatMessages(
     return false;
   }
 }
+
+Future<bool> storeChatSession(
+    {required String title}) async {
+  const String url = '${apiUrl}chat-sessions';
+
+  final Map<String, dynamic> messageData = {
+    'user_id': user.id,
+    'title': title,
+  };
+
+  final prefs = await getPrefs();
+
+  try {
+    final response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${prefs.accessToken}',
+      },
+      body: jsonEncode(messageData),
+    );
+
+    if (response.statusCode == 201) {
+      return true;
+    }
+  } catch (e) {
+    print(e);
+  } finally {
+    // ignore: control_flow_in_finally
+    return false;
+  }
+}

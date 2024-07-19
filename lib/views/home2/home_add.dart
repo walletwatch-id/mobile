@@ -130,9 +130,8 @@ class _HomeAddState extends State<HomeAdd> {
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(50),
-                                  child: Image.asset(
-                                    user.image,
-                                  ),
+                                  child:  user.image,
+                                
                                 ),
                               ),
                             ),
