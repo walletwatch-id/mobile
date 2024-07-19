@@ -34,9 +34,10 @@ class _HomeMonitorState extends State<HomeMonitor>
     with SingleTickerProviderStateMixin {
   final _advancedDrawerController = AdvancedDrawerController();
   bool isSettingVisible = false;
-  late List<ChartData> _data;
+  List<ChartData> _data = [];
   List<Statistic> _statistics = [];
   late TabController _tabController;
+  double _limitPercentage = 0;
   int _segmentedControlValue = 0;
 
   @override
@@ -44,15 +45,6 @@ class _HomeMonitorState extends State<HomeMonitor>
     super.initState();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.light, statusBarColor: darkColor));
-
-    _data = [
-      ChartData("Januari", 1.52),
-      ChartData("Februari", 4.54),
-      ChartData("Maret", 3.51),
-      ChartData("April", 9.22),
-      ChartData("Mei", 6.23),
-      ChartData("Juni", 7.41),
-    ];
 
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(_handleTabSelection);
@@ -79,17 +71,15 @@ class _HomeMonitorState extends State<HomeMonitor>
     setState(() {
       _statistics.addAll(statistics);
 
+      _limitPercentage = _statistics.last.ratio *
+          _statistics.last.totalIncome /
+          _statistics.last.totalInstallment *
+          100;
+
       for (var statistic in _statistics) {
-        _data.add(ChartData(statistic.month, statistic.ratio));
+        _data.add(ChartData(
+            convertIntToMonth(statistic.month), statistic.totalIncome));
       }
-          _data = [
-      ChartData("Januari", 1.52),
-      ChartData("Februari", 4.54),
-      ChartData("Maret", 3.51),
-      ChartData("April", 9.22),
-      ChartData("Mei", 6.23),
-      ChartData("Juni", 7.41),
-    ];
     });
 
     EasyLoading.dismiss();
@@ -183,7 +173,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                                       style: AppFontStyle.homeSubHeaderText
                                           .copyWith(color: lightColor)),
                                   Text(
-                                      'Batas wajar pinjaman kamu sudah mencapai 73%',
+                                      'Batas wajar pinjaman kamu sudah mencapai ${_limitPercentage.toStringAsFixed(2)}%',
                                       style: AppFontStyle.homeNormalText
                                           .copyWith(color: lightColor)),
                                 ],
@@ -195,8 +185,12 @@ class _HomeMonitorState extends State<HomeMonitor>
                             RoundedProgressBar(
                                 height: 150.h,
                                 childLeft: Padding(
-                                  padding: EdgeInsets.only(left: 73.w / 1.1),
-                                  child: Text("73%",
+                                  padding: EdgeInsets.only(
+                                      left:_limitPercentage
+                                              .w /
+                                          1.1),
+                                  child: Text(
+                                      "${_limitPercentage.toStringAsFixed(2)}%",
                                       style: AppFontStyle
                                           .homeMonitorIndicatorText
                                           .copyWith(color: darkColor)),
@@ -209,7 +203,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                                   borderWidth: 0,
                                   widthShadow: 0,
                                 ),
-                                percent: 73),
+                                percent: _limitPercentage),
                             SizedBox(
                               height: 11.h,
                             ),

@@ -141,3 +141,27 @@ String randomString() {
   final values = List<int>.generate(16, (i) => random.nextInt(255));
   return base64UrlEncode(values);
 }
+
+String convertIntToMonth(int month) {
+
+  List<String> months = [
+    'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember'
+  ];
+
+  if (month < 1 || month > 12) {
+    throw ArgumentError("Invalid month: $month. Must be between 1 and 12.");
+  }
+
+  return months[month - 1];
+}
