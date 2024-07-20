@@ -15,7 +15,8 @@ const apiUrl = "${_baseUrl}api/v1/";
 const oauthUrl = "${_baseUrl}oauth2/";
 const authUrl = "${_baseUrl}auth/";
 // ignore: constant_identifier_names
-const SURVEY_ID = "0190cc8f-38db-7e53-9fd1-b7600c63680b";
+const FINANCIAL_ID = "0190ce51-8331-71c9-9cae-0ff70d383ae2";
+const PERSONALITY_ID = "0190cc8f-38db-7e53-9fd1-b7600c63680b";
 
 User user = User(
   id: "1",

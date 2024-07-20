@@ -1,6 +1,6 @@
 class SurveyAnswer {
   final String questionId;
-  final int answer;
+  final dynamic answer;
 
   const SurveyAnswer({required this.questionId, required this.answer});
 }

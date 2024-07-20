@@ -41,13 +41,11 @@ class _SelfDiscoveryState extends State<SelfDiscovery> {
 
   void loadPage() async {
     EasyLoading.show(status: 'Loading...');
-    final questions =
-        await fetchPersonalityQuestions("0190cc8f-38db-7e53-9fd1-b7600c63680b");
+    final questions = await fetchPersonalityQuestions();
     setState(() {
+      _questions.clear();
       _questions.addAll(questions);
-      _answers.addAll(List.generate(questions.length, (index) => SurveyAnswer(
-          questionId: questions[index].id, answer: 3)
-          ));
+      _answers.addAll(List.generate(questions.length, (index) => null));
     });
     EasyLoading.dismiss();
   }
@@ -214,10 +212,11 @@ class _SelfDiscoveryState extends State<SelfDiscovery> {
                             var result = await storePersonalitySurveyResult();
 
                             if (result != null) {
-                              bool request = await storePersonalitySurveyAnswers(
-                                resultId: result,
-                                  surveyAnswers:
-                                      _answers.map((e) => e!).toList());
+                              bool request =
+                                  await storePersonalitySurveyAnswers(
+                                      resultId: result,
+                                      surveyAnswers:
+                                          _answers.map((e) => e!).toList());
 
                               print(result);
 

@@ -9,9 +9,12 @@ import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:walletwatch_mobile/common/data/chart_data.dart';
 import 'package:walletwatch_mobile/common/data/statistic.dart';
+import 'package:walletwatch_mobile/common/data/survey_answer.dart';
+import 'package:walletwatch_mobile/common/data/suvey_question.dart';
 import 'package:walletwatch_mobile/common/enum/home_state.dart';
 import 'package:walletwatch_mobile/common/enum/item_state.dart';
 import 'package:walletwatch_mobile/common/helper.dart';
+import 'package:walletwatch_mobile/common/http/financial.dart';
 import 'package:walletwatch_mobile/common/http/statistics.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
 import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
@@ -39,6 +42,8 @@ class _HomeMonitorState extends State<HomeMonitor>
   final List<ChartData> _installmentData = [];
   final List<ChartData> _incomeData = [];
   final List<Statistic> _statistics = [];
+  final List<SurveyQuestion> _questions = [];
+  final List<SurveyAnswer?> _answers = [];
   late TabController _tabController;
   double _limitPercentage = 0;
   int _segmentedControlValue = 0;
@@ -77,6 +82,7 @@ class _HomeMonitorState extends State<HomeMonitor>
   void loadPage() async {
     EasyLoading.show(status: 'Loading...');
     final statistics = await fetchStatistics();
+    final questions = await fetchFinancialQuestions();
     setState(() {
       _statistics.addAll(statistics);
 
@@ -102,6 +108,9 @@ class _HomeMonitorState extends State<HomeMonitor>
         _installmentData.add(ChartData(convertIntToMonth(statistic.month),
             statistic.totalInstallment / _installmentSummarizer.keys.first));
       }
+
+      _questions.addAll(questions);
+      _answers.addAll(List.generate(questions.length, (index) => null));
     });
 
     EasyLoading.dismiss();
@@ -196,8 +205,10 @@ class _HomeMonitorState extends State<HomeMonitor>
                                         .copyWith(color: lightColor)),
                                 Text(
                                     'Batas wajar pinjaman kamu sudah mencapai ${_limitPercentage.toStringAsFixed(2)}%',
-                                    style: AppFontStyle.homeNormalText
-                                        .copyWith(color: lightColor, fontSize: 12.5.sp, height: 2)),
+                                    style: AppFontStyle.homeNormalText.copyWith(
+                                        color: lightColor,
+                                        fontSize: 12.5.sp,
+                                        height: 2)),
                               ],
                             ),
                           ),
@@ -385,41 +396,101 @@ class _HomeMonitorState extends State<HomeMonitor>
                                               .values.first,
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
                                       Container(
-                                        height: 40.h,
+                                        margin: EdgeInsets.only(top: 20.h),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 24.w, vertical: 10.h),
                                         width: double.infinity,
                                         decoration: BoxDecoration(
-                                          color: primaryColor,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(12.r),
-                                          ),
-                                          border: Border.all(
-                                            color: borderColor,
-                                            width: 1.5.w,
-                                          ),
-                                        ),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(12.r),
-                                          child: MaterialButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                Navigator.of(context).push(
-                                                    TransitionVerticalBottom(
-                                                        child:
-                                                            const SelfDiscovery()));
-                                              });
-                                            },
-                                            child: Text(
-                                                "Cek Money Personality Kamu",
-                                                style: AppFontStyle
-                                                    .homeSubTitleText
-                                                    .copyWith(
-                                                        color: lightColor)),
-                                          ),
+                                            color: lightColor,
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                              Radius.circular(16),
+                                            ),
+                                            border: Border.all(
+                                              color: borderColor,
+                                              width: 1.5.w,
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: borderColor,
+                                                spreadRadius: -1.h,
+                                                blurRadius: 5.w,
+                                                offset: Offset(0, 5.h),
+                                              ),
+                                            ]),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                    'Money personality-mu saat ini:',
+                                                    style: AppFontStyle
+                                                        .homeSubTitleText
+                                                        .copyWith(
+                                                            color: darkColor)),
+                                                SizedBox(
+                                                  height: 25.h,
+                                                )
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 20.h),
+                                              child: Column(
+                                                children: [
+                                                  Text(
+                                                    _statistics.last
+                                                        .personality,
+                                                    style: AppFontStyle
+                                                        .homeCardTitleText
+                                                        .copyWith(
+                                                            color: darkColor,
+                                                            fontSize: 28.sp),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 40.h,
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: primaryColor,
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(12.r),
+                                                ),
+                                                border: Border.all(
+                                                  color: borderColor,
+                                                  width: 1.5.w,
+                                                ),
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(12.r),
+                                                child: MaterialButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      Navigator.of(context).push(
+                                                          TransitionVerticalBottom(
+                                                              child:
+                                                                  const SelfDiscovery()));
+                                                    });
+                                                  },
+                                                  child: Text("Survey Ulang",
+                                                      style: AppFontStyle
+                                                          .homeSubTitleText
+                                                          .copyWith(
+                                                              color:
+                                                                  lightColor)),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       const MonitorCard(
@@ -706,20 +777,42 @@ class _HomeMonitorState extends State<HomeMonitor>
               keyboardType: TextInputType.number,
               visible: _isInputIncomeVisible,
               onSubmit: () async {
-                EasyLoading.show(status: 'loading...');
+                try {
+                  setState(() {
+                    double.parse(_incomeController.text);
+                    _answers[0] = SurveyAnswer(
+                        questionId: _questions[0].id,
+                        answer: _incomeController.text);
+                  });
+                } catch (e) {
+                  EasyLoading.showError("Masukkan angka yang valid");
+                }
 
-                // await storeChatSession(title: _incomeController.text);
+                if (_answers[0] != null) {
+                  EasyLoading.show(status: 'Loading...');
+                  var result = await storeFinancialSurveyResult();
+                  EasyLoading.dismiss();
 
-                await Future.delayed(const Duration(seconds: 2));
+                  if (result != null) {
+                    bool request = await storeFinancialSurveyAnswers(
+                        resultId: result,
+                        surveyAnswers: _answers.map((e) => e).toList());
 
-                // loadPage();
+                    if (request) {
+                      EasyLoading.showSuccess("Berhasil mengirim jawaban");
+                      loadPage();
+                    }
+                  } else {
+                    EasyLoading.showError("Gagal mengirim jawaban");
+                  }
+                } else {
+                  EasyLoading.showError("Silahkan jawab semua pertanyaan");
+                }
 
                 setState(() {
                   _isInputIncomeVisible = false;
                   _incomeController.clear();
                 });
-
-                EasyLoading.dismiss();
               },
               onDismiss: () {
                 setState(() {

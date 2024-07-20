@@ -5,9 +5,9 @@ import 'package:walletwatch_mobile/common/helper.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<List<SurveyQuestion>> fetchPersonalityQuestions() async {
+Future<List<SurveyQuestion>> fetchFinancialQuestions() async {
   const String url =
-      '${apiUrl}personality-surveys/$PERSONALITY_ID/survey-questions?per_page=100';
+      '${apiUrl}financial-surveys/$FINANCIAL_ID/survey-questions?per_page=100';
   final List<SurveyQuestion> results = [];
 
   final prefs = await getPrefs();
@@ -40,11 +40,11 @@ Future<List<SurveyQuestion>> fetchPersonalityQuestions() async {
   }
 }
 
-Future<String?> storePersonalitySurveyResult() async {
-  const String url = '${apiUrl}personality-surveys/$PERSONALITY_ID/survey-results';
+Future<String?> storeFinancialSurveyResult() async {
+  const String url = '${apiUrl}financial-surveys/$FINANCIAL_ID/survey-results';
 
   final Map<String, dynamic> resultData = {
-    'survey_id': PERSONALITY_ID,
+    'survey_id': FINANCIAL_ID,
     'date':
         DateFormat('yyyy-MM-ddTHH:mm:ss+00:00').format(DateTime.now().toUtc()),
   };
@@ -77,21 +77,23 @@ Future<String?> storePersonalitySurveyResult() async {
   }
 }
 
-Future<bool> storePersonalitySurveyAnswers(
+Future<bool> storeFinancialSurveyAnswers(
     {required String resultId,
-    required List<SurveyAnswer> surveyAnswers}) async {
+    required List<SurveyAnswer?> surveyAnswers}) async {
   final String url = '${apiUrl}survey-results/$resultId/survey-result-answers';
 
   final prefs = await getPrefs();
 
   try {
     for (var answer in surveyAnswers) {
+      if (answer == null) {
+        continue;
+      }
+
       final Map<String, dynamic> answerData = {
         'question_id': answer.questionId,
-        'answer': (answer.answer + 1).toString(),
-      };
-
-      print(answer.questionId);
+        'answer': answer.answer,
+      };;
 
       final response = await http.post(
         Uri.parse(url),
