@@ -19,5 +19,7 @@ Color warningIconColor = const Color(0xFFA53714);
 Color dangerColor = const Color(0xFFD32222);
 Color transactionColor = const Color(0xFFD9D9D9);
 Color personalColor = const Color(0xFFD9D9D9);
+Color monitorWarning = const Color(0xFFAAC62A);
+Color monitorDanger = const Color(0xFFB0441C);
 
 void loadColor() {}

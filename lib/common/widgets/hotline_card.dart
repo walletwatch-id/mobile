@@ -124,21 +124,21 @@ class _HotlineCardState extends State<HotlineCard> {
                                   color: darkColor,
                                   fontSize: 17.sp,
                                   height: 1.8.h)),
-                          Text('Email: ${widget.hotlines[i].email ?? ''}',
-                              style: AppFontStyle.homeCardTitleText.copyWith(
-                                  color: darkColor,
-                                  fontSize: 17.sp,
-                                  height: 1.8.h)),
-                          Text('URL: ${widget.hotlines[i].url ?? ''}',
-                              style: AppFontStyle.homeCardTitleText.copyWith(
-                                  color: darkColor,
-                                  fontSize: 17.sp,
-                                  height: 1.8.h)),
+                          // Text('Email: ${widget.hotlines[i].email ?? ''}',
+                          //     style: AppFontStyle.homeCardTitleText.copyWith(
+                          //         color: darkColor,
+                          //         fontSize: 17.sp,
+                          //         height: 1.8.h)),
+                          // Text('URL: ${widget.hotlines[i].url ?? ''}',
+                          //     style: AppFontStyle.homeCardTitleText.copyWith(
+                          //         color: darkColor,
+                          //         fontSize: 17.sp,
+                          //         height: 1.8.h)),
                         ],
                       ),
                     ),
                   ),
-                  
+
               ],
             ),
           ),

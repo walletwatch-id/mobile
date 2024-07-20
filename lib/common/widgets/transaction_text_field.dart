@@ -1,7 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:googleapis/workflowexecutions/v1.dart';
 import 'package:walletwatch_mobile/common/data/provider.dart';
 import 'package:walletwatch_mobile/common/data/period.dart';
 import 'package:walletwatch_mobile/common/enum/transaction_field_state.dart';
@@ -326,7 +325,7 @@ class _TransactionTextFieldState extends State<TransactionTextField> {
                 color: secondaryColor,
               ),
             )
-          
+
           else
             CustomTextField(
               hintText: widget.hint,

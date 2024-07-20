@@ -208,7 +208,7 @@ class _SelfDiscoveryState extends State<SelfDiscovery> {
                                   .where((e) => e != null)
                                   .length ==
                               _questions.length) {
-                            EasyLoading.show(status: 'Loading...');
+                            EasyLoading.show(status: 'Loading...\n\nProses ini memerlukan waktu yang cukup lama...');
                             var result = await storePersonalitySurveyResult();
 
                             if (result != null) {

@@ -84,11 +84,12 @@ class _HomeMonitorState extends State<HomeMonitor>
     final statistics = await fetchStatistics();
     final questions = await fetchFinancialQuestions();
     setState(() {
+      _statistics.clear();
       _statistics.addAll(statistics);
 
-      _limitPercentage = _statistics.last.ratio *
-          _statistics.last.totalIncome /
-          _statistics.last.totalInstallment *
+      _limitPercentage =
+         (_statistics.last.totalInstallment / (_statistics.last.ratio *
+          _statistics.last.totalIncome)) *
           100;
 
       _incomeSummarizer = summarizeValues(_statistics
@@ -215,19 +216,20 @@ class _HomeMonitorState extends State<HomeMonitor>
                           SizedBox(
                             height: 8.h,
                           ),
+                          if (_statistics.isNotEmpty)
                           RoundedProgressBar(
                               height: 150.h,
                               childLeft: Padding(
                                 padding: EdgeInsets.only(
-                                    left: _limitPercentage.w / 1.1),
+                                    left: _limitPercentage.w > 100 ? 100 : _limitPercentage.w / 1.3),
                                 child: Text(
                                     "${_limitPercentage.toStringAsFixed(2)}%",
                                     style: AppFontStyle.homeMonitorIndicatorText
-                                        .copyWith(color: darkColor)),
+                                        .copyWith(color: _statistics.last.ratio < .15 ? darkColor : lightColor)),
                               ),
                               style: RoundedProgressBarStyle(
                                 colorBorder: primaryColor,
-                                colorProgress: Colors.white.withOpacity(.5),
+                                colorProgress: _statistics.last.ratio < .15 ? Colors.white.withOpacity(.5) : _statistics.last.ratio > .15 && _statistics.last.ratio < .35 ? monitorWarning : monitorDanger,
                                 backgroundProgress: secondaryColor,
                                 colorProgressDark: secondaryColor,
                                 borderWidth: 0,
