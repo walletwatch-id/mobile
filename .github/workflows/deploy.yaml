@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+name: Deploy
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  deploy-beta-play-store:
+    name: Deploy to Google Play Store Open Testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: 8
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+          cache-key: "flutter-:channel:-:version:-cache-:os:-:arch:-:hash:"
+          pub-cache-key: "flutter-pub-:channel:-:version:-:os:-:arch:-:hash:"
+
+      - name: Configure keystore
+        run: |
+          echo $KEYSTORE_KEY_JKS | base64 -d > android/app/keystore.jks
+          echo "storeFile=keystore.jks" >> android/keystore.properties
+          echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> android/keystore.properties
+          echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> android/keystore.properties
+          echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> android/keystore.properties
+        env:
+          KEYSTORE_KEY_JKS: ${{ secrets.KEYSTORE_KEY_JKS }}
+          KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
+          KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
+          KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
+
+      - name: Create Google Play Store credential file
+        run: echo $PLAY_STORE_CREDENTIAL_JSON | base64 -d > android/play-store-credentials.json
+        env:
+          PLAY_STORE_CREDENTIAL_JSON: ${{ secrets.PLAY_STORE_CREDENTIAL_JSON }}
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build app bundle
+        run: flutter build appbundle --release
+
+      - name: Deploy app bundle
+        uses: maierj/fastlane-action@v3.1.0
+        with:
+          lane: deploy_beta_appbundle
+          subdirectory: android
