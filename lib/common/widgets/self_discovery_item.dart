@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:walletwatch_mobile/common/data/self_discovery.dart';
+import 'package:walletwatch_mobile/common/data/suvey_question.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
 
 class SelfDiscoveryItem extends StatefulWidget {
   final int number;
-  final SelfDiscovery selfDiscovery;
+  final SurveyQuestion surveyQuestion;
+  final Function(int?)? onSelected;
+  final int selectedValue;
   const SelfDiscoveryItem(
-      {super.key, required this.number, required this.selfDiscovery});
+      {super.key,
+      required this.number,
+      required this.surveyQuestion,
+      this.onSelected,
+      required this.selectedValue});
 
   @override
   State<SelfDiscoveryItem> createState() => _SelfDiscoveryItemState();
 }
 
 class _SelfDiscoveryItemState extends State<SelfDiscoveryItem> {
-  int _selectedValue = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +57,7 @@ class _SelfDiscoveryItemState extends State<SelfDiscoveryItem> {
               SizedBox(width: 8.w),
               Expanded(
                 child: Text(
-                  widget.selfDiscovery.content,
+                  widget.surveyQuestion.question,
                   style: TextStyle(fontSize: 14.sp),
                 ),
               ),
@@ -71,11 +77,13 @@ class _SelfDiscoveryItemState extends State<SelfDiscoveryItem> {
                     children: [
                       Radio<int>(
                         value: index,
-                        groupValue: _selectedValue,
+                        groupValue: widget.selectedValue,
                         onChanged: (value) {
-                          setState(() {
-                            _selectedValue = value!;
-                          });
+                          if (value != null) {
+                            setState(() {
+                              widget.onSelected!(value);
+                            });
+                          }
                         },
                         activeColor: primaryColor,
                       ),

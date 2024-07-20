@@ -166,7 +166,7 @@ class _HomeHotlineState extends State<HomeHotline> {
                                                 .homeCardTitleText
                                                 .copyWith(
                                                     color: lightColor,
-                                                    fontSize: 18.sp),
+                                                    fontSize: 14.sp),
                                           ),
                                         ),
                                       ),

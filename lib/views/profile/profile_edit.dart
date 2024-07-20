@@ -156,7 +156,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(100.r)),
                                   border: Border.all(
-                                      color: primaryColor, width: 1.5.w),
+                                      color: primaryColor, width: 1.w),
                                 ),
                                 child: CircleAvatar(
                                   radius: 60.r,

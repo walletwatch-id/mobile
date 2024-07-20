@@ -14,6 +14,8 @@ const _baseUrl = "https://www.walletwatch.id/";
 const apiUrl = "${_baseUrl}api/v1/";
 const oauthUrl = "${_baseUrl}oauth2/";
 const authUrl = "${_baseUrl}auth/";
+// ignore: constant_identifier_names
+const SURVEY_ID = "0190cc8f-38db-7e53-9fd1-b7600c63680b";
 
 User user = User(
   id: "1",
@@ -22,6 +24,10 @@ User user = User(
   role: 'Student',
   image: Image.asset("assets/images/user_default.png"),
 );
+
+bool isAdmin() {
+  return user.role == 'ADMIN';
+}
 
 @pragma('vm:entry-point')
 String? emptyNull(String? text) {

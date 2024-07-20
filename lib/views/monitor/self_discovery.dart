@@ -1,9 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:walletwatch_mobile/common/data/self_discovery.dart';
+import 'package:walletwatch_mobile/common/data/survey_answer.dart';
+import 'package:walletwatch_mobile/common/data/suvey_question.dart';
 import 'package:walletwatch_mobile/common/helper.dart';
+import 'package:walletwatch_mobile/common/http/personality.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
 import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
 import 'package:walletwatch_mobile/common/utils/transtition_fade.dart';
@@ -20,16 +26,30 @@ class SelfDiscovery extends StatefulWidget {
 
 class _SelfDiscoveryState extends State<SelfDiscovery> {
   bool isSettingVisible = false;
+  final List<SurveyQuestion> _questions = [];
+  final List<SurveyAnswer?> _answers = [];
 
   @override
   void initState() {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark, statusBarColor: lightColor));
+
+    EasyLoading.init();
+    loadPage();
     super.initState();
   }
 
-  void refresh() {
-    setState(() {});
+  void loadPage() async {
+    EasyLoading.show(status: 'Loading...');
+    final questions =
+        await fetchPersonalityQuestions("0190cc8f-38db-7e53-9fd1-b7600c63680b");
+    setState(() {
+      _questions.addAll(questions);
+      _answers.addAll(List.generate(questions.length, (index) => SurveyAnswer(
+          questionId: questions[index].id, answer: 3)
+          ));
+    });
+    EasyLoading.dismiss();
   }
 
   @override
@@ -78,10 +98,7 @@ class _SelfDiscoveryState extends State<SelfDiscovery> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(50),
                               child: SizedBox(
-                                width: 56.h,
-                                height: 56.h,
-                                child: user.image),
-                                
+                                  width: 56.h, height: 56.h, child: user.image),
                             ),
                           ),
                         ),
@@ -135,8 +152,10 @@ class _SelfDiscoveryState extends State<SelfDiscovery> {
                           setState(() {});
                         },
                         child: Text("Silahkan menjawab pertanyaan di bawah ini",
-                            style: AppFontStyle.homeSubTitleText
-                                .copyWith(color: darkColor, fontSize: 16.sp, height: 1.4)),
+                            style: AppFontStyle.homeSubTitleText.copyWith(
+                                color: darkColor,
+                                fontSize: 14.sp,
+                                height: 1.4)),
                       ),
                     ),
                   ),
@@ -151,12 +170,21 @@ class _SelfDiscoveryState extends State<SelfDiscovery> {
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: [
-                  ...selfDiscoveries.asMap().entries.map((entry) {
+                  ..._questions.asMap().entries.map((entry) {
                     int index = entry.key;
                     var item = entry.value;
                     return SelfDiscoveryItem(
                       number: index + 1,
-                      selfDiscovery: item,
+                      surveyQuestion: item,
+                      selectedValue: _answers[index]?.answer ?? -1,
+                      onSelected: (value) {
+                        setState(
+                          () {
+                            _answers[index] = SurveyAnswer(
+                                questionId: item.id, answer: value!);
+                          },
+                        );
+                      },
                     );
                   }),
                   Container(
@@ -176,9 +204,37 @@ class _SelfDiscoveryState extends State<SelfDiscovery> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12.r),
                       child: MaterialButton(
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(TransitionFade(
-                              child: const SelfDiscoveryFinish()));
+                        onPressed: () async {
+                          if (_answers
+                                  .toList()
+                                  .where((e) => e != null)
+                                  .length ==
+                              _questions.length) {
+                            EasyLoading.show(status: 'Loading...');
+                            var result = await storePersonalitySurveyResult();
+
+                            if (result != null) {
+                              bool request = await storePersonalitySurveyAnswers(
+                                resultId: result,
+                                  surveyAnswers:
+                                      _answers.map((e) => e!).toList());
+
+                              print(result);
+
+                              if (request) {
+                                Navigator.of(context).pushReplacement(
+                                    TransitionFade(
+                                        child: const SelfDiscoveryFinish()));
+                              }
+
+                              EasyLoading.dismiss();
+                            } else {
+                              EasyLoading.showError("Gagal mengirim jawaban");
+                            }
+                          } else {
+                            EasyLoading.showError(
+                                "Silahkan jawab semua pertanyaan");
+                          }
                         },
                         child: Text("Selesai",
                             style: AppFontStyle.homeSubTitleText

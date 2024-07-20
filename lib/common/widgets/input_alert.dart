@@ -12,6 +12,7 @@ class InputAlert extends StatefulWidget {
   final List<Color> colors;
   final VoidCallback onDismiss;
   final VoidCallback onSubmit;
+  final TextInputType? keyboardType;
   final TextEditingController controller;
   final int? maxLength;
   const InputAlert(
@@ -19,6 +20,7 @@ class InputAlert extends StatefulWidget {
       required this.title,
       required this.label,
       required this.hint,
+      this.keyboardType,
       required this.visible,
       this.colors = const [
         Color(0xFF3CEAC1),
@@ -97,7 +99,7 @@ class _InputAlertState extends State<InputAlert> {
                               controller: widget.controller,
                               hintText: widget.hint,
                               obscureText: false,
-                              keyboardType: TextInputType.name,
+                              keyboardType: widget.keyboardType ?? TextInputType.name,
                               color: subColor,
                               // maxLength: widget.maxLength,
                             ),

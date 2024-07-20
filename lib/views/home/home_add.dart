@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:io';
+
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,7 +37,7 @@ class _HomeAddState extends State<HomeAdd> {
   final _installmentController = TextEditingController();
   final _totalController = TextEditingController();
   final _periodController = TextEditingController();
-  final _providerController = TextEditingController();
+  final _providerController = SingleSelectController<Hotline?>(null);
   final _firstInstallmentController = TextEditingController();
   final List<Hotline> _hotlines = [];
   bool _isDateSelectorVisible = false;
@@ -63,9 +66,9 @@ class _HomeAddState extends State<HomeAdd> {
     EasyLoading.show(status: 'Loading...');
     final hotlines = await fetchHotlines();
     setState(() {
+      _providerController.value = hotlines[0];
       _hotlines.addAll(hotlines);
     });
-    _providerController.text = _hotlines[0].id;
 
     EasyLoading.dismiss();
   }
@@ -93,8 +96,6 @@ class _HomeAddState extends State<HomeAdd> {
                   },
                 ),
               ),
-
-
               Container(
                 margin: EdgeInsets.only(top: 40.h),
                 child: Container(
@@ -126,11 +127,10 @@ class _HomeAddState extends State<HomeAdd> {
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(50),
-                                  child:  SizedBox(
-                                    height: 65.h,
-                                    width: 65.h,
-                                    child: user.image),
-
+                                  child: SizedBox(
+                                      height: 65.h,
+                                      width: 65.h,
+                                      child: user.image),
                                 ),
                               ),
                             ),
@@ -181,7 +181,8 @@ class _HomeAddState extends State<HomeAdd> {
                       if (_hotlines.isNotEmpty)
                         CustomDropdown<Hotline>.search(
                           overlayHeight: 300.h,
-                          hintText: 'Pilih Chat...',
+                          hintText: 'Pilih Lembaga...',
+                          controller: _providerController,
                           closedHeaderPadding: EdgeInsets.symmetric(
                               horizontal: 20.w, vertical: 16.h),
                           decoration: CustomDropdownDecoration(
@@ -221,11 +222,10 @@ class _HomeAddState extends State<HomeAdd> {
                             style: AppFontStyle.homeCardTitleText
                                 .copyWith(fontSize: 16.sp),
                           ),
-                          initialItem: _hotlines[0],
                           onChanged: (value) {
                             setState(() {
                               if (value != null) {
-                                _providerController.text = value.id;
+                                _providerController.value = value;
                               }
                             });
                           },
@@ -308,25 +308,48 @@ class _HomeAddState extends State<HomeAdd> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12.r),
                           child: MaterialButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              if (!_providerController.hasValue ||
+                                  _installmentController.text.isEmpty ||
+                                  _totalController.text.isEmpty ||
+                                  _periodController.text.isEmpty ||
+                                  _firstInstallmentController.text.isEmpty) {
+                                EasyLoading.showError(
+                                    "Mohon isi semua field dengan benar");
+                                return;
+                              }
+
                               try {
+                                EasyLoading.show(status: 'Loading...');
                                 DateTime parsedDate = DateFormat('yyyy-MM-dd')
                                     .parse(_firstInstallmentController.text);
                                 String selectedDate =
                                     DateFormat('yyyy-MM-ddTHH:mm:ss+00:00')
                                         .format(parsedDate.toUtc());
-                                storeTransaction(
+                                bool result = await storeTransaction(
                                     context: context,
-                                    paylaterId: _providerController.text,
+                                    paylaterId: _providerController.value!.id,
                                     monthlyInstallment:
-                                        double.tryParse(_totalController.text)!,
-                                    period: periodList[int.tryParse(
-                                                _periodController.text)! -
-                                            1]
+                                        double.parse(_totalController.text),
+                                    period: periodList[
+                                            int.parse(_periodController.text) -
+                                                1]
                                         .value,
                                     firstInstallmentDateTime: selectedDate);
+
+                                if (result) {
+                                  setState(() {
+                                    _providerController.value = _hotlines[0];
+                                    _installmentController.text = "";
+                                    _totalController.text = "";
+                                    _periodController.text = "";
+                                    _firstInstallmentController.text = "";
+                                  });
+                                }
+                                EasyLoading.dismiss();
                               } catch (e) {
-                                print(e);
+                                EasyLoading.showError(
+                                    "Mohon isi semua field dengan benar");
                               }
                             },
                             child: Text("Tambahkan Transkasi",
@@ -342,7 +365,6 @@ class _HomeAddState extends State<HomeAdd> {
                   ),
                 ),
               ),
-
               DateSelector(
                 visible: _isDateSelectorVisible,
                 onDismiss: (args) {

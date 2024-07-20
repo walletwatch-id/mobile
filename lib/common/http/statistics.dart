@@ -19,7 +19,7 @@ Future<List<Statistic>> fetchStatistics() async {
   if (response.statusCode == 200) {
     final responseBody = jsonDecode(response.body);
 
-    final statistics = responseBody['data']['statistic'] as List<dynamic>;
+    final statistics = responseBody['data']['statistics'] as List<dynamic>;
 
     for (var statistic in statistics) {
 

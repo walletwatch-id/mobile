@@ -18,6 +18,7 @@ import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
 import 'package:walletwatch_mobile/common/utils/transition_vertical_bottom.dart';
 import 'package:walletwatch_mobile/common/widgets/area_chart.dart';
 import 'package:walletwatch_mobile/common/widgets/home_navigator.dart';
+import 'package:walletwatch_mobile/common/widgets/input_alert.dart';
 import 'package:walletwatch_mobile/common/widgets/monitor_card.dart';
 import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
 import 'package:walletwatch_mobile/views/monitor/self_discovery.dart';
@@ -33,6 +34,7 @@ class HomeMonitor extends StatefulWidget {
 class _HomeMonitorState extends State<HomeMonitor>
     with SingleTickerProviderStateMixin {
   final _advancedDrawerController = AdvancedDrawerController();
+  final _incomeController = TextEditingController();
   bool isSettingVisible = false;
   final List<ChartData> _installmentData = [];
   final List<ChartData> _incomeData = [];
@@ -42,6 +44,7 @@ class _HomeMonitorState extends State<HomeMonitor>
   int _segmentedControlValue = 0;
   Map<int, String> _installmentSummarizer = {1: ""};
   Map<int, String> _incomeSummarizer = {1: ""};
+  bool _isInputIncomeVisible = false;
 
   @override
   void initState() {
@@ -67,6 +70,7 @@ class _HomeMonitorState extends State<HomeMonitor>
   @override
   void dispose() {
     super.dispose();
+    _incomeController.dispose();
     _tabController.dispose();
   }
 
@@ -193,7 +197,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                                 Text(
                                     'Batas wajar pinjaman kamu sudah mencapai ${_limitPercentage.toStringAsFixed(2)}%',
                                     style: AppFontStyle.homeNormalText
-                                        .copyWith(color: lightColor)),
+                                        .copyWith(color: lightColor, fontSize: 12.5.sp, height: 2)),
                               ],
                             ),
                           ),
@@ -219,15 +223,17 @@ class _HomeMonitorState extends State<HomeMonitor>
                                 widthShadow: 0,
                               ),
                               percent: _limitPercentage),
-                          SizedBox(
-                            height: 11.h,
-                          ),
-                          Center(
-                            child: SizedBox(
-                              height: 7.h,
-                              child: Image.asset(
-                                'assets/images/monitor_indicator.png',
-                                fit: BoxFit.contain,
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 4.h),
+                              child: Center(
+                                child: SizedBox(
+                                  height: 7.h,
+                                  child: Image.asset(
+                                    'assets/images/monitor_indicator.png',
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -508,9 +514,17 @@ class _HomeMonitorState extends State<HomeMonitor>
                                                         .homeSubTitleText
                                                         .copyWith(
                                                             color: darkColor)),
-                                                Icon(
-                                                  Icons.edit_outlined,
-                                                  size: 25.h,
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      _isInputIncomeVisible =
+                                                          true;
+                                                    });
+                                                  },
+                                                  child: Icon(
+                                                    Icons.edit_outlined,
+                                                    size: 25.h,
+                                                  ),
                                                 )
                                               ],
                                             ),
@@ -520,8 +534,11 @@ class _HomeMonitorState extends State<HomeMonitor>
                                               child: Column(
                                                 children: [
                                                   Text(
-                                                    formatCurrency(_statistics.isNotEmpty ? _statistics
-                                                        .last.totalIncome : 0),
+                                                    formatCurrency(
+                                                        _statistics.isNotEmpty
+                                                            ? _statistics.last
+                                                                .totalIncome
+                                                            : 0),
                                                     style: AppFontStyle
                                                         .homeCardTitleText
                                                         .copyWith(
@@ -641,8 +658,11 @@ class _HomeMonitorState extends State<HomeMonitor>
                                                               ),
                                                             ],
                                                           ),
-                                                          if (_statistics.isNotEmpty && statistic !=
-                                                              _statistics.last)
+                                                          if (_statistics
+                                                                  .isNotEmpty &&
+                                                              statistic !=
+                                                                  _statistics
+                                                                      .last)
                                                             SizedBox(
                                                               height: 8.h,
                                                             ),
@@ -654,8 +674,8 @@ class _HomeMonitorState extends State<HomeMonitor>
                                               crossFadeState: _isExpanded
                                                   ? CrossFadeState.showSecond
                                                   : CrossFadeState.showFirst,
-                                              duration:
-                                                  const Duration(milliseconds: 300),
+                                              duration: const Duration(
+                                                  milliseconds: 300),
                                             ),
                                           ],
                                         ),
@@ -676,6 +696,37 @@ class _HomeMonitorState extends State<HomeMonitor>
                   ],
                 ),
               ),
+            ),
+            InputAlert(
+              title: "Update Pendapatan",
+              label: " Jumlah Pendapatan",
+              hint: "Masukkan Jumlah Pendapatan..",
+              submitText: "Update",
+              colors: [secondaryColor, primaryColor, primaryColor],
+              keyboardType: TextInputType.number,
+              visible: _isInputIncomeVisible,
+              onSubmit: () async {
+                EasyLoading.show(status: 'loading...');
+
+                // await storeChatSession(title: _incomeController.text);
+
+                await Future.delayed(const Duration(seconds: 2));
+
+                // loadPage();
+
+                setState(() {
+                  _isInputIncomeVisible = false;
+                  _incomeController.clear();
+                });
+
+                EasyLoading.dismiss();
+              },
+              onDismiss: () {
+                setState(() {
+                  _isInputIncomeVisible = false;
+                });
+              },
+              controller: _incomeController,
             ),
           ],
         ),

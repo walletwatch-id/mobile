@@ -112,7 +112,6 @@ class _SelfDiscoveryFinishState extends State<SelfDiscoveryFinish> {
                     height: 60.h,
                   ),
                   Container(
-                    height: 40.h,
                     margin: EdgeInsets.all(16.w),
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -133,7 +132,7 @@ class _SelfDiscoveryFinishState extends State<SelfDiscoveryFinish> {
                         },
                         child: Text("Kamu telah menjawab semua pertanyaan",
                             style: AppFontStyle.homeSubTitleText
-                                .copyWith(color: lightColor)),
+                                .copyWith(color: lightColor, fontSize: 14.sp)),
                       ),
                     ),
                   ),

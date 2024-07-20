@@ -64,17 +64,18 @@ class _HomeChatState extends State<HomeChat> {
     super.dispose();
   }
 
-  void loadPage({bool isLoadChat = true}) async {
+  void loadPage() async {
     EasyLoading.show(status: 'Loading...');
     final chatSessions = await fetchChats();
     setState(() {
       _chatSessions.addAll(chatSessions);
-      _currentChatSession = chatSessions.last;
+
+      if (_chatSessions.isNotEmpty) _currentChatSession = _chatSessions.last;
     });
 
-    if (isLoadChat) {
-      loadChat();
-    }
+    EasyLoading.dismiss();
+
+    loadChat();
   }
 
   Future<void> connectWebSocket() async {
@@ -146,14 +147,13 @@ class _HomeChatState extends State<HomeChat> {
   }
 
   void loadChat() async {
-    _chatMessages.clear();
-    _messages.clear();
-
     if (_currentChatSession != null) {
       EasyLoading.show(status: 'Loading...');
       final chatMessages = await fetchChatMessages(_currentChatSession!);
       setState(() {
         _chatMessages.addAll(chatMessages);
+        _chatMessages.clear();
+        _messages.clear();
       });
 
       final textMessage = types.TextMessage(
@@ -445,7 +445,7 @@ class _HomeChatState extends State<HomeChat> {
 
                 Future.delayed(const Duration(seconds: 2));
 
-                loadPage(isLoadChat: false);
+                loadPage();
 
                 setState(() {
                   _isInputTitleVisible = false;
