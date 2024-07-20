@@ -1,0 +1,49 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+
+default_platform(:android)
+
+platform :android do
+  desc "Deploy to Google Play Store Internal Testing"
+  lane :deploy_internal_appbundle do
+    upload_to_play_store(
+      track: 'internal',
+      aab: '../build/app/outputs/bundle/release/app-release.aab',
+    )
+  end
+
+  desc "Deploy to Google Play Store Closed Testing"
+  lane :deploy_alpha_appbundle do
+    upload_to_play_store(
+      track: 'alpha',
+      aab: '../build/app/outputs/bundle/release/app-release.aab',
+    )
+  end
+
+  desc "Deploy to Google Play Store Open Testing"
+  lane :deploy_beta_appbundle do
+    upload_to_play_store(
+      track: 'beta',
+      aab: '../build/app/outputs/bundle/release/app-release.aab',
+    )
+  end
+
+  desc "Deploy to Google Play Store Production"
+  lane :deploy_production_appbundle do
+    upload_to_play_store(
+      track: 'production',
+      aab: '../build/app/outputs/bundle/release/app-release.aab',
+    )
+  end
+end
