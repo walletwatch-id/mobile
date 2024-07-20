@@ -445,8 +445,10 @@ class _HomeMonitorState extends State<HomeMonitor>
                                               child: Column(
                                                 children: [
                                                   Text(
-                                                    _statistics.last
-                                                        .personality,
+                                                    _statistics.isNotEmpty
+                                                        ? _statistics.last
+                                                            .personality
+                                                        : "Personality",
                                                     style: AppFontStyle
                                                         .homeCardTitleText
                                                         .copyWith(
