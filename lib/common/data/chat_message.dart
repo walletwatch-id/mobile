@@ -4,6 +4,7 @@ class ChatMessage {
   final String message;
   final String hash;
   final String status;
+  final int createdAt;
 
   ChatMessage({
     required this.id,
@@ -11,5 +12,6 @@ class ChatMessage {
     required this.message,
     required this.hash,
     required this.status,
+    required this.createdAt,
   });
 }

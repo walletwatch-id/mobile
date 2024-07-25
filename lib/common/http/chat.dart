@@ -38,7 +38,7 @@ Future<List<ChatSession>> fetchChats() async {
 
 Future<List<ChatMessage>> fetchChatMessages(ChatSession session) async {
   final String url =
-      '${apiUrl}chat-sessions/${session.id}/chat-messages?per_page=100';
+      '${apiUrl}chat-sessions/${session.id}/chat-messages?per_page=1000&sort=created_at';
   final List<ChatMessage> results = [];
 
   final prefs = await getPrefs();
@@ -61,7 +61,9 @@ Future<List<ChatMessage>> fetchChatMessages(ChatSession session) async {
           sender: message['sender'] as String,
           message: message['message'] as String,
           hash: message['hash'] as String,
-          status: message['status'] as String);
+          status: message['status'] as String,
+          createdAt: DateTime.parse(message['created_at']).millisecondsSinceEpoch,
+      );
       results.add(result);
     }
 
@@ -95,16 +97,14 @@ Future<bool> storeChatMessages(
     if (response.statusCode == 201) {
       return true;
     }
+    return false;
   } catch (e) {
     print(e);
-  } finally {
-    // ignore: control_flow_in_finally
     return false;
   }
 }
 
-Future<bool> storeChatSession(
-    {required String title}) async {
+Future<bool> storeChatSession({required String title}) async {
   const String url = '${apiUrl}chat-sessions';
 
   final Map<String, dynamic> messageData = {

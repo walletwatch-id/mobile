@@ -45,8 +45,8 @@ class _SelfDiscoveryState extends State<SelfDiscovery> {
     setState(() {
       _questions.clear();
       _questions.addAll(questions);
-      _answers.addAll(List.generate(questions.length, (index) => null));
-      // _answers.addAll(List.generate(questions.length, (index) => SurveyAnswer(questionId: questions[index].id, answer: 3)));
+      // _answers.addAll(List.generate(questions.length, (index) => null));
+      _answers.addAll(List.generate(questions.length, (index) => SurveyAnswer(questionId: questions[index].id, answer: 3)));
     });
     EasyLoading.dismiss();
   }

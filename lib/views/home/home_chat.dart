@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:dart_pusher_channels/dart_pusher_channels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
@@ -44,6 +45,7 @@ class _HomeChatState extends State<HomeChat> {
   Timer? _timer;
   bool _isInputTitleVisible = false;
   final _titleController = TextEditingController();
+  PusherChannelsClient? _client;
 
   @override
   void initState() {
@@ -61,6 +63,7 @@ class _HomeChatState extends State<HomeChat> {
     _timer?.cancel();
     _channel?.sink.close(status.normalClosure);
     _titleController.dispose();
+    _client?.dispose();
     super.dispose();
   }
 
@@ -70,7 +73,9 @@ class _HomeChatState extends State<HomeChat> {
     setState(() {
       _chatSessions.addAll(chatSessions);
 
-      if (_chatSessions.isNotEmpty) _currentChatSession = _chatSessions.last;
+      if (_chatSessions.isNotEmpty) {
+        _currentChatSession = _chatSessions.last;
+      }
     });
 
     EasyLoading.dismiss();
@@ -86,32 +91,110 @@ class _HomeChatState extends State<HomeChat> {
       return;
     }
 
-    _channel = WebSocketChannel.connect(
-      Uri.parse('wss://ws.walletwatch.id/app/hsdoMSurOsKZrEpZOUS8L7xpG7XciFPf'),
-      protocols: ['Bearer $accessToken'],
+    const hostOptions = PusherChannelsOptions.fromHost(
+      scheme: 'wss',
+      host: 'ws.walletwatch.id',
+      key: 'hsdoMSurOsKZrEpZOUS8L7xpG7XciFPf',
+      shouldSupplyMetadataQueries: true,
+      metadata: PusherChannelsOptionsMetadata.byDefault(),
+      port: 443,
     );
 
-    _channel!.stream.listen((message) {
-      print(message);
-      // final decodedMessage = jsonDecode(message);
-      // final chatMessage = ChatMessage(
-      //   id: decodedMessage['id'],
-      //   sender: decodedMessage['sender'],
-      //   message: decodedMessage['message'],
-      //   hash: decodedMessage['hash'],
-      //   status: decodedMessage['status'],
-      // );
-      // setState(() {
-      //   _chatMessages.add(chatMessage);
-      // });
-      // final textMessage = types.TextMessage(
-      //   author: types.User(id: chatMessage.sender),
-      //   id: chatMessage.id,
-      //   text: chatMessage.message,
-      // );
-      // _addMessage(textMessage);
+    setState(() {
+      _client = PusherChannelsClient.websocket(
+        options: hostOptions,
+        connectionErrorHandler: (exception, trace, refresh) {
+          refresh();
+        },
+        minimumReconnectDelayDuration: const Duration(
+          seconds: 1,
+        ),
+        defaultActivityDuration: const Duration(
+          seconds: 120,
+        ),
+        activityDurationOverride: const Duration(
+          seconds: 120,
+        ),
+        waitForPongDuration: const Duration(
+          seconds: 30,
+        ),
+      );
     });
+
+    final channel = _client!.privateChannel(
+      'chat-sessions.${_currentChatSession!.id}',
+      authorizationDelegate:
+          EndpointAuthorizableChannelTokenAuthorizationDelegate
+              .forPrivateChannel(
+        authorizationEndpoint:
+            Uri.parse('https://www.walletwatch.id/broadcasting/auth'),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+        },
+      ),
+    );
+
+    final allChannels = <Channel>[
+      channel,
+    ];
+
+    final StreamSubscription connectionSubs =
+        _client!.onConnectionEstablished.listen((_) {
+      for (final channel in allChannels) {
+        channel.subscribeIfNotUnsubscribed();
+      }
+    });
+    _client!.connect();
+
+    _client!.onConnectionEstablished.listen((event) {
+      print('Connection established');
+      print('chat-sessions.${_currentChatSession!.id}');
+    });
+
+    final onCreated = channel.bind('chat-message.created').listen((event) {
+      print('Event from the private channel fired!');
+    });
+
+    // await Future.delayed(const Duration(seconds: 60));
+    // connectionSubs.cancel();
+    // onCreated.cancel();
+    // client.dispose();
   }
+
+  // Future<void> connectWebSocket() async {
+  //   final prefs = await getPrefs();
+  //   final accessToken = prefs.accessToken;
+  //   if (accessToken == null) {
+  //     print('No access token found.');
+  //     return;
+  //   }
+
+  //   _channel = WebSocketChannel.connect(
+  //     Uri.parse('wss://ws.walletwatch.id/app/hsdoMSurOsKZrEpZOUS8L7xpG7XciFPf'),
+  //     protocols: ['Bearer $accessToken'],
+  //   );
+
+  //   _channel!.stream.listen((message) {
+  //     print(message);
+  //     // final decodedMessage = jsonDecode(message);
+  //     // final chatMessage = ChatMessage(
+  //     //   id: decodedMessage['id'],
+  //     //   sender: decodedMessage['sender'],
+  //     //   message: decodedMessage['message'],
+  //     //   hash: decodedMessage['hash'],
+  //     //   status: decodedMessage['status'],
+  //     // );
+  //     // setState(() {
+  //     //   _chatMessages.add(chatMessage);
+  //     // });
+  //     // final textMessage = types.TextMessage(
+  //     //   author: types.User(id: chatMessage.sender),
+  //     //   id: chatMessage.id,
+  //     //   text: chatMessage.message,
+  //     // );
+  //     // _addMessage(textMessage);
+  //   });
+  // }
 
   void startFetchingMessages() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -149,11 +232,16 @@ class _HomeChatState extends State<HomeChat> {
   void loadChat() async {
     if (_currentChatSession != null) {
       EasyLoading.show(status: 'Loading...');
+      _client?.dispose();
+      if (_chatSessions.isNotEmpty) {
+        await connectWebSocket();
+      }
+
       final chatMessages = await fetchChatMessages(_currentChatSession!);
       setState(() {
-        _chatMessages.addAll(chatMessages);
         _chatMessages.clear();
         _messages.clear();
+        _chatMessages.addAll(chatMessages);
       });
 
       final textMessage = types.TextMessage(
@@ -167,9 +255,11 @@ class _HomeChatState extends State<HomeChat> {
 
       for (var chatMessage in _chatMessages) {
         final textMessage = types.TextMessage(
-            author: types.User(id: chatMessage.sender),
-            id: chatMessage.id,
-            text: chatMessage.message);
+          author: types.User(id: chatMessage.sender),
+          id: chatMessage.id,
+          text: chatMessage.message,
+          createdAt: chatMessage.createdAt,
+        );
 
         _addMessage(textMessage);
       }
@@ -188,26 +278,10 @@ class _HomeChatState extends State<HomeChat> {
   void _handleSendPressed(types.PartialText message) async {
     if (_currentChatSession != null) {
       EasyLoading.show(status: 'Loading...');
-      // final textMessage = types.TextMessage(
-      //   author: _user,
-      //   createdAt: DateTime.now().millisecondsSinceEpoch,
-      //   id: randomString(),
-      //   text: message.text,
-      // );
-
-      // _addMessage(textMessage);
 
       await storeChatMessages(
           message: message.text, session: _currentChatSession!);
       EasyLoading.dismiss();
-      // final textMessage1 = types.TextMessage(
-      //   author: _bot,
-      //   createdAt: DateTime.now().millisecondsSinceEpoch,
-      //   id: randomString(),
-      //   text: message.text,
-      // );
-
-      // _addMessage(textMessage1);
     }
   }
 

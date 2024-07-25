@@ -34,7 +34,8 @@ dependencies:
   awesome_notifications_fcm: 0.9.3
   toggle_list: 0.3.1
   animated_custom_dropdown: 3.1.1
-  web_socket_channel: 3.0.1
+  # web_socket_channel: 3.0.1
+  dart_pusher_channels: 1.2.2+1
 
   intl: any
   flutter_chat_types: any

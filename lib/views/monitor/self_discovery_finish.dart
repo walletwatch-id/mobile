@@ -5,7 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:walletwatch_mobile/common/helper.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
 import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
+import 'package:walletwatch_mobile/common/utils/transtition_fade.dart';
 import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
+import 'package:walletwatch_mobile/views/monitor/self_discovery.dart';
 
 class SelfDiscoveryFinish extends StatefulWidget {
   const SelfDiscoveryFinish({super.key});
@@ -74,9 +76,7 @@ class _SelfDiscoveryFinishState extends State<SelfDiscoveryFinish> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(50),
                               child: SizedBox(
-                                width: 50.h,
-                                height: 50.h,
-                                child: user.image),
+                                  width: 50.h, height: 50.h, child: user.image),
                             ),
                           ),
                         ),
@@ -170,7 +170,9 @@ class _SelfDiscoveryFinishState extends State<SelfDiscoveryFinish> {
                             borderRadius: BorderRadius.circular(12.r),
                             child: MaterialButton(
                               onPressed: () {
-                                setState(() {});
+                                Navigator.of(context).pushReplacement(
+                                    TransitionFade(
+                                        child: const SelfDiscovery()));
                               },
                               child: Text("Coba ulang",
                                   style: AppFontStyle.homeNormalText
@@ -184,47 +186,47 @@ class _SelfDiscoveryFinishState extends State<SelfDiscoveryFinish> {
                 ],
               ),
             ),
-            Positioned(
-                bottom: 120.h,
-                right: 0,
-                left: 0,
-                child: Column(
-                  children: [
-                    Text("Money Personality Kamu",
-                        style: AppFontStyle.homeSubTitleText.copyWith(
-                            color: darkColor, fontSize: 28.sp, height: 1.4)),
-                    Text(
-                      "Berdasarkan jawaban kamu",
-                      style: AppFontStyle.homeListHeaderText.copyWith(
-                          color: subColor, fontSize: 16.sp, height: 1.4),
-                    ),
-                    Container(
-                      height: 100.h,
-                      width: double.infinity,
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                          border: Border.all(color: borderColor, width: 1.5.w)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Personality Type",
-                            style: AppFontStyle.homeListHeaderText.copyWith(
-                                color: subColor, fontSize: 20.sp, height: 1.4),
-                          ),
-                          SizedBox(
-                            height: 12.h,
-                          ),
-                          Text("Binger",
-                              style: AppFontStyle.homeSubTitleText
-                                  .copyWith(color: darkColor, fontSize: 28.sp)),
-                        ],
-                      ),
-                    )
-                  ],
-                )),
+            // Positioned(
+            //     bottom: 120.h,
+            //     right: 0,
+            //     left: 0,
+            //     child: Column(
+            //       children: [
+            //         Text("Money Personality Kamu",
+            //             style: AppFontStyle.homeSubTitleText.copyWith(
+            //                 color: darkColor, fontSize: 28.sp, height: 1.4)),
+            //         Text(
+            //           "Berdasarkan jawaban kamu",
+            //           style: AppFontStyle.homeListHeaderText.copyWith(
+            //               color: subColor, fontSize: 16.sp, height: 1.4),
+            //         ),
+            //         Container(
+            //           height: 100.h,
+            //           width: double.infinity,
+            //           margin:
+            //               EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+            //           decoration: BoxDecoration(
+            //               borderRadius: BorderRadius.all(Radius.circular(8.r)),
+            //               border: Border.all(color: borderColor, width: 1.5.w)),
+            //           child: Column(
+            //             mainAxisAlignment: MainAxisAlignment.center,
+            //             children: [
+            //               Text(
+            //                 "Personality Type",
+            //                 style: AppFontStyle.homeListHeaderText.copyWith(
+            //                     color: subColor, fontSize: 20.sp, height: 1.4),
+            //               ),
+            //               SizedBox(
+            //                 height: 12.h,
+            //               ),
+            //               Text("Binger",
+            //                   style: AppFontStyle.homeSubTitleText
+            //                       .copyWith(color: darkColor, fontSize: 28.sp)),
+            //             ],
+            //           ),
+            //         )
+            //       ],
+            //     )),
           ],
         ),
       ),
