@@ -47,6 +47,7 @@ class _HomeMonitorState extends State<HomeMonitor>
   late TabController _tabController;
   double _limitPercentage = 0;
   int _segmentedControlValue = 0;
+  double _installmentIncome = 0;
   Map<int, String> _installmentSummarizer = {1: ""};
   Map<int, String> _incomeSummarizer = {1: ""};
   bool _isInputIncomeVisible = false;
@@ -87,9 +88,12 @@ class _HomeMonitorState extends State<HomeMonitor>
       _statistics.clear();
       _statistics.addAll(statistics);
 
-      _limitPercentage =
-         (_statistics.last.totalInstallment / (_statistics.last.ratio *
-          _statistics.last.totalIncome)) *
+      _installmentIncome =
+          (_statistics.last.totalInstallment / _statistics.last.totalIncome);
+      print(_installmentIncome);
+
+      _limitPercentage = (_statistics.last.totalInstallment /
+              (_statistics.last.ratio * _statistics.last.totalIncome)) *
           100;
 
       _incomeSummarizer = summarizeValues(_statistics
@@ -217,25 +221,36 @@ class _HomeMonitorState extends State<HomeMonitor>
                             height: 8.h,
                           ),
                           if (_statistics.isNotEmpty)
-                          RoundedProgressBar(
-                              height: 150.h,
-                              childLeft: Padding(
-                                padding: EdgeInsets.only(
-                                    left: _limitPercentage.w > 100 ? 100 : _limitPercentage.w / 1.3),
-                                child: Text(
-                                    "${_limitPercentage.toStringAsFixed(2)}%",
-                                    style: AppFontStyle.homeMonitorIndicatorText
-                                        .copyWith(color: _statistics.last.ratio < .15 ? darkColor : lightColor)),
-                              ),
-                              style: RoundedProgressBarStyle(
-                                colorBorder: primaryColor,
-                                colorProgress: _statistics.last.ratio < .15 ? Colors.white.withOpacity(.5) : _statistics.last.ratio > .15 && _statistics.last.ratio < .35 ? monitorWarning : monitorDanger,
-                                backgroundProgress: secondaryColor,
-                                colorProgressDark: secondaryColor,
-                                borderWidth: 0,
-                                widthShadow: 0,
-                              ),
-                              percent: _limitPercentage),
+                            RoundedProgressBar(
+                                height: 150.h,
+                                childLeft: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: _limitPercentage.w > 100
+                                          ? 100
+                                          : _limitPercentage.w / 1.3),
+                                  child: Text(
+                                      "${_limitPercentage.toStringAsFixed(2)}%",
+                                      style: AppFontStyle
+                                          .homeMonitorIndicatorText
+                                          .copyWith(
+                                              color: _installmentIncome < .15
+                                                  ? darkColor
+                                                  : lightColor)),
+                                ),
+                                style: RoundedProgressBarStyle(
+                                  colorBorder: primaryColor,
+                                  colorProgress: _installmentIncome < .15
+                                      ? Colors.white.withOpacity(.5)
+                                      : _installmentIncome > .15 &&
+                                              _installmentIncome < .35
+                                          ? monitorWarning
+                                          : monitorDanger,
+                                  backgroundProgress: secondaryColor,
+                                  colorProgressDark: secondaryColor,
+                                  borderWidth: 0,
+                                  widthShadow: 0,
+                                ),
+                                percent: _limitPercentage),
                           Expanded(
                             child: Padding(
                               padding: EdgeInsets.only(top: 4.h),
@@ -448,8 +463,8 @@ class _HomeMonitorState extends State<HomeMonitor>
                                                 children: [
                                                   Text(
                                                     _statistics.isNotEmpty
-                                                        ? _statistics.last
-                                                            .personality
+                                                        ? _statistics
+                                                            .last.personality
                                                         : "Personality",
                                                     style: AppFontStyle
                                                         .homeCardTitleText

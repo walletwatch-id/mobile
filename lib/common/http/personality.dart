@@ -41,7 +41,8 @@ Future<List<SurveyQuestion>> fetchPersonalityQuestions() async {
 }
 
 Future<String?> storePersonalitySurveyResult() async {
-  const String url = '${apiUrl}personality-surveys/$PERSONALITY_ID/survey-results';
+  const String url =
+      '${apiUrl}personality-surveys/$PERSONALITY_ID/survey-results';
 
   final Map<String, dynamic> resultData = {
     'survey_id': PERSONALITY_ID,
@@ -49,7 +50,7 @@ Future<String?> storePersonalitySurveyResult() async {
         DateFormat('yyyy-MM-ddTHH:mm:ss+00:00').format(DateTime.now().toUtc()),
   };
 
-    if (isAdmin()) {
+  if (isAdmin()) {
     resultData['user_id'] = user.id;
   }
 
@@ -76,44 +77,43 @@ Future<String?> storePersonalitySurveyResult() async {
     return null;
   }
 }
-
 Future<bool> storePersonalitySurveyAnswers(
     {required String resultId,
     required List<SurveyAnswer> surveyAnswers}) async {
   final String url = '${apiUrl}survey-results/$resultId/survey-result-answers';
 
   final prefs = await getPrefs();
+  final date =
+      DateFormat('yyyy-MM-ddTHH:mm:ss+00:00').format(DateTime.now().toUtc());
 
   try {
-    for (var answer in surveyAnswers) {
-      final Map<String, dynamic> answerData = {
+    final List<Map<String, dynamic>> answersData = surveyAnswers.map((answer) {
+      return {
         'question_id': answer.questionId,
         'answer': (answer.answer + 1).toString(),
+        'date': date,
       };
+    }).toList();
 
-      print(answer.questionId);
+    final response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${prefs.accessToken}',
+      },
+      body: jsonEncode(answersData),
+    );
 
-      final response = await http.post(
-        Uri.parse(url),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${prefs.accessToken}',
-        },
-        body: jsonEncode(answerData),
-      );
+    print(response.body);
 
-      print(response.body);
-
-      if (response.statusCode == 201) {
-        continue;
-      } else {
-        return false;
-      }
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
     }
-
-    return true;
   } catch (e) {
     print(e);
     return false;
   }
 }
+
