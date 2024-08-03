@@ -12,7 +12,6 @@ class HotlineCard extends StatefulWidget {
   final HotlineState state;
   final String title;
   final double height;
-  // final List<Map<ItemState, String>> hotlines;
   final List<Hotline> hotlines;
   const HotlineCard({
     super.key,
@@ -30,27 +29,10 @@ class _HotlineCardState extends State<HotlineCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 10.h),
+      // margin: EdgeInsets.only(top: 10.h),
       height: widget.height.h,
       padding: EdgeInsets.all(10.h),
       width: double.infinity,
-      // decoration: BoxDecoration(
-      //     color: widget.state == HotlineState.government ? primaryColor.withOpacity(.4) : lightColor,
-      //     borderRadius: const BorderRadius.all(
-      //       Radius.circular(16),
-      //     ),
-      //     border: Border.all(
-      //       color: widget.state == HotlineState.government ? darkColor : primaryColor,
-      //       width: 1.5.w,
-      //     ),
-      //     boxShadow: [
-      //       BoxShadow(
-      //         color: borderColor,
-      //         spreadRadius: -1.h,
-      //         blurRadius: 5.w,
-      //         offset: Offset(0, 5.h),
-      //       ),
-      //     ]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -79,14 +61,6 @@ class _HotlineCardState extends State<HotlineCard> {
               children: [
                 for (int i = 0; i < widget.hotlines.length; i++)
                   ToggleListItem(
-                    // headerDecoration: BoxDecoration(
-                    //   color: backColor,
-                    //   borderRadius: BorderRadius.circular(10.r),
-                    //       border: Border.all(
-                    //         color: borderColor,
-                    //         width: 1.5.w,
-                    //       ),
-                    // ),
                     divider: Divider(
                       color: borderColor,
                       height: 2.h,
@@ -119,26 +93,17 @@ class _HotlineCardState extends State<HotlineCard> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                              'No. Telp: ${widget.hotlines[i].phoneNumber ?? ''}',
-                              style: AppFontStyle.homeCardTitleText.copyWith(
-                                  color: darkColor,
-                                  fontSize: 17.sp,
-                                  height: 1.8.h)),
-                          // Text('Email: ${widget.hotlines[i].email ?? ''}',
-                          //     style: AppFontStyle.homeCardTitleText.copyWith(
-                          //         color: darkColor,
-                          //         fontSize: 17.sp,
-                          //         height: 1.8.h)),
-                          // Text('URL: ${widget.hotlines[i].url ?? ''}',
-                          //     style: AppFontStyle.homeCardTitleText.copyWith(
-                          //         color: darkColor,
-                          //         fontSize: 17.sp,
-                          //         height: 1.8.h)),
+                            'No. Telp: ${widget.hotlines[i].phoneNumber ?? ''}',
+                            style: AppFontStyle.homeCardTitleText.copyWith(
+                              color: darkColor,
+                              fontSize: 17.sp,
+                              height: 1.8.h,
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ),
-
               ],
             ),
           ),

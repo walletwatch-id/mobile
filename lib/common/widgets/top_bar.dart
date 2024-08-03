@@ -120,6 +120,8 @@ class _TopBarState extends State<TopBar> {
                 Navigator.of(context).push(TransitionVerticalTop(
                     child: HomeNotification(
                   isLight: widget.isLight,
+                  popAction: widget.popAction,
+
                 )));
               }
             },

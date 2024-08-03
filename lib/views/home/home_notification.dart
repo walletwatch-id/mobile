@@ -10,7 +10,8 @@ import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
 
 class HomeNotification extends StatefulWidget {
   final bool isLight;
-  const HomeNotification({super.key, this.isLight = true});
+  final VoidCallback? popAction;
+  const HomeNotification({super.key, this.isLight = true, this.popAction});
 
   @override
   State<HomeNotification> createState() => _HomeNotificationState();
@@ -49,6 +50,9 @@ class _HomeNotificationState extends State<HomeNotification> {
                   // });
                 },
                 popAction: () {
+                  if (widget.popAction != null) {
+                    widget.popAction!();
+                  }
                   if (widget.isLight) {
                     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
                         statusBarIconBrightness: Brightness.dark,

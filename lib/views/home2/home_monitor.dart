@@ -143,6 +143,7 @@ class _HomeMonitorState extends State<HomeMonitor>
               left: 0,
               child: TopBar(
                   controller: _advancedDrawerController,
+                  isLight: true,
                   title: "Monitor",
                   textColor: darkColor,
                   settingAction: () {

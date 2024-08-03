@@ -76,6 +76,19 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.ease,
                 );
+
+                if (_currentIndex == 2) {
+                  SystemChrome.setSystemUIOverlayStyle(
+                      const SystemUiOverlayStyle(
+                    statusBarIconBrightness: Brightness.dark,
+                    statusBarColor: Color(0xFFe8f6ee),
+                  ));
+                } else {
+                  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                    statusBarIconBrightness: Brightness.dark,
+                    statusBarColor: lightColor,
+                  ));
+                }
               });
             },
             // styleDivider: StyleDivider.bottom,

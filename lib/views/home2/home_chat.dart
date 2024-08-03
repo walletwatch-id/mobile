@@ -78,6 +78,7 @@ class _HomeChatState extends State<HomeChat> {
                   controller: _advancedDrawerController,
                   title: "ChatBot",
                   textColor: darkColor,
+                  isLight: true,
                   settingAction: () {
                     // setState(() {
                     //   isSettingAlertVisible = true;
@@ -91,9 +92,7 @@ class _HomeChatState extends State<HomeChat> {
               bottom: 0,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Column(
-                  children: [
-                    Container(
+                child:  Container(
                       height: 60.h,
                       padding: EdgeInsets.symmetric(horizontal: 4.w),
                       child: Row(
@@ -146,10 +145,16 @@ class _HomeChatState extends State<HomeChat> {
                           ),
                         ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 12.h,
-                    ),
+                    ),),),
+            Positioned(
+              top: 124.h,
+              right: 0,
+              left: 0,
+              bottom: 0,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: ListView(
+                  children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -173,6 +178,7 @@ class _HomeChatState extends State<HomeChat> {
                         ),
                       ],
                     ),
+
                     SizedBox(
                       height: 8.h,
                     ),
@@ -186,7 +192,14 @@ class _HomeChatState extends State<HomeChat> {
                       ),
                     ),
                     SizedBox(
-                      height: 12.h,
+                      height: 4.h,
+                    ),
+                    Divider(
+                      color: borderColor,
+                      height: 1.5.h,
+                    ),
+                    SizedBox(
+                      height: 8.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
