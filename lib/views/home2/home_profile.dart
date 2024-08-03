@@ -26,8 +26,6 @@ class _HomeProfileState extends State<HomeProfile> {
 
   @override
   void initState() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark, statusBarColor: lightColor));
 
     EasyLoading.init();
     super.initState();

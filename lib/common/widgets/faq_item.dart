@@ -18,9 +18,9 @@ class FAQItem extends StatelessWidget {
               CircleAvatar(
                 backgroundColor: Colors.grey[300],
                 radius: 20,
-                child: Icon(Icons.help_outline, color: Colors.white),
+                child: const Icon(Icons.help_outline, color: Colors.white),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

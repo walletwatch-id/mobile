@@ -43,9 +43,6 @@ class _HomeChatState extends State<HomeChat> {
   void initState() {
     super.initState();
 
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark, statusBarColor: lightColor));
-
     loadPage();
     super.initState();
   }
@@ -56,9 +53,6 @@ class _HomeChatState extends State<HomeChat> {
   }
 
   void loadPage() async {
-    EasyLoading.show(status: 'Loading...');
-
-    EasyLoading.dismiss();
   }
 
   @override

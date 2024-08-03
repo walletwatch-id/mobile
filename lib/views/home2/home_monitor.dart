@@ -55,8 +55,6 @@ class _HomeMonitorState extends State<HomeMonitor>
   @override
   void initState() {
     super.initState();
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark, statusBarColor: lightColor));
 
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(_handleTabSelection);
