@@ -90,7 +90,6 @@ class _HomeMonitorState extends State<HomeMonitor>
 
       _installmentIncome =
           (_statistics.last.totalInstallment / _statistics.last.totalIncome);
-      print(_installmentIncome);
 
       _limitPercentage = (_statistics.last.totalInstallment /
               (_statistics.last.ratio * _statistics.last.totalIncome)) *
@@ -392,114 +391,120 @@ class _HomeMonitorState extends State<HomeMonitor>
                                 borderRadius: BorderRadius.circular(8),
                                 border:
                                     Border.all(width: 1.w, color: borderColor)),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  color: Colors.black.withOpacity(.05),
-                                  height: 180.h,
-                                  width: double.infinity,
-                                  child: Stack(
-                                    children: [
-                                      Positioned(
-                                          bottom: 0,
-                                          left: 30.w,
-                                          child: Image.asset(
-                                            'assets/images/monitor-personality.png',
-                                            width: 150.w,
-                                          )),
-                                      Positioned(
-                                        top: 0,
-                                        left: 0,
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 8.w, vertical: 4.h),
-                                          decoration: BoxDecoration(
-                                            color:
-                                                Colors.black.withOpacity(.05),
-                                            borderRadius: BorderRadius.only(
-                                              bottomRight: Radius.circular(8.r),
-                                              topLeft: Radius.circular(8.r),
-                                            ),
-                                          ),
-                                          child: Text(
-                                            'Self-Discovery',
-                                            style: TextStyle(
-                                              color: primaryColor,
-                                              fontStyle: FontStyle.italic,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        right: 30.w,
-                                        top: 0,
-                                        bottom: 0,
-                                        child: SizedBox(
-                                          width: 150.w,
-                                          child: Center(
-                                            child: Text(
-                                              'Untuk pengontrolan lebih baik, mari kita mencari tahu tipe personalitas keuangan kamu!',
-                                              style: TextStyle(
-                                                fontSize: 12.sp,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    color: Colors.black.withOpacity(.05),
+                                    height: 180.h,
+                                    width: double.infinity,
+                                    child: Stack(
+                                      children: [
+                                        Positioned(
+                                            bottom: 0,
+                                            left: 30.w,
+                                            child: Image.asset(
+                                              'assets/images/monitor-personality.png',
+                                              width: 150.w,
+                                            )),
+                                        Positioned(
+                                          top: 0,
+                                          left: 0,
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8.w, vertical: 4.h),
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  Colors.black.withOpacity(.05),
+                                              borderRadius: BorderRadius.only(
+                                                bottomRight: Radius.circular(8.r),
                                               ),
-                                              textAlign: TextAlign.center,
+                                            ),
+                                            child: Text(
+                                              'Self-Discovery',
+                                              style: TextStyle(
+                                                color: primaryColor,
+                                                fontStyle: FontStyle.italic,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
                                           ),
                                         ),
+                                        Positioned(
+                                          right: 30.w,
+                                          top: 0,
+                                          bottom: 0,
+                                          child: SizedBox(
+                                            width: 150.w,
+                                            child: Center(
+                                              child: Text(
+                                                'Untuk pengontrolan lebih baik, mari kita mencari tahu tipe personalitas keuangan kamu!',
+                                                style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(8.w),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Kamu tipe:',
+                                            style: AppFontStyle.homeNormalText
+                                                .copyWith(color: primaryColor)),
+                                        SizedBox(height: 6.h),
+                                        Text('Binger',
+                                            style: AppFontStyle.homeSubHeaderText
+                                            .copyWith(
+                                                color: darkColor,
+                                                fontSize: 17.sp,
+                                                height: 1.4),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8.w),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text('Kamu tipe:',
-                                          style: AppFontStyle.homeNormalText
-                                              .copyWith(color: primaryColor)),
-                                      SizedBox(height: 6.h),
-                                      Text('Binger',
-                                          style:
-                                              AppFontStyle.homeSubHeaderText),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 40.h,
-                                  width: double.infinity,
-                                  margin: EdgeInsets.all(8.w),
-                                  decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(12.r),
-                                    ),
-                                    border: Border.all(
-                                      color: borderColor,
-                                      width: 1.5.w,
+                                      ],
                                     ),
                                   ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(12.r),
-                                    child: MaterialButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          Navigator.of(context).push(
-                                              TransitionVerticalBottom(
-                                                  child:
-                                                      const SelfDiscovery()));
-                                        });
-                                      },
-                                      child: Text("Survey Ulang",
-                                          style: AppFontStyle.homeSubTitleText
-                                              .copyWith(color: lightColor)),
+                                  Container(
+                                    height: 40.h,
+                                    width: double.infinity,
+                                    margin: EdgeInsets.all(8.w),
+                                    decoration: BoxDecoration(
+                                      color: primaryColor,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(12.r),
+                                      ),
+                                      border: Border.all(
+                                        color: borderColor,
+                                        width: 1.5.w,
+                                      ),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12.r),
+                                      child: MaterialButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            Navigator.of(context).push(
+                                                TransitionVerticalBottom(
+                                                    child:
+                                                        const SelfDiscovery()));
+                                          });
+                                        },
+                                        child: Text("Survey Ulang",
+                                            style: AppFontStyle.homeSubTitleText
+                                                .copyWith(color: lightColor)),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ],

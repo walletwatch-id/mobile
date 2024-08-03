@@ -105,7 +105,7 @@ class _HomeNavigatorState extends State<HomeNavigator> {
                                 width: 56.h,
                                 height: 56.h,
                                 child: user.image),
-                                
+
                         ),
                       ),
                     ),
@@ -153,22 +153,24 @@ class _HomeNavigatorState extends State<HomeNavigator> {
           ),
         ),
       ),
-      child: Stack(children: [
-        widget.child,
-        // if (userMode == UserMode.normal)
-        //   SettingAlert(
-        //     visible: isSettingAlertVisible,
-        //     isHome: true,
-        //     onDismiss: () {
-        //       if (widget.load != null) {
-        //         widget.load!();
-        //       }
-        //       setState(() {
-        //         isSettingAlertVisible = false;
-        //       });
-        //     },
-        //   ),
-      ]),
+      child: SafeArea(
+        child: Stack(children: [
+          widget.child,
+          // if (userMode == UserMode.normal)
+          //   SettingAlert(
+          //     visible: isSettingAlertVisible,
+          //     isHome: true,
+          //     onDismiss: () {
+          //       if (widget.load != null) {
+          //         widget.load!();
+          //       }
+          //       setState(() {
+          //         isSettingAlertVisible = false;
+          //       });
+          //     },
+          //   ),
+        ]),
+      ),
     );
   }
 }

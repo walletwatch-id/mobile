@@ -55,7 +55,7 @@ class _HomeProfileState extends State<HomeProfile> {
   Widget build(BuildContext context) {
     return HomeNavigator(
         controller: _advancedDrawerController,
-        state: HomeState.monitor,
+        state: HomeState.profil,
         child: Scaffold(
           backgroundColor: lightColor,
           body: Stack(
@@ -179,7 +179,7 @@ class _HomeProfileState extends State<HomeProfile> {
               ),
               Positioned(
                 top: 200.h,
-                bottom: 100.h,
+                bottom: 20.h,
                 left: 0,
                 right: 0,
                 child: Container(

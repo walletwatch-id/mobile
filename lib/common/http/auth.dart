@@ -19,38 +19,43 @@ Future<User?> fetchUser() async {
     return null;
   }
 
-  final response = await http.get(
-    Uri.parse(url),
-    headers: {
-      'Authorization': 'Bearer $accessToken',
-    },
-  );
-
-  if (response.statusCode == 200) {
-    final responseBody = jsonDecode(response.body);
-    final user = responseBody['data']['user'];
-
-    return User(
-      id: user['id'] as String,
-      name: user['name'] as String,
-      email: user['email'] as String,
-      role: user['role'] as String,
-      image: (user['picture'] as String?) != null
-          ? Image.network(
-              '${apiUrl}blobs/${user['picture'] as String}',
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
-            )
-          : Image.asset(
-              'assets/images/user_default.png',
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
-            ),
+  try {
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
     );
-  } else {
-    print('Request failed with status: ${response.statusCode}');
+
+    if (response.statusCode == 200) {
+      final responseBody = jsonDecode(response.body);
+      final user = responseBody['data']['user'];
+
+      return User(
+        id: user['id'] as String,
+        name: user['name'] as String,
+        email: user['email'] as String,
+        role: user['role'] as String,
+        image: (user['picture'] as String?) != null
+            ? Image.network(
+                '${apiUrl}blobs/${user['picture'] as String}',
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              )
+            : Image.asset(
+                'assets/images/user_default.png',
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+      );
+    } else {
+      print('Request failed with status: ${response.statusCode}');
+      return null;
+    }
+  } catch (e) {
+    print(e);
     return null;
   }
 }
