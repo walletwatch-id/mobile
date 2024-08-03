@@ -370,12 +370,13 @@ class _HomeAddState extends State<HomeAdd> {
                 onDismiss: (args) {
                   setState(() {
                     _isDateSelectorVisible = false;
-                    _firstInstallmentController.text = args;
-                  });
-                },
-              ),
-            ],
-          ),
-        ));
+                  _firstInstallmentController.text = args;
+                });
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -80,7 +80,8 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       // }
       permissionIsGranted();
     } else {
-      permissionDeniedDialog();
+      // permissionDeniedDialog();
+      permissionIsGranted();
     }
   }
 

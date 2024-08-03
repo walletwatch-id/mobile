@@ -36,6 +36,7 @@ dependencies:
   animated_custom_dropdown: 3.1.1
   # web_socket_channel: 3.0.1
   dart_pusher_channels: 1.2.2+1
+  awesome_bottom_bar: ^1.2.4
 
   intl: any
   flutter_chat_types: any
@@ -67,6 +68,9 @@ flutter:
     - assets/images/government/
     - assets/pdf/
   fonts:
+    - family: BottomNavIcons
+      fonts:
+        - asset: assets/fonts/BottomNavIcons/BottomNavIcons.ttf
     - family: Baloo
       fonts:
         - asset: assets/fonts/Baloo/Baloo-Regular.ttf

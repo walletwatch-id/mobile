@@ -8,7 +8,7 @@ import 'package:walletwatch_mobile/common/http/auth.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
 import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
 import 'package:walletwatch_mobile/common/utils/transtition_fade.dart';
-import 'package:walletwatch_mobile/views/home/home.dart';
+import 'package:walletwatch_mobile/views/home2/home.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

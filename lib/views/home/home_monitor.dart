@@ -213,7 +213,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                                     style: AppFontStyle.homeNormalText.copyWith(
                                         color: lightColor,
                                         fontSize: 12.5.sp,
-                                        height: 2)),
+                                        height: 2),),
                               ],
                             ),
                           ),

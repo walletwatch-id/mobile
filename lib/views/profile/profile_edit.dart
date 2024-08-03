@@ -15,10 +15,9 @@ import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
 import 'package:walletwatch_mobile/views/home/home.dart';
 
 class ProfileEdit extends StatefulWidget {
-  final ScrollController controller;
   final VoidCallback refresh;
   const ProfileEdit(
-      {super.key, required this.controller, required this.refresh});
+      {super.key, required this.refresh});
 
   @override
   State<ProfileEdit> createState() => _ProfileEditState();

@@ -181,7 +181,6 @@ class _HomeProfileState extends State<HomeProfile> {
                             onPressed: () {
                               Navigator.of(context).push(TransitionFade(
                                   child: ProfileEdit(
-                                controller: widget.controller,
                                 refresh: _refresh,
                               )));
                             },

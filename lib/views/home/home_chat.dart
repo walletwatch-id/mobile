@@ -298,13 +298,14 @@ class _HomeChatState extends State<HomeChat> {
               right: 0,
               left: 0,
               child: TopBar(
-                  controller: _advancedDrawerController,
-                  title: "Chatbot",
-                  settingAction: () {
-                    // setState(() {
-                    //   isSettingAlertVisible = true;
-                    // });
-                  }),
+                controller: _advancedDrawerController,
+                title: "Chatbot",
+                settingAction: () {
+                  // setState(() {
+                  //   isSettingAlertVisible = true;
+                  // });
+                },
+              ),
             ),
             Positioned(
               top: 55.h,
