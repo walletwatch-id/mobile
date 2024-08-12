@@ -1,10 +1,10 @@
 name: walletwatch_mobile
 description: "WalletWatch"
 publish_to: "none"
-version: 0.1.0
+version: 0.2.0+1
 
 environment:
-  sdk: "3.4.4"
+  sdk: "3.4.3"
 
 dependencies:
   flutter:
@@ -12,12 +12,12 @@ dependencies:
   font_awesome_flutter: 10.7.0
   flutter_launcher_icons: 0.13.1
   flutter_native_splash: 2.4.1
-  shared_preferences: 2.2.3
+  shared_preferences: ^2.3.1
   flutter_screenutil: 5.9.3
   sign_in_button: 3.2.0
-  syncfusion_flutter_datepicker: 26.1.42
-  syncfusion_flutter_charts: 26.1.42
-  syncfusion_flutter_pdfviewer: 26.1.42
+  syncfusion_flutter_datepicker: 26.2.8
+  syncfusion_flutter_pdfviewer: 26.2.8
+  syncfusion_flutter_charts: 26.2.8
   flutter_advanced_drawer: 1.3.6
   flutter_easyloading: 3.0.5
   flutter_rounded_progress_bar: 0.3.2
@@ -28,22 +28,25 @@ dependencies:
   dropdown_button2: 2.3.9
   persistent_bottom_nav_bar_v2: 5.3.0
   image_picker: 1.1.2
-  flutter_appauth: 6.0.6
-  awesome_notifications: 0.9.3
+  flutter_appauth: ^6.0.7
+  awesome_notifications: ^0.9.3+1
   permission_handler: 11.3.1
-  awesome_notifications_fcm: 0.9.3
+  awesome_notifications_fcm: ^0.9.3+1
   toggle_list: 0.3.1
   animated_custom_dropdown: 3.1.1
   # web_socket_channel: 3.0.1
-  dart_pusher_channels: 1.2.2+1
+  dart_pusher_channels: ^1.2.3
   awesome_bottom_bar: ^1.2.4
 
   intl: any
   flutter_chat_types: any
+  path: any
+  http_parser: any
+  web_socket_channel: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: 3.0.2
+  flutter_lints: ^4.0.0
 
 flutter_launcher_icons:
   remove_alpha_ios: true

@@ -1,11 +1,9 @@
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:walletwatch_mobile/common/data/self_discovery.dart';
 import 'package:walletwatch_mobile/common/data/survey_answer.dart';
 import 'package:walletwatch_mobile/common/data/suvey_question.dart';
 import 'package:walletwatch_mobile/common/helper.dart';

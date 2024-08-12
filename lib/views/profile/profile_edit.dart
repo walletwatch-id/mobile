@@ -9,10 +9,8 @@ import 'package:walletwatch_mobile/common/helper.dart';
 import 'package:walletwatch_mobile/common/http/auth.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
 import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
-import 'package:walletwatch_mobile/common/utils/transtition_fade.dart';
 import 'package:walletwatch_mobile/common/widgets/custom_text_field.dart';
 import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
-import 'package:walletwatch_mobile/views/home/home.dart';
 
 class ProfileEdit extends StatefulWidget {
   final VoidCallback refresh;

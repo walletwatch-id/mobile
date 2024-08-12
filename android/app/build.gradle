@@ -57,18 +57,22 @@ android {
         multiDexEnabled true
     }
 
-    // signingConfigs {
-    //     release {
-    //         storeFile file(keystoreProperties['storeFile'])
-    //         storePassword keystoreProperties['storePassword']
-    //         keyAlias keystoreProperties['keyAlias']
-    //         keyPassword keystoreProperties['keyPassword']
-    //     }
-    // }
+    signingConfigs {
+        release {
+            // storeFile file("key.jks")
+            // storePassword "walletwatch"
+            // keyAlias "key"
+            // keyPassword "walletwatch"
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+    }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled false
             shrinkResources false
         }

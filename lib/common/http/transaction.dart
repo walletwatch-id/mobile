@@ -46,7 +46,7 @@ Future<bool> storeTransaction(
       // ignore: use_build_context_synchronously
       print(responseBody);
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Error: ${responseBody}")));
+          .showSnackBar(SnackBar(content: Text("Error: $responseBody")));
       return false;
     }
   } catch (e) {

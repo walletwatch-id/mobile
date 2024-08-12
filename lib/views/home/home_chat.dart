@@ -21,8 +21,6 @@ import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/status.dart' as status;
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 class HomeChat extends StatefulWidget {
   final ScrollController controller;

@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,8 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:walletwatch_mobile/common/data/hotline.dart';
 import 'package:walletwatch_mobile/common/enum/home_state.dart';
 import 'package:walletwatch_mobile/common/enum/hotline_state.dart';
-import 'package:walletwatch_mobile/common/enum/item_state.dart';
-import 'package:walletwatch_mobile/common/helper.dart';
 import 'package:walletwatch_mobile/common/http/hotline.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
 import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
@@ -17,8 +14,6 @@ import 'package:walletwatch_mobile/common/widgets/faq_item.dart';
 import 'package:walletwatch_mobile/common/widgets/home_navigator.dart';
 import 'package:walletwatch_mobile/common/widgets/hotline_card.dart';
 import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
-import 'package:http/http.dart' as http;
-import 'package:toggle_list/toggle_list.dart';
 
 class HomeHotline extends StatefulWidget {
   const HomeHotline({super.key});
@@ -234,7 +229,7 @@ class _HomeHotlineState extends State<HomeHotline> {
                                                 Expanded(
                                                   child: ListView(
                                                     padding: EdgeInsets.zero,
-                                                    children: [
+                                                    children: const [
                                                       FAQItem(
             question: 'Hal apa saja yang bisa saya tanyakan?',
             detail: 'Hal-hal yang dapat dibantu',

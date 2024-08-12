@@ -45,7 +45,7 @@ class ColumnChartState extends State<ColumnChart> {
       legend: Legend(
         isVisible: true,
         textStyle: AppFontStyle.chartLabelText.copyWith(color: Colors.white),
-        
+
       ),
       series: <CartesianSeries<ChartData, String>>[
         ColumnSeries<ChartData, String>(
@@ -61,7 +61,7 @@ class ColumnChartState extends State<ColumnChart> {
           // ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
           name: widget.title,
           legendIconType: LegendIconType.circle,
-          
+
         ),
       ],
     );

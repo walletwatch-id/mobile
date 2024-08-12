@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:walletwatch_mobile/common/data/self_discovery.dart';
 import 'package:walletwatch_mobile/common/data/suvey_question.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
 

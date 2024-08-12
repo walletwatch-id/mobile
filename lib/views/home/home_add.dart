@@ -1,5 +1,3 @@
-import 'dart:ffi';
-import 'dart:io';
 
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +15,8 @@ import 'package:walletwatch_mobile/common/http/hotline.dart';
 import 'package:walletwatch_mobile/common/http/transaction.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
 import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
-import 'package:walletwatch_mobile/common/widgets/custom_text_field.dart';
 import 'package:walletwatch_mobile/common/widgets/date_selector.dart';
 import 'package:walletwatch_mobile/common/widgets/home_navigator.dart';
-import 'package:walletwatch_mobile/common/widgets/input_alert.dart';
 import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
 import 'package:walletwatch_mobile/common/widgets/transaction_text_field.dart';
 

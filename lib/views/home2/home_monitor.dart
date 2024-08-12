@@ -1,7 +1,6 @@
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';

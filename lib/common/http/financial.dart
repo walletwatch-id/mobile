@@ -93,7 +93,7 @@ Future<bool> storeFinancialSurveyAnswers(
       final Map<String, dynamic> answerData = {
         'question_id': answer.questionId,
         'answer': answer.answer,
-      };;
+      };
 
       final response = await http.post(
         Uri.parse(url),

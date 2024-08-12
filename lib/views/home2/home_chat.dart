@@ -1,32 +1,17 @@
-import 'dart:async';
 
-import 'package:animated_custom_dropdown/custom_dropdown.dart';
-import 'package:dart_pusher_channels/dart_pusher_channels.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:walletwatch_mobile/common/data/chat_message.dart';
-import 'package:walletwatch_mobile/common/data/chat_session.dart';
 import 'package:walletwatch_mobile/common/data/feedback_item.dart';
 import 'package:walletwatch_mobile/common/enum/home_state.dart';
 import 'package:walletwatch_mobile/common/helper.dart';
-import 'package:walletwatch_mobile/common/http/chat.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
 import 'package:walletwatch_mobile/common/theme/app_font_style.dart';
 import 'package:walletwatch_mobile/common/utils/transtition_fade.dart';
 import 'package:walletwatch_mobile/common/widgets/feedback_item.dart';
 import 'package:walletwatch_mobile/common/widgets/home_navigator.dart';
-import 'package:walletwatch_mobile/common/widgets/input_alert.dart';
 import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:walletwatch_mobile/views/chat/chatbot.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:web_socket_channel/status.dart' as status;
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 class HomeChat extends StatefulWidget {
   const HomeChat({super.key});
