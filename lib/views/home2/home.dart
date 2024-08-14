@@ -9,9 +9,11 @@ import 'package:walletwatch_mobile/views/home2/home_monitor.dart';
 import 'package:walletwatch_mobile/views/home2/home_profile.dart';
 
 class Home extends StatefulWidget {
+  final int initialPage;
   final double height;
   final double width;
-  const Home({super.key, this.height = 55, this.width = 35});
+  const Home(
+      {super.key, this.initialPage = 0, this.height = 55, this.width = 35});
 
   @override
   State<Home> createState() => _HomeState();
@@ -23,6 +25,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
+    _currentIndex = widget.initialPage;
     _pageController = PageController(initialPage: _currentIndex);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark, statusBarColor: lightColor));
@@ -32,7 +35,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: true,
+      canPop: false,
       child: SafeArea(
         child: Scaffold(
           body: PageView(
@@ -69,29 +72,29 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               ),
             ],
             onTap: (int index) {
-              setState(() {
-                _currentIndex = index;
-                _pageController.animateToPage(
-                  index,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.ease,
-                );
+              // setState(() {
+              //   _currentIndex = index;
 
-                if (_currentIndex == 2) {
-                  SystemChrome.setSystemUIOverlayStyle(
-                      const SystemUiOverlayStyle(
-                    statusBarIconBrightness: Brightness.dark,
-                    statusBarColor: Color(0xFFe8f6ee),
-                  ));
-                } else {
-                  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-                    statusBarIconBrightness: Brightness.dark,
-                    statusBarColor: lightColor,
-                  ));
-                }
-              });
+              // });
+
+              _pageController.animateToPage(
+                index,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.ease,
+              );
+
+              if (index == 2) {
+                SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+                  statusBarIconBrightness: Brightness.dark,
+                  statusBarColor: Color(0xFFe8f6ee),
+                ));
+              } else {
+                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                  statusBarIconBrightness: Brightness.dark,
+                  statusBarColor: lightColor,
+                ));
+              }
             },
-            // styleDivider: StyleDivider.bottom,
           ),
         ),
       ),

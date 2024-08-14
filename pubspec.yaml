@@ -1,7 +1,7 @@
 name: walletwatch_mobile
 description: "WalletWatch"
 publish_to: "none"
-version: 0.2.0+1
+version: 0.2.0+2
 
 environment:
   sdk: "3.4.3"
@@ -35,6 +35,7 @@ dependencies:
   toggle_list: 0.3.1
   animated_custom_dropdown: 3.1.1
   # web_socket_channel: 3.0.1
+  go_router: ^14.2.3
   dart_pusher_channels: ^1.2.3
   awesome_bottom_bar: ^1.2.4
 
@@ -74,6 +75,14 @@ flutter:
     - family: BottomNavIcons
       fonts:
         - asset: assets/fonts/BottomNavIcons/BottomNavIcons.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto/Roboto-Light.ttf
+          weight: 400
+        - asset: assets/fonts/Roboto/Roboto-Regular.ttf
+          weight: 700
+        - asset: assets/fonts/Roboto/Roboto-Medium.ttf
+          weight: 900
     - family: Baloo
       fonts:
         - asset: assets/fonts/Baloo/Baloo-Regular.ttf

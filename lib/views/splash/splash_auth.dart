@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:walletwatch_mobile/common/helper.dart';
 import 'package:walletwatch_mobile/common/http/auth.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
@@ -32,8 +33,7 @@ class _SplashAuthState extends State<SplashAuth>
 
       if (fUser == null) {
         // ignore: use_build_context_synchronously
-        await Navigator.of(context)
-            .pushReplacement(TransitionFade(child: const Login()));
+        context.go('/login');
         return;
       }
 
@@ -42,37 +42,9 @@ class _SplashAuthState extends State<SplashAuth>
       });
 
       // ignore: use_build_context_synchronously
-      await Navigator.of(context)
-          .pushReplacement(TransitionFade(child: const Home()));
+      context.go('/home');
     });
   }
-
-  // Future<void> _afterGoogleLogin(GoogleSignInAccount gSA) async {
-  //   googleSignInAccount = gSA;
-  //   final GoogleSignInAuthentication googleSignInAuthentication =
-  //       await googleSignInAccount!.authentication;
-
-  //   final AuthCredential credential = GoogleAuthProvider.credential(
-  //     accessToken: googleSignInAuthentication.accessToken,
-  //     idToken: googleSignInAuthentication.idToken,
-  //   );
-
-  //   final UserCredential authResult =
-  //       await firebaseAuth.signInWithCredential(credential);
-  //   final User? user = authResult.user;
-
-  //   assert(user!.isAnonymous);
-  //   assert(await user!.getIdToken() != null);
-
-  //   final User? currentUser = firebaseAuth.currentUser;
-  //   assert(user!.uid == currentUser!.uid);
-
-  //   storage.write(key: "signedIn", value: "true").then((value) {
-  //     setState(() {
-  //       signedIn = true;
-  //     });
-  //   });
-  // }
 
   @override
   void dispose() {

@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walletwatch_mobile/common/data/preference.dart';
 import 'package:walletwatch_mobile/common/data/user.dart';
@@ -63,13 +64,7 @@ Future<Preference> getPrefs() async {
 Future<void> signOut(BuildContext context) async {
   resetPrefs();
 
-  // final service = FlutterBackgroundService();
-  // service.invoke('stopService');
-  // ignore: use_build_context_synchronously
-  Navigator.of(context).pushAndRemoveUntil(
-    MaterialPageRoute(builder: (context) => const Splash()),
-    (Route<dynamic> route) => false,
-  );
+  context.go('/splash');
 }
 
 Widget getStateImage(ItemState? state, {double size = 1}) {

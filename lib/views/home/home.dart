@@ -11,9 +11,10 @@ import 'package:walletwatch_mobile/views/home/home_monitor.dart';
 import 'package:walletwatch_mobile/views/home/home_profile.dart';
 
 class Home extends StatefulWidget {
+  final int initialPage;
   final double height;
   final double width;
-  const Home({super.key, this.height = 55, this.width = 35});
+  const Home({super.key, this.initialPage = 0, this.height = 55, this.width = 35});
 
   @override
   State<Home> createState() => _HomeState();
@@ -25,7 +26,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    _currentPage = 0;
+    _currentPage = widget.initialPage;
     _tabController = TabController(length: 5, vsync: this);
     _tabController.animation?.addListener(
       () {
@@ -37,9 +38,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.light,
-      statusBarColor: darkColor
-    ));
+        statusBarIconBrightness: Brightness.light, statusBarColor: darkColor));
     super.initState();
   }
 
@@ -132,7 +131,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       child: Center(
                           child: Icon(
                         Icons.home,
-                        color: _currentPage == 0 ? primaryColor : unselectedColor,
+                        color:
+                            _currentPage == 0 ? primaryColor : unselectedColor,
                       )),
                     ),
                     Container(
@@ -156,8 +156,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       child: Center(
                         child: Icon(
                           Icons.contacts,
-                          color:
-                              _currentPage == 2 ? primaryColor : unselectedColor,
+                          color: _currentPage == 2
+                              ? primaryColor
+                              : unselectedColor,
                         ),
                       ),
                     ),
@@ -167,8 +168,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       child: Center(
                         child: Icon(
                           Icons.contacts,
-                          color:
-                              _currentPage == 3 ? primaryColor : unselectedColor,
+                          color: _currentPage == 3
+                              ? primaryColor
+                              : unselectedColor,
                         ),
                       ),
                     ),
@@ -178,8 +180,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       child: Center(
                         child: Icon(
                           Icons.person,
-                          color:
-                              _currentPage == 4 ? primaryColor : unselectedColor,
+                          color: _currentPage == 4
+                              ? primaryColor
+                              : unselectedColor,
                         ),
                       ),
                     ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
 import 'package:walletwatch_mobile/common/utils/transtition_fade.dart';
 import 'package:walletwatch_mobile/views/splash/splash_auth.dart';
@@ -48,8 +49,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     }
 
     // ignore: use_build_context_synchronously
-    Navigator.of(context)
-        .pushReplacement(TransitionFade(child: const SplashAuth()));
+    context.go('/splash/auth');
   }
 
   Future<void> checkPermission() async {
@@ -111,11 +111,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
             TextButton(
               child: const Text('OK'),
               onPressed: () {
-                // SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                Navigator.of(context).pop();
-                // openAppSettings();
-                // Navigator.of(context)
-                //     .pushReplacement(TransitionFade(child: const Splash()));
+                context.pop();
               },
             ),
           ],
@@ -138,20 +134,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.4,
-              // child:               Center(
-              //     child: RichText(
-              //   text: TextSpan(children: [
-              //     TextSpan(
-              //         text: "Wallet",
-              //         style: AppFontStyle.authTitleText
-              //             .copyWith(color: primaryColor, fontSize: 52.sp)),
-              //     TextSpan(
-              //         text: "Watch",
-              //         style: AppFontStyle.authTitleText
-              //             .copyWith(color: secondaryColor, fontSize: 52.sp))
-              //   ]),
-              //   textAlign: TextAlign.center,
-              // )),
               child: Image.asset(
                 'assets/images/splash.png',
                 fit: BoxFit.contain,

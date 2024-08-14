@@ -63,10 +63,14 @@ android {
             // storePassword "walletwatch"
             // keyAlias "key"
             // keyPassword "walletwatch"
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
+            storeFile file("walletwatch.jks")
+            keyAlias "ww-ps-upload-key0"
+            storePassword "F6epUJB2cGufycLm"
+            keyPassword "F6epUJB2cGufycLm"
+            // storeFile file(keystoreProperties['storeFile'])
+            // storePassword keystoreProperties['storePassword']
+            // keyAlias keystoreProperties['keyAlias']
+            // keyPassword keystoreProperties['keyPassword']
         }
     }
 

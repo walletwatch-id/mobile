@@ -37,7 +37,7 @@ Future<User?> fetchUser() async {
         role: user['role'] as String,
         image: (user['picture'] as String?) != null
             ? Image.network(
-                '${apiUrl}blobs/${user['picture'] as String}',
+                user['picture'] as String,
                 width: 100,
                 height: 100,
                 fit: BoxFit.cover,

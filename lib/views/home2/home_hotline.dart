@@ -38,9 +38,7 @@ class _HomeHotlineState extends State<HomeHotline> {
   void loadPage() async {
     EasyLoading.show(status: 'Loading...');
     final hotlines = await fetchHotlines();
-    setState(() {
-      _hotlines.addAll(hotlines);
-    });
+    _hotlines.addAll(hotlines);
     EasyLoading.dismiss();
   }
 

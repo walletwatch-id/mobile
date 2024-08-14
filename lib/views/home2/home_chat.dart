@@ -29,7 +29,6 @@ class _HomeChatState extends State<HomeChat> {
     super.initState();
 
     loadPage();
-    super.initState();
   }
 
   @override

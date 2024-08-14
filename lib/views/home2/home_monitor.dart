@@ -6,6 +6,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:walletwatch_mobile/common/data/chart_data.dart';
 import 'package:walletwatch_mobile/common/data/statistic.dart';
 import 'package:walletwatch_mobile/common/data/survey_answer.dart';
@@ -488,12 +489,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                                       borderRadius: BorderRadius.circular(12.r),
                                       child: MaterialButton(
                                         onPressed: () {
-                                          setState(() {
-                                            Navigator.of(context).push(
-                                                TransitionVerticalBottom(
-                                                    child:
-                                                        const SelfDiscovery()));
-                                          });
+                                          context.go('/home/monitor/self-discovery');
                                         },
                                         child: Text("Survey Ulang",
                                             style: AppFontStyle.homeSubTitleText
@@ -529,11 +525,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                         borderRadius: BorderRadius.circular(12.r),
                         child: MaterialButton(
                           onPressed: () {
-                            setState(() {
-                              Navigator.of(context).push(
-                                  TransitionVerticalBottom(
-                                      child: const SelfDiscovery()));
-                            });
+                            context.push('/home/monitor/transaction');
                           },
                           child: Text("Tambahkan Transaksi Paylater",
                               style: AppFontStyle.homeSubTitleText

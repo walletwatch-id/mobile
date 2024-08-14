@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:walletwatch_mobile/common/enum/home_state.dart';
 import 'package:walletwatch_mobile/common/helper.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
@@ -22,13 +23,6 @@ class HomeProfile extends StatefulWidget {
 class _HomeProfileState extends State<HomeProfile> {
   final _advancedDrawerController = AdvancedDrawerController();
   bool isSettingVisible = false;
-
-  @override
-  void initState() {
-
-    EasyLoading.init();
-    super.initState();
-  }
 
   void _refresh() {
     setState(() {});
@@ -153,10 +147,10 @@ class _HomeProfileState extends State<HomeProfile> {
                           borderRadius: BorderRadius.circular(12.r),
                           child: MaterialButton(
                             onPressed: () {
-                              Navigator.of(context).push(TransitionFade(
-                                  child: ProfileEdit(
-                                refresh: _refresh,
-                              )));
+                              context.push(
+                                  '/home/profile/edit',
+                                  extra: _refresh,
+                                );
                             },
                             child: Text("Edit Profile",
                                 style: AppFontStyle.homeSubTitleText
@@ -213,8 +207,6 @@ class _HomeProfileState extends State<HomeProfile> {
                               Icons.settings,
                               'Help',
                               onTap: () async {
-                                EasyLoading.show(status: 'loading...');
-                                EasyLoading.dismiss();
                               },
                             ),
                             _buildListTile(context, Icons.feedback, 'Feedback'),
@@ -223,63 +215,67 @@ class _HomeProfileState extends State<HomeProfile> {
                               Icons.article,
                               'Terms of Service',
                               onTap: () {
-                                Navigator.of(context).push(
-                                  TransitionFade(
-                                    child: const ProfilePdf(
-                                      title: "Terms of Service",
-                                      path: "assets/pdf/terms_of_service.pdf",
-                                    ),
-                                  ),
+                                context.push(
+                                  '/home/profile/pdf',
+                                  extra: {
+                                    'title': 'Terms of Service',
+                                    'path': 'assets/pdf/terms_of_service.pdf',
+                                  },
                                 );
                               },
                             ),
                             _buildListTile(
                                 context, Icons.lock, 'Privacy Policy',  onTap: () {
-                                Navigator.of(context).push(
-                                  TransitionFade(
-                                    child: const ProfilePdf(
-                                      title: "Privacy Policy",
-                                      path: "assets/pdf/privacy_policy.pdf",
-                                    ),
-                                  ),
+                                  context.push('/home/profile/pdf',
+                                  extra: {
+                                    'title': 'Privacy Policy',
+                                    'path': 'assets/pdf/privacy_policy.pdf',
+                                  },
                                 );
-                              },),
-                            _buildListTile(context, Icons.info, 'About',  onTap: () {
-                                Navigator.of(context).push(
-                                  TransitionFade(
-                                    child: const ProfilePdf(
-                                      title: "About",
-                                      path: "assets/pdf/about.pdf",
-                                    ),
-                                  ),
+                              },
+                            ),
+                            _buildListTile(
+                              context,
+                              Icons.info,
+                              'About',
+                              onTap: () {
+                                context.push('/home/profile/pdf',
+                                  extra: {
+                                    'title': 'About',
+                                    'path': 'assets/pdf/about.pdf',
+                                  },
                                 );
-                              },),
-                            _buildListTile(context, Icons.security,
-                                'Data Security Protection',  onTap: () {
-                                Navigator.of(context).push(
-                                  TransitionFade(
-                                    child: const ProfilePdf(
-                                      title: "Data Security Protection",
-                                      path: "assets/pdf/data_security.pdf",
-                                    ),
-                                  ),
-                                );
-                              },),
-                            _buildListTile(context, Icons.exit_to_app, 'Keluar',
-                                onTap: () {
-                              EasyLoading.show(status: 'loading...');
-                              signOut(context);
-                              EasyLoading.dismiss();
-                            }),
-                          ],
-                        ),
+                              },
+                            ),
+                            _buildListTile(
+                              context,
+                              Icons.security,
+                              'Data Security Protection',
+                              onTap: () {
+                                context.push('/home/profile/pdf',
+                                  extra: {
+                                    'title': 'Data Security Protection',
+                                  'path': 'assets/pdf/data_security.pdf',
+                                },
+                              );
+                            },
+                          ),
+                          _buildListTile(context, Icons.exit_to_app, 'Keluar',
+                              onTap: () {
+                            EasyLoading.show(status: 'loading...');
+                            signOut(context);
+                            EasyLoading.dismiss();
+                          }),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

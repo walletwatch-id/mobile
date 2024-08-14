@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:walletwatch_mobile/common/helper.dart';
 import 'package:walletwatch_mobile/common/http/auth.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
@@ -57,9 +58,7 @@ class _LoginState extends State<Login> {
         });
 
         // ignore: use_build_context_synchronously
-        Navigator.of(context).pushReplacement(
-          TransitionFade(child: const Home()),
-        );
+        context.go('/home');
       }
     } catch (e) {
       // Handle any errors
