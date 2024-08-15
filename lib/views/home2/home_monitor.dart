@@ -418,7 +418,8 @@ class _HomeMonitorState extends State<HomeMonitor>
                                               color:
                                                   Colors.black.withOpacity(.05),
                                               borderRadius: BorderRadius.only(
-                                                bottomRight: Radius.circular(8.r),
+                                                bottomRight:
+                                                    Radius.circular(8.r),
                                               ),
                                             ),
                                             child: Text(
@@ -461,13 +462,16 @@ class _HomeMonitorState extends State<HomeMonitor>
                                             style: AppFontStyle.homeNormalText
                                                 .copyWith(color: primaryColor)),
                                         SizedBox(height: 6.h),
-                                        Text('Binger',
-                                            style: AppFontStyle.homeSubHeaderText
-                                            .copyWith(
-                                                color: darkColor,
-                                                fontSize: 17.sp,
-                                                height: 1.4),
-                                      ),
+                                        Text(
+                                          _statistics.isNotEmpty
+                                              ? _statistics[0].personality
+                                              : 'Loading',
+                                          style: AppFontStyle.homeSubHeaderText
+                                              .copyWith(
+                                                  color: darkColor,
+                                                  fontSize: 17.sp,
+                                                  height: 1.4),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -489,7 +493,8 @@ class _HomeMonitorState extends State<HomeMonitor>
                                       borderRadius: BorderRadius.circular(12.r),
                                       child: MaterialButton(
                                         onPressed: () {
-                                          context.go('/home/monitor/self-discovery');
+                                          context.push(
+                                              '/home/monitor/self-discovery');
                                         },
                                         child: Text("Survey Ulang",
                                             style: AppFontStyle.homeSubTitleText
@@ -550,7 +555,9 @@ class _HomeMonitorState extends State<HomeMonitor>
                                   initialValue: _segmentedControlValue,
                                   children: {
                                     0: SizedBox(
-                                        width: MediaQuery.of(context).size.width * .4,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .4,
                                         child: Center(
                                             child: Text(
                                           'Pinjaman',
@@ -563,7 +570,9 @@ class _HomeMonitorState extends State<HomeMonitor>
                                                           : darkColor),
                                         ))),
                                     1: SizedBox(
-                                        width: MediaQuery.of(context).size.width * .4,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .4,
                                         child: Center(
                                             child: Text(
                                           'Pendapatan',
@@ -597,7 +606,9 @@ class _HomeMonitorState extends State<HomeMonitor>
                                       ),
                                     ],
                                   ),
-                                  fixedWidth: MediaQuery.of(context).size.width * .5 - 20.w,
+                                  fixedWidth:
+                                      MediaQuery.of(context).size.width * .5 -
+                                          20.w,
                                   duration: const Duration(milliseconds: 300),
                                   curve: Curves.easeInToLinear,
                                   onValueChanged: (v) async {
@@ -1108,6 +1119,7 @@ class _HomeMonitorState extends State<HomeMonitor>
 
                       if (request) {
                         EasyLoading.showSuccess("Berhasil mengirim jawaban");
+                        await Future.delayed(const Duration(seconds: 1));
                         loadPage();
                       }
                     } else {

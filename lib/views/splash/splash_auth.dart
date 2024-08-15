@@ -33,7 +33,7 @@ class _SplashAuthState extends State<SplashAuth>
 
       if (fUser == null) {
         // ignore: use_build_context_synchronously
-        context.go('/login');
+        context.replace('/login');
         return;
       }
 
@@ -42,7 +42,7 @@ class _SplashAuthState extends State<SplashAuth>
       });
 
       // ignore: use_build_context_synchronously
-      context.go('/home');
+      context.replace('/home');
     });
   }
 

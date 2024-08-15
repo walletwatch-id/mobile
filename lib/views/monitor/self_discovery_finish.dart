@@ -44,7 +44,6 @@ class _SelfDiscoveryFinishState extends State<SelfDiscoveryFinish> {
               child: TopBar(
                 title: "Self-Discovery",
                 textColor: darkColor,
-                isLight: true,
                 settingAction: () {
                   //
                 },

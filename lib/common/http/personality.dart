@@ -80,7 +80,7 @@ Future<String?> storePersonalitySurveyResult() async {
 Future<bool> storePersonalitySurveyAnswers(
     {required String resultId,
     required List<SurveyAnswer> surveyAnswers}) async {
-  final String url = '${apiUrl}survey-results/$resultId/survey-result-answers';
+  final String url = '${apiUrl}survey-results/$resultId/survey-answers';
 
   final prefs = await getPrefs();
   final date =

@@ -29,16 +29,23 @@ class _HomeHotlineState extends State<HomeHotline> {
 
   @override
   void initState() {
-
+    super.initState();
 
     loadPage();
-    super.initState();
+  }
+
+  @override
+  void dispose() {
+    EasyLoading.dismiss();
+    super.dispose();
   }
 
   void loadPage() async {
     EasyLoading.show(status: 'Loading...');
     final hotlines = await fetchHotlines();
-    _hotlines.addAll(hotlines);
+    setState(() {
+      _hotlines.addAll(hotlines);
+    });
     EasyLoading.dismiss();
   }
 

@@ -1,9 +1,9 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:walletwatch_mobile/common/data/survey_answer.dart';
 import 'package:walletwatch_mobile/common/data/suvey_question.dart';
 import 'package:walletwatch_mobile/common/helper.dart';
@@ -44,7 +44,8 @@ class _SelfDiscoveryState extends State<SelfDiscovery> {
       _questions.clear();
       _questions.addAll(questions);
       _answers.addAll(List.generate(questions.length, (index) => null));
-      // _answers.addAll(List.generate(questions.length, (index) => SurveyAnswer(questionId: questions[index].id, answer: 3)));
+      // _answers.addAll(List.generate(questions.length,
+      //     (index) => SurveyAnswer(questionId: questions[index].id, answer: 3)));
     });
     EasyLoading.dismiss();
   }
@@ -207,7 +208,9 @@ class _SelfDiscoveryState extends State<SelfDiscovery> {
                                   .where((e) => e != null)
                                   .length ==
                               _questions.length) {
-                            EasyLoading.show(status: 'Loading...\n\nProses ini memerlukan waktu yang cukup lama...');
+                            EasyLoading.show(
+                                status:
+                                    'Loading...\n\nProses ini memerlukan waktu yang cukup lama...');
                             var result = await storePersonalitySurveyResult();
 
                             if (result != null) {
@@ -217,11 +220,15 @@ class _SelfDiscoveryState extends State<SelfDiscovery> {
                                       surveyAnswers:
                                           _answers.map((e) => e!).toList());
 
-
-                                Navigator.of(context).pushReplacement(
-                                    TransitionFade(
-                                        child: const SelfDiscoveryFinish()));
-
+                              if (request) {
+                                EasyLoading.showSuccess(
+                                    "Berhasil mengirim jawaban");
+                                // ignore: use_build_context_synchronously
+                                context
+                                    .replace('/home/monitor/self-discovery/finish');
+                              } else {
+                                EasyLoading.showError("Gagal mengirim jawaban");
+                              }
 
                               EasyLoading.dismiss();
                             } else {

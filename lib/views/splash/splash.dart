@@ -49,7 +49,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     }
 
     // ignore: use_build_context_synchronously
-    context.go('/splash/auth');
+    context.replace('/splash/auth');
   }
 
   Future<void> checkPermission() async {
