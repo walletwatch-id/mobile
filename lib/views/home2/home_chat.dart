@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:walletwatch_mobile/common/data/feedback_item.dart';
 import 'package:walletwatch_mobile/common/enum/home_state.dart';
@@ -21,7 +21,7 @@ class HomeChat extends StatefulWidget {
 }
 
 class _HomeChatState extends State<HomeChat> {
-  final _advancedDrawerController = AdvancedDrawerController();
+
   bool isSettingVisible = false;
 
   @override
@@ -42,7 +42,7 @@ class _HomeChatState extends State<HomeChat> {
   @override
   Widget build(BuildContext context) {
     return HomeNavigator(
-      controller: _advancedDrawerController,
+
       state: HomeState.chat,
       child: Scaffold(
         backgroundColor: lightColor,
@@ -53,7 +53,7 @@ class _HomeChatState extends State<HomeChat> {
               right: 0,
               left: 0,
               child: TopBar(
-                  controller: _advancedDrawerController,
+
                   title: "ChatBot",
                   textColor: darkColor,
                   isLight: true,

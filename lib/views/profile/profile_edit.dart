@@ -116,6 +116,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 left: 0,
                 child: TopBar(
                   title: "Edit Profile",
+                  canClose: true,
                   textColor: darkColor,
                   popAction: () async {
                     final fUser = await fetchUser();

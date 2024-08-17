@@ -2,7 +2,7 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -20,15 +20,15 @@ import 'package:walletwatch_mobile/common/widgets/home_navigator.dart';
 import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
 import 'package:walletwatch_mobile/common/widgets/transaction_text_field.dart';
 
-class HomeTransaction extends StatefulWidget {
-  const HomeTransaction({super.key});
+class TransactionAdd extends StatefulWidget {
+  const TransactionAdd({super.key});
 
   @override
-  State<HomeTransaction> createState() => _HomeTransactionState();
+  State<TransactionAdd> createState() => _TransactionAddState();
 }
 
-class _HomeTransactionState extends State<HomeTransaction> {
-  final _advancedDrawerController = AdvancedDrawerController();
+class _TransactionAddState extends State<TransactionAdd> {
+
   final _installmentController = TextEditingController();
   final _totalController = TextEditingController();
   final _periodController = TextEditingController();
@@ -71,7 +71,7 @@ class _HomeTransactionState extends State<HomeTransaction> {
   @override
   Widget build(BuildContext context) {
     return HomeNavigator(
-        controller: _advancedDrawerController,
+
         state: HomeState.monitor,
         child: Scaffold(
           backgroundColor: lightColor,
@@ -84,6 +84,7 @@ class _HomeTransactionState extends State<HomeTransaction> {
                 child: TopBar(
                   title: "Tambah Transaksi",
                   textColor: darkColor,
+                  canClose: true,
                   settingAction: () {
                     //
                   },

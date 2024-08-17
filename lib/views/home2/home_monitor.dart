@@ -1,7 +1,9 @@
+import 'dart:math';
+
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
@@ -36,12 +38,13 @@ class HomeMonitor extends StatefulWidget {
 
 class _HomeMonitorState extends State<HomeMonitor>
     with SingleTickerProviderStateMixin {
-  final _advancedDrawerController = AdvancedDrawerController();
+
   final _incomeController = TextEditingController();
   bool isSettingVisible = false;
   final List<ChartData> _installmentData = [];
   final List<ChartData> _incomeData = [];
   final List<Statistic> _statistics = [];
+  Statistic? _statistic;
   final List<SurveyQuestion> _questions = [];
   final List<SurveyAnswer?> _answers = [];
   late TabController _tabController;
@@ -82,15 +85,21 @@ class _HomeMonitorState extends State<HomeMonitor>
     EasyLoading.show(status: 'Loading...');
     final statistics = await fetchStatistics();
     final questions = await fetchFinancialQuestions();
+
     setState(() {
       _statistics.clear();
+      _installmentData.clear();
+      _installmentSummarizer.clear();
+      _incomeData.clear();
+      _incomeSummarizer.clear();
       _statistics.addAll(statistics);
+      _statistic = checkStatistic(statistics);
 
       _installmentIncome =
-          (_statistics.last.totalInstallment / _statistics.last.totalIncome);
+          (_statistic!.totalInstallment / _statistic!.totalIncome);
 
-      _limitPercentage = (_statistics.last.totalInstallment /
-              (_statistics.last.ratio * _statistics.last.totalIncome)) *
+      _limitPercentage = (_statistic!.totalInstallment /
+              (_statistic!.ratio * _statistic!.totalIncome)) *
           100;
 
       _incomeSummarizer = summarizeValues(_statistics
@@ -118,6 +127,27 @@ class _HomeMonitorState extends State<HomeMonitor>
     EasyLoading.dismiss();
   }
 
+  Statistic? checkStatistic(List<Statistic> statistics) {
+    if (statistics.isEmpty) {
+      return null;
+    }
+
+    var result = statistics[0];
+
+    for (int i = statistics.length - 1; i >= 0; i--) {
+      if (statistics[i].personality.isNotEmpty) {
+        result.personality = statistics[i].personality;
+        break;
+      }
+      if (statistics[i].totalIncome != 0) {
+        result.totalIncome = statistics[i].totalIncome;
+        break;
+      }
+    }
+
+    return result;
+  }
+
   bool _isExpanded = false;
 
   void _toggleExpand() {
@@ -129,7 +159,7 @@ class _HomeMonitorState extends State<HomeMonitor>
   @override
   Widget build(BuildContext context) {
     return HomeNavigator(
-      controller: _advancedDrawerController,
+
       state: HomeState.monitor,
       child: Scaffold(
         backgroundColor: lightColor,
@@ -140,7 +170,7 @@ class _HomeMonitorState extends State<HomeMonitor>
               right: 0,
               left: 0,
               child: TopBar(
-                  controller: _advancedDrawerController,
+
                   isLight: true,
                   title: "Monitor",
                   textColor: darkColor,
@@ -267,8 +297,8 @@ class _HomeMonitorState extends State<HomeMonitor>
                                 height: 150.h,
                                 childLeft: Padding(
                                   padding: EdgeInsets.only(
-                                      left: _limitPercentage.w > 100
-                                          ? 100
+                                      left: _limitPercentage.w > 80.w
+                                          ? 80.w
                                           : _limitPercentage.w / 1.3),
                                   child: Text(
                                       "${_limitPercentage.toStringAsFixed(2)}%",
@@ -463,9 +493,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                                                 .copyWith(color: primaryColor)),
                                         SizedBox(height: 6.h),
                                         Text(
-                                          _statistics.isNotEmpty
-                                              ? _statistics[0].personality
-                                              : 'Loading',
+                                          _statistic?.personality ?? 'Loading',
                                           style: AppFontStyle.homeSubHeaderText
                                               .copyWith(
                                                   color: darkColor,
@@ -494,7 +522,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                                       child: MaterialButton(
                                         onPressed: () {
                                           context.push(
-                                              '/home/monitor/self-discovery');
+                                              '/home/monitor/self-discovery', extra: loadPage);
                                         },
                                         child: Text("Survey Ulang",
                                             style: AppFontStyle.homeSubTitleText
@@ -541,8 +569,16 @@ class _HomeMonitorState extends State<HomeMonitor>
                     SizedBox(
                       height: 16.h,
                     ),
+                    // + max( + )
                     SizedBox(
-                      height: 350.h + (111.1632.h * 3 + 8.h),
+                      height: 350.h +
+                          max(
+                              111.1632.h * 3 + 46.h,
+                              (183.h +
+                                  (!_isExpanded
+                                      ? 51.h
+                                      : (80.h + 27.h * _statistics.length)))) +
+                          8.h,
                       child: Center(
                         child: Stack(
                           children: [
@@ -644,6 +680,8 @@ class _HomeMonitorState extends State<HomeMonitor>
                                           padding: EdgeInsets.symmetric(
                                               vertical: 8.h, horizontal: 20.w),
                                           child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Container(
                                                 height: 280.h,
@@ -675,8 +713,17 @@ class _HomeMonitorState extends State<HomeMonitor>
                                                       .values.first,
                                                 ),
                                               ),
-                                              SizedBox(
-                                                height: 8.h,
+                                              const SizedBox(height: 20),
+                                              Text(
+                                                'Transaksi Paylater',
+                                                style: AppFontStyle
+                                                    .monitorSubHeaderText
+                                                    .copyWith(
+                                                  color: darkColor,
+                                                  height: 1.4,
+                                                  fontSize: 20.sp,
+                                                ),
+                                                textAlign: TextAlign.start,
                                               ),
                                               const MonitorCard(
                                                   state: ItemState.shopee,
@@ -993,7 +1040,10 @@ class _HomeMonitorState extends State<HomeMonitor>
                                 height: 30.h,
                                 width: 80.w,
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    context.push(
+                                        '/home/monitor/transaction/history');
+                                  },
                                   style: ButtonStyle(
                                     backgroundColor:
                                         WidgetStateProperty.all(Colors.white),
@@ -1044,14 +1094,16 @@ class _HomeMonitorState extends State<HomeMonitor>
                             children: [
                               TransactionHistoryCard(
                                   title: "Total Transaksi",
-                                  value: formatCurrency(1300000, digits: 0),
+                                  value: formatCurrency(_statistic?.totalTransaction ?? 0, digits: 0),
                                   description: "+10%"),
                               SizedBox(
                                 width: 12.w,
                               ),
-                              const TransactionHistoryCard(
+                              TransactionHistoryCard(
                                   title: "Rerata Rasio",
-                                  value: "30%",
+                                  value: _statistic != null
+                                      ? '${(_statistic!.ratio * 100).toStringAsFixed(0)}%'
+                                      : '0%',
                                   description: "-5%"),
                             ],
                           ),
@@ -1119,7 +1171,7 @@ class _HomeMonitorState extends State<HomeMonitor>
 
                       if (request) {
                         EasyLoading.showSuccess("Berhasil mengirim jawaban");
-                        await Future.delayed(const Duration(seconds: 1));
+                        await Future.delayed(const Duration(seconds: 2));
                         loadPage();
                       }
                     } else {

@@ -2,7 +2,7 @@ import 'package:custom_sliding_segmented_control/custom_sliding_segmented_contro
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
@@ -36,7 +36,7 @@ class HomeMonitor extends StatefulWidget {
 
 class _HomeMonitorState extends State<HomeMonitor>
     with SingleTickerProviderStateMixin {
-  final _advancedDrawerController = AdvancedDrawerController();
+
   final _incomeController = TextEditingController();
   bool isSettingVisible = false;
   final List<ChartData> _installmentData = [];
@@ -132,7 +132,7 @@ class _HomeMonitorState extends State<HomeMonitor>
   @override
   Widget build(BuildContext context) {
     return HomeNavigator(
-      controller: _advancedDrawerController,
+
       state: HomeState.monitor,
       child: Scaffold(
         body: Stack(
@@ -142,7 +142,7 @@ class _HomeMonitorState extends State<HomeMonitor>
               right: 0,
               left: 0,
               child: TopBar(
-                  controller: _advancedDrawerController,
+
                   title: "Monitor",
                   settingAction: () {
                     // setState(() {
@@ -493,12 +493,20 @@ class _HomeMonitorState extends State<HomeMonitor>
                                                     BorderRadius.circular(12.r),
                                                 child: MaterialButton(
                                                   onPressed: () {
-                                                    setState(() {
-                                                      Navigator.of(context).push(
+                                                    setState(
+                                                      () {
+                                                        Navigator.of(context)
+                                                            .push(
                                                           TransitionVerticalBottom(
-                                                              child:
-                                                                  const SelfDiscovery()));
-                                                    });
+                                                            child:
+                                                                SelfDiscovery(
+                                                              onDismiss:
+                                                                  loadPage,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
                                                   },
                                                   child: Text("Survey Ulang",
                                                       style: AppFontStyle
@@ -775,7 +783,7 @@ class _HomeMonitorState extends State<HomeMonitor>
                                   SizedBox(
                                     height:
                                         MediaQuery.of(context).size.height * .3,
-                                  )
+                                  ),
                                 ],
                               ),
                             ),

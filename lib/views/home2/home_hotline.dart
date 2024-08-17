@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:walletwatch_mobile/common/data/hotline.dart';
@@ -23,7 +23,7 @@ class HomeHotline extends StatefulWidget {
 }
 
 class _HomeHotlineState extends State<HomeHotline> {
-  final _advancedDrawerController = AdvancedDrawerController();
+
   final List<Hotline> _hotlines = [];
   bool isSettingVisible = false;
 
@@ -52,7 +52,7 @@ class _HomeHotlineState extends State<HomeHotline> {
   @override
   Widget build(BuildContext context) {
     return HomeNavigator(
-      controller: _advancedDrawerController,
+
       state: HomeState.hotline,
       child: Scaffold(
         backgroundColor: lightColor,
@@ -72,7 +72,7 @@ class _HomeHotlineState extends State<HomeHotline> {
               right: 0,
               left: 0,
               child: TopBar(
-                  controller: _advancedDrawerController,
+
                   title: "Hotline",
                   textColor: darkColor,
                   popAction: () {

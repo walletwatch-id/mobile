@@ -16,7 +16,8 @@ import 'package:walletwatch_mobile/common/widgets/top_bar.dart';
 import 'package:walletwatch_mobile/views/monitor/self_discovery_finish.dart';
 
 class SelfDiscovery extends StatefulWidget {
-  const SelfDiscovery({super.key});
+  final VoidCallback onDismiss;
+  const SelfDiscovery({super.key, required this.onDismiss});
 
   @override
   State<SelfDiscovery> createState() => _SelfDiscoveryState();
@@ -43,212 +44,218 @@ class _SelfDiscoveryState extends State<SelfDiscovery> {
     setState(() {
       _questions.clear();
       _questions.addAll(questions);
-      _answers.addAll(List.generate(questions.length, (index) => null));
-      // _answers.addAll(List.generate(questions.length,
-      //     (index) => SurveyAnswer(questionId: questions[index].id, answer: 3)));
+      // _answers.addAll(List.generate(questions.length, (index) => null));
+      _answers.addAll(List.generate(questions.length,
+          (index) => SurveyAnswer(questionId: questions[index].id, answer: 4)));
     });
     EasyLoading.dismiss();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: lightColor,
-        body: Stack(
-          children: [
-            Positioned(
-              top: 0,
-              right: 0,
-              left: 0,
-              child: TopBar(
-                title: "Self-Discovery",
-                textColor: darkColor,
-                isLight: true,
-                settingAction: () {
-                  //
-                },
+    return PopScope(
+      onPopInvoked: (value) {
+        widget.onDismiss();
+      },
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: lightColor,
+          body: Stack(
+            children: [
+              Positioned(
+                top: 0,
+                right: 0,
+                left: 0,
+                child: TopBar(
+                  title: "Self-Discovery",
+                  textColor: darkColor,
+                  canClose: true,
+                  popAction: widget.onDismiss,
+                  settingAction: () {
+                    //
+                  },
+                ),
               ),
-            ),
-            Positioned(
-              top: 55.h,
-              right: 0,
-              left: 0,
-              child: Column(
-                children: [
-                  Container(
-                    height: 60.h,
-                    padding: EdgeInsets.symmetric(horizontal: 24.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              border: Border.all(
-                                color: darkColor,
-                                width: 2.w,
+              Positioned(
+                top: 55.h,
+                right: 0,
+                left: 0,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 60.h,
+                      padding: EdgeInsets.symmetric(horizontal: 24.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                border: Border.all(
+                                  color: darkColor,
+                                  width: 2.w,
+                                ),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: SizedBox(
+                                    width: 56.h, height: 56.h, child: user.image),
                               ),
                             ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(50),
-                              child: SizedBox(
-                                  width: 56.h, height: 56.h, child: user.image),
+                          ),
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.only(left: 16.w, top: 6.h),
+                              height: 60.h,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    user.name,
+                                    style: AppFontStyle.accountNameText,
+                                  ),
+                                  SizedBox(
+                                    height: 4.h,
+                                  ),
+                                  Text(
+                                    "Selamat datang di Aplikasi WalletWatch!",
+                                    style: AppFontStyle.homeListHeaderText
+                                        .copyWith(
+                                            color: subColor, fontSize: 13.sp),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 40.h,
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: CupertinoColors.lightBackgroundGray,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12.r),
                         ),
-                        Expanded(
-                          child: Container(
-                            padding: EdgeInsets.only(left: 16.w, top: 6.h),
-                            height: 60.h,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  user.name,
-                                  style: AppFontStyle.accountNameText,
-                                ),
-                                SizedBox(
-                                  height: 4.h,
-                                ),
-                                Text(
-                                  "Selamat datang di Aplikasi WalletWatch!",
-                                  style: AppFontStyle.homeListHeaderText
-                                      .copyWith(
-                                          color: subColor, fontSize: 13.sp),
-                                ),
-                              ],
-                            ),
-                          ),
+                        border: Border.all(
+                          color: borderColor,
+                          width: 1.5.w,
                         ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 40.h,
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: CupertinoColors.lightBackgroundGray,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(12.r),
                       ),
-                      border: Border.all(
-                        color: borderColor,
-                        width: 1.5.w,
-                      ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12.r),
-                      child: MaterialButton(
-                        onPressed: () {
-                          setState(() {});
-                        },
-                        child: Text("Silahkan menjawab pertanyaan di bawah ini",
-                            style: AppFontStyle.homeSubTitleText.copyWith(
-                                color: darkColor,
-                                fontSize: 14.sp,
-                                height: 1.4)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              top: 180.h,
-              right: 0,
-              left: 0,
-              bottom: 0,
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  ..._questions.asMap().entries.map((entry) {
-                    int index = entry.key;
-                    var item = entry.value;
-                    return SelfDiscoveryItem(
-                      number: index + 1,
-                      surveyQuestion: item,
-                      selectedValue: _answers[index]?.answer ?? -1,
-                      onSelected: (value) {
-                        setState(
-                          () {
-                            _answers[index] = SurveyAnswer(
-                                questionId: item.id, answer: value!);
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12.r),
+                        child: MaterialButton(
+                          onPressed: () {
+                            setState(() {});
                           },
-                        );
-                      },
-                    );
-                  }),
-                  Container(
-                    height: 40.h,
-                    margin: EdgeInsets.all(16.w),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(12.r),
-                      ),
-                      border: Border.all(
-                        color: borderColor,
-                        width: 1.5.w,
+                          child: Text("Silahkan menjawab pertanyaan di bawah ini",
+                              style: AppFontStyle.homeSubTitleText.copyWith(
+                                  color: darkColor,
+                                  fontSize: 14.sp,
+                                  height: 1.4)),
+                        ),
                       ),
                     ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12.r),
-                      child: MaterialButton(
-                        onPressed: () async {
-                          if (_answers
-                                  .toList()
-                                  .where((e) => e != null)
-                                  .length ==
-                              _questions.length) {
-                            EasyLoading.show(
-                                status:
-                                    'Loading...\n\nProses ini memerlukan waktu yang cukup lama...');
-                            var result = await storePersonalitySurveyResult();
+                  ],
+                ),
+              ),
+              Positioned(
+                top: 180.h,
+                right: 0,
+                left: 0,
+                bottom: 0,
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    ..._questions.asMap().entries.map((entry) {
+                      int index = entry.key;
+                      var item = entry.value;
+                      return SelfDiscoveryItem(
+                        number: index + 1,
+                        surveyQuestion: item,
+                        selectedValue: _answers[index]?.answer ?? -1,
+                        onSelected: (value) {
+                          setState(
+                            () {
+                              _answers[index] = SurveyAnswer(
+                                  questionId: item.id, answer: value!);
+                            },
+                          );
+                        },
+                      );
+                    }),
+                    Container(
+                      height: 40.h,
+                      margin: EdgeInsets.all(16.w),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12.r),
+                        ),
+                        border: Border.all(
+                          color: borderColor,
+                          width: 1.5.w,
+                        ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12.r),
+                        child: MaterialButton(
+                          onPressed: () async {
+                            if (_answers
+                                    .toList()
+                                    .where((e) => e != null)
+                                    .length ==
+                                _questions.length) {
+                              EasyLoading.show(
+                                  status:
+                                      'Loading...\n\nProses ini memerlukan waktu yang cukup lama...');
+                              var result = await storePersonalitySurveyResult();
 
-                            if (result != null) {
-                              bool request =
-                                  await storePersonalitySurveyAnswers(
-                                      resultId: result,
-                                      surveyAnswers:
-                                          _answers.map((e) => e!).toList());
+                              if (result != null) {
+                                bool request =
+                                    await storePersonalitySurveyAnswers(
+                                        resultId: result,
+                                        surveyAnswers:
+                                            _answers.map((e) => e!).toList());
 
-                              if (request) {
-                                EasyLoading.showSuccess(
-                                    "Berhasil mengirim jawaban");
-                                // ignore: use_build_context_synchronously
-                                context
-                                    .replace('/home/monitor/self-discovery/finish');
+                                if (request) {
+                                  EasyLoading.showSuccess(
+                                      "Berhasil mengirim jawaban\nSilahkan tunggu 5 menit untuk melihat hasilnya...");
+                                  // ignore: use_build_context_synchronously
+                                  context.replace(
+                                      '/home/monitor/self-discovery/finish', extra: widget.onDismiss);
+                                } else {
+                                  EasyLoading.showError("Gagal mengirim jawaban");
+                                }
+
+                                EasyLoading.dismiss();
                               } else {
                                 EasyLoading.showError("Gagal mengirim jawaban");
                               }
-
-                              EasyLoading.dismiss();
                             } else {
-                              EasyLoading.showError("Gagal mengirim jawaban");
+                              EasyLoading.showError(
+                                  "Silahkan jawab semua pertanyaan");
                             }
-                          } else {
-                            EasyLoading.showError(
-                                "Silahkan jawab semua pertanyaan");
-                          }
-                        },
-                        child: Text("Selesai",
-                            style: AppFontStyle.homeSubTitleText
-                                .copyWith(color: lightColor)),
+                          },
+                          child: Text("Selesai",
+                              style: AppFontStyle.homeSubTitleText
+                                  .copyWith(color: lightColor)),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

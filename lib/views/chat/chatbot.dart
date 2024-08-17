@@ -4,7 +4,7 @@ import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:dart_pusher_channels/dart_pusher_channels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,7 +33,7 @@ class _ChatBotState extends State<ChatBot> {
   final List<types.Message> _messages = [];
   final _user = const types.User(id: "USER");
   final _bot = const types.User(id: "BOT");
-  final _advancedDrawerController = AdvancedDrawerController();
+
   final List<ChatSession> _chatSessions = [];
   final List<ChatMessage> _chatMessages = [];
   ChatSession? _currentChatSession;
@@ -285,7 +285,7 @@ class _ChatBotState extends State<ChatBot> {
   @override
   Widget build(BuildContext context) {
     return HomeNavigator(
-        controller: _advancedDrawerController,
+
         state: HomeState.monitor,
         child: Scaffold(
           backgroundColor: lightColor,
@@ -298,6 +298,7 @@ class _ChatBotState extends State<ChatBot> {
                 child: TopBar(
                     title: "ChatBot",
                     textColor: darkColor,
+                    canClose: true,
                     settingAction: () {
                       // setState(() {
                       //   isSettingAlertVisible = true;
@@ -447,13 +448,13 @@ class _ChatBotState extends State<ChatBot> {
                           headerBuilder: (context, selectedItem, status) => Text(
                             selectedItem.title,
                             style: AppFontStyle.classLabelText
-                                .copyWith(color: const Color(0xFF3A2723)),
+                                .copyWith(color: darkColor),
                           ),
                           listItemBuilder:
                               (context, item, isSelected, onItemSelect) => Text(
                             item.title,
                             style: AppFontStyle.classLabelText
-                                .copyWith(color: const Color(0xFF3A2723)),
+                                .copyWith(color: darkColor),
                           ),
                           initialItem: _chatSessions.last,
                           onChanged: (value) {

@@ -3,7 +3,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:walletwatch_mobile/common/data/transaction.dart';
 import 'package:walletwatch_mobile/common/helper.dart';
+
+Future<List<Transaction>> fetchTransactions() async {
+  const String url = '${apiUrl}transactions?per_page=999';
+
+  final prefs = await getPrefs();
+
+  final response = await http.get(
+    Uri.parse(url),
+    headers: {
+      'Authorization': 'Bearer ${prefs.accessToken}',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    final responseBody = jsonDecode(response.body);
+
+    final transactions = responseBody['data']['transactions'] as List<dynamic>;
+
+    final results = transactions.map((transaction) => Transaction.fromJson(transaction)).toList();
+
+    return results;
+  } else {
+    print('Request failed with status: ${response.statusCode}');
+    return List.empty();
+  }
+}
+
 
 Future<bool> storeTransaction(
     {required BuildContext context,

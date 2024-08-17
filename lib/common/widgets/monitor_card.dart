@@ -13,7 +13,7 @@ class MonitorCard extends StatefulWidget {
       {super.key,
       required this.state,
       required this.value,
-      this.unit = "Per Bulan"});
+      this.unit = "Bulan Ini"});
 
   @override
   State<MonitorCard> createState() => _MonitorCardState();
@@ -23,44 +23,54 @@ class _MonitorCardState extends State<MonitorCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 20.h),
-      width: double.infinity,
-      decoration: BoxDecoration(
-          color: lightColor,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(16),
-          ),
-          border: Border.all(
-            color: borderColor,
-            width: 1.5.w,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: borderColor,
-              spreadRadius: -1.h,
-              blurRadius: 5.w,
-              offset: Offset(0, 5.h),
+        margin: EdgeInsets.only(top: 20.h),
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: lightColor,
+            borderRadius: const BorderRadius.all(
+              Radius.circular(16),
             ),
-          ]),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Center(child: getStateImage(widget.state)),
-            
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 8.w, right: 20.w, top: 20.h, bottom: 20.h),
-            child: Column(
-              children: [
-                Text(formatCurrency(widget.value), style: AppFontStyle.homeCardTitleText.copyWith(color: darkColor),),
-                SizedBox(height: 4.h,),
-                Text(widget.unit, style: AppFontStyle.authSubLabelText.copyWith(color: subColor),)
+            border: Border.all(
+              color: borderColor,
+              width: 1.5.w,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: borderColor,
+                spreadRadius: -1.h,
+                blurRadius: 5.w,
+                offset: Offset(0, 5.h),
+              ),
+            ]),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Center(child: getStateImage(widget.state)),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: 8.w, right: 20.w, top: 20.h, bottom: 20.h),
+              child: Column(
+                children: [
+                  Text(
+                    formatCurrency(widget.value),
+                    style: AppFontStyle.homeCardTitleText
+                        .copyWith(color: darkColor),
+                  ),
+                  SizedBox(
+                    height: 4.h,
+                  ),
+                  Text(
+                    widget.unit,
+                    style:
+                        AppFontStyle.authSubLabelText.copyWith(color: subColor),
+                  ),
               ],
             ),
           )
         ],
-      )
+      ),
     );
   }
 }

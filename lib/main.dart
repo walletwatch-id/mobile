@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -9,9 +11,10 @@ import 'package:walletwatch_mobile/views/auth/login.dart';
 import 'package:walletwatch_mobile/views/chat/chatbot.dart';
 import 'package:walletwatch_mobile/views/home2/home_notification.dart';
 import 'package:walletwatch_mobile/views/home2/home.dart';
-import 'package:walletwatch_mobile/views/home2/home_transaction.dart';
+import 'package:walletwatch_mobile/views/monitor/transaction_add.dart';
 import 'package:walletwatch_mobile/views/monitor/self_discovery.dart';
 import 'package:walletwatch_mobile/views/monitor/self_discovery_finish.dart';
+import 'package:walletwatch_mobile/views/monitor/transaction_history.dart';
 import 'package:walletwatch_mobile/views/profile/profile_edit.dart';
 import 'package:walletwatch_mobile/views/profile/profile_pdf.dart';
 import 'package:walletwatch_mobile/views/splash/splash.dart';
@@ -19,7 +22,7 @@ import 'package:walletwatch_mobile/views/splash/splash_auth.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //   await Firebase.initializeApp(
+  // await Firebase.initializeApp(
   //   options: DefaultFirebaseOptions.currentPlatform,
   // );
 
@@ -27,6 +30,7 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarIconBrightness: Brightness.dark,
@@ -134,18 +138,32 @@ class _MainAppState extends State<MainApp> {
                 routes: [
                   GoRoute(
                     path: 'transaction',
-                    pageBuilder: (context, state) => CustomTransitionPage<void>(
-                      key: state.pageKey,
-                      child: const HomeTransaction(),
-                      transitionDuration: const Duration(milliseconds: 200),
-                      transitionsBuilder: TransitionRouteBuilder.fade,
-                    ),
+                    pageBuilder: (context, state) =>
+                          CustomTransitionPage<void>(
+                            key: state.pageKey,
+                            child: const TransactionAdd(),
+                            transitionDuration:
+                                const Duration(milliseconds: 200),
+                            transitionsBuilder: TransitionRouteBuilder.verticalBottom,
+                          ),
+                      routes: [
+                      GoRoute(
+                        path: 'history',
+                        pageBuilder: (context, state) =>
+                            CustomTransitionPage<void>(
+                          key: state.pageKey,
+                          child: const TransactionHistory(),
+                          transitionDuration: const Duration(milliseconds: 200),
+                          transitionsBuilder: TransitionRouteBuilder.verticalBottom,
+                        ),
+                      ),
+                    ],
                   ),
                   GoRoute(
                     path: 'self-discovery',
                     pageBuilder: (context, state) => CustomTransitionPage<void>(
                       key: state.pageKey,
-                      child: const SelfDiscovery(),
+                      child: SelfDiscovery(onDismiss: state.extra as VoidCallback,),
                       transitionDuration: const Duration(milliseconds: 200),
                       transitionsBuilder: TransitionRouteBuilder.verticalBottom,
                     ),
@@ -155,7 +173,7 @@ class _MainAppState extends State<MainApp> {
                         pageBuilder: (context, state) =>
                             CustomTransitionPage<void>(
                           key: state.pageKey,
-                          child: const SelfDiscoveryFinish(),
+                          child: SelfDiscoveryFinish(onPop: state.extra as VoidCallback,),
                           transitionDuration: const Duration(milliseconds: 200),
                           transitionsBuilder: TransitionRouteBuilder.fade,
                         ),

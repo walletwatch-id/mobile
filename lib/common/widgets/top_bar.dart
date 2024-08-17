@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:walletwatch_mobile/common/enum/home_state.dart';
 import 'package:walletwatch_mobile/common/theme/app_color_style.dart';
@@ -12,7 +12,7 @@ class TopBar extends StatefulWidget {
   final String? title;
   final VoidCallback settingAction;
   final VoidCallback? popAction;
-  final AdvancedDrawerController? controller;
+  final bool canClose;
   final Color? backgroundColor;
   final Color? textColor;
   final HomeState? state;
@@ -25,7 +25,7 @@ class TopBar extends StatefulWidget {
       this.state,
       this.backgroundColor,
       this.textColor,
-      this.controller,
+      this.canClose = false,
       this.isLight = false});
 
   @override
@@ -43,25 +43,8 @@ class _TopBarState extends State<TopBar> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          widget.controller != null
-              ? IconButton(
-                  onPressed: _handleMenuButtonPressed,
-                  icon: ValueListenableBuilder<AdvancedDrawerValue>(
-                    valueListenable: widget.controller!,
-                    builder: (_, value, __) {
-                      return AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 250),
-                        child: Icon(
-                          value.visible ? Icons.clear : Icons.menu,
-                          key: ValueKey<bool>(value.visible),
-                          size: 32.w,
-                          color: primaryColor,
-                        ),
-                      );
-                    },
-                  ),
-                )
-              : SizedBox(
+          if (widget.canClose)
+              SizedBox(
                   width: 58.w,
                   child: GestureDetector(
                     onTap: () {
@@ -137,11 +120,5 @@ class _TopBarState extends State<TopBar> {
         ],
       ),
     );
-  }
-
-  void _handleMenuButtonPressed() {
-    // NOTICE: Manage Advanced Drawer state through the Controller.
-    // _advancedDrawerController.value = AdvancedDrawerValue.visible();
-    widget.controller!.showDrawer();
   }
 }

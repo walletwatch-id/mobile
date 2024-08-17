@@ -1,7 +1,7 @@
 name: walletwatch_mobile
 description: "WalletWatch"
 publish_to: "none"
-version: 0.4.0+4
+version: 0.5.0+5
 
 environment:
   sdk: "3.4.3"
@@ -18,7 +18,6 @@ dependencies:
   syncfusion_flutter_datepicker: 26.2.8
   syncfusion_flutter_pdfviewer: 26.2.8
   syncfusion_flutter_charts: 26.2.8
-  flutter_advanced_drawer: 1.3.6
   flutter_easyloading: 3.0.5
   flutter_rounded_progress_bar: 0.3.2
   custom_sliding_segmented_control: 1.8.3

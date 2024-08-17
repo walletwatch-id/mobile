@@ -4,7 +4,7 @@ import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:dart_pusher_channels/dart_pusher_channels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,7 +34,7 @@ class _HomeChatState extends State<HomeChat> {
   final List<types.Message> _messages = [];
   final _user = const types.User(id: "USER");
   final _bot = const types.User(id: "BOT");
-  final _advancedDrawerController = AdvancedDrawerController();
+
   final List<ChatSession> _chatSessions = [];
   final List<ChatMessage> _chatMessages = [];
   ChatSession? _currentChatSession;
@@ -286,7 +286,7 @@ class _HomeChatState extends State<HomeChat> {
   @override
   Widget build(BuildContext context) {
     return HomeNavigator(
-      controller: _advancedDrawerController,
+
       state: HomeState.monitor,
       child: Scaffold(
         body: Stack(
@@ -296,7 +296,7 @@ class _HomeChatState extends State<HomeChat> {
               right: 0,
               left: 0,
               child: TopBar(
-                controller: _advancedDrawerController,
+
                 title: "Chatbot",
                 settingAction: () {
                   // setState(() {

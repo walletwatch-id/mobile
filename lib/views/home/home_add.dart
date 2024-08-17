@@ -2,7 +2,7 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -29,7 +29,7 @@ class HomeAdd extends StatefulWidget {
 }
 
 class _HomeAddState extends State<HomeAdd> {
-  final _advancedDrawerController = AdvancedDrawerController();
+
   final _installmentController = TextEditingController();
   final _totalController = TextEditingController();
   final _periodController = TextEditingController();
@@ -72,7 +72,7 @@ class _HomeAddState extends State<HomeAdd> {
   @override
   Widget build(BuildContext context) {
     return HomeNavigator(
-        controller: _advancedDrawerController,
+
         state: HomeState.monitor,
         child: Scaffold(
           backgroundColor: lightColor,
@@ -83,7 +83,7 @@ class _HomeAddState extends State<HomeAdd> {
                 right: 0,
                 left: 0,
                 child: TopBar(
-                  controller: _advancedDrawerController,
+
                   title: "Tambah Transaksi",
                   textColor: darkColor,
                   isLight: true,

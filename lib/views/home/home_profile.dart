@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:walletwatch_mobile/common/enum/home_state.dart';
@@ -23,7 +23,7 @@ class HomeProfile extends StatefulWidget {
 }
 
 class _HomeProfileState extends State<HomeProfile> {
-  final _advancedDrawerController = AdvancedDrawerController();
+
   bool isSettingVisible = false;
 
   @override
@@ -77,7 +77,7 @@ class _HomeProfileState extends State<HomeProfile> {
   @override
   Widget build(BuildContext context) {
     return HomeNavigator(
-        controller: _advancedDrawerController,
+
         state: HomeState.monitor,
         child: Scaffold(
           backgroundColor: lightColor,
@@ -88,7 +88,7 @@ class _HomeProfileState extends State<HomeProfile> {
                 right: 0,
                 left: 0,
                 child: TopBar(
-                  controller: _advancedDrawerController,
+
                   title: "Profile",
                   textColor: darkColor,
                   isLight: true,
