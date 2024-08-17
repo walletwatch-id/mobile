@@ -38,7 +38,6 @@ class HomeMonitor extends StatefulWidget {
 
 class _HomeMonitorState extends State<HomeMonitor>
     with SingleTickerProviderStateMixin {
-
   final _incomeController = TextEditingController();
   bool isSettingVisible = false;
   final List<ChartData> _installmentData = [];
@@ -54,6 +53,8 @@ class _HomeMonitorState extends State<HomeMonitor>
   Map<int, String> _installmentSummarizer = {1: ""};
   Map<int, String> _incomeSummarizer = {1: ""};
   bool _isInputIncomeVisible = false;
+  double _transactionDivPercentange = 0;
+  double _ratioDivPercentage = 0;
 
   @override
   void initState() {
@@ -94,6 +95,15 @@ class _HomeMonitorState extends State<HomeMonitor>
       _incomeSummarizer.clear();
       _statistics.addAll(statistics);
       _statistic = checkStatistic(statistics);
+
+      _ratioDivPercentage =
+          (_statistics.last.ratio - _statistics[_statistics.length - 2].ratio) /
+              _statistics[_statistics.length - 2].ratio *
+              100;
+      _transactionDivPercentange = (_statistics.last.totalTransaction -
+              _statistics[_statistics.length - 2].totalTransaction) /
+          _statistics[_statistics.length - 2].totalTransaction *
+          100;
 
       _installmentIncome =
           (_statistic!.totalInstallment / _statistic!.totalIncome);
@@ -159,7 +169,6 @@ class _HomeMonitorState extends State<HomeMonitor>
   @override
   Widget build(BuildContext context) {
     return HomeNavigator(
-
       state: HomeState.monitor,
       child: Scaffold(
         backgroundColor: lightColor,
@@ -170,7 +179,6 @@ class _HomeMonitorState extends State<HomeMonitor>
               right: 0,
               left: 0,
               child: TopBar(
-
                   isLight: true,
                   title: "Monitor",
                   textColor: darkColor,
@@ -522,7 +530,8 @@ class _HomeMonitorState extends State<HomeMonitor>
                                       child: MaterialButton(
                                         onPressed: () {
                                           context.push(
-                                              '/home/monitor/self-discovery', extra: loadPage);
+                                              '/home/monitor/self-discovery',
+                                              extra: loadPage);
                                         },
                                         child: Text("Survey Ulang",
                                             style: AppFontStyle.homeSubTitleText
@@ -1094,8 +1103,10 @@ class _HomeMonitorState extends State<HomeMonitor>
                             children: [
                               TransactionHistoryCard(
                                   title: "Total Transaksi",
-                                  value: formatCurrency(_statistic?.totalTransaction ?? 0, digits: 0),
-                                  description: "+10%"),
+                                  value: formatCurrency(
+                                      _statistic?.totalTransaction ?? 0,
+                                      digits: 0),
+                                  description: "${_transactionDivPercentange.toStringAsFixed(0)}%"),
                               SizedBox(
                                 width: 12.w,
                               ),
@@ -1104,30 +1115,30 @@ class _HomeMonitorState extends State<HomeMonitor>
                                   value: _statistic != null
                                       ? '${(_statistic!.ratio * 100).toStringAsFixed(0)}%'
                                       : '0%',
-                                  description: "-5%"),
+                                  description: "${_ratioDivPercentage.toStringAsFixed(0)}%"),
                             ],
                           ),
                           const SizedBox(height: 20),
-                          Text(
-                            'Kategori Pengeluaran Paylater',
-                            style: AppFontStyle.monitorSubHeaderText.copyWith(
-                              color: darkColor,
-                              height: 1.4,
-                              fontSize: 20.sp,
-                            ),
-                          ),
-                          const ListTile(
-                            leading: Icon(Icons.shopping_cart),
-                            title: Text('Shopping'),
-                            subtitle: Text('Total spend: Rp7.653.000'),
-                          ),
-                          Divider(color: subColor, thickness: .5.h),
-                          const ListTile(
-                            leading: Icon(Icons.fastfood),
-                            title: Text('Makanan'),
-                            subtitle: Text('Total spend: Rp1.432.278'),
-                          ),
-                          Divider(color: subColor, thickness: .5.h),
+                          // Text(
+                          //   'Kategori Pengeluaran Paylater',
+                          //   style: AppFontStyle.monitorSubHeaderText.copyWith(
+                          //     color: darkColor,
+                          //     height: 1.4,
+                          //     fontSize: 20.sp,
+                          //   ),
+                          // ),
+                          // const ListTile(
+                          //   leading: Icon(Icons.shopping_cart),
+                          //   title: Text('Shopping'),
+                          //   subtitle: Text('Total spend: Rp7.653.000'),
+                          // ),
+                          // Divider(color: subColor, thickness: .5.h),
+                          // const ListTile(
+                          //   leading: Icon(Icons.fastfood),
+                          //   title: Text('Makanan'),
+                          //   subtitle: Text('Total spend: Rp1.432.278'),
+                          // ),
+                          // Divider(color: subColor, thickness: .5.h),
                         ],
                       ),
                     ),

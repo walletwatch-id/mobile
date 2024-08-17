@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -23,7 +22,6 @@ class HomeHotline extends StatefulWidget {
 }
 
 class _HomeHotlineState extends State<HomeHotline> {
-
   final List<Hotline> _hotlines = [];
   bool isSettingVisible = false;
 
@@ -52,7 +50,6 @@ class _HomeHotlineState extends State<HomeHotline> {
   @override
   Widget build(BuildContext context) {
     return HomeNavigator(
-
       state: HomeState.hotline,
       child: Scaffold(
         backgroundColor: lightColor,
@@ -72,11 +69,10 @@ class _HomeHotlineState extends State<HomeHotline> {
               right: 0,
               left: 0,
               child: TopBar(
-
                   title: "Hotline",
                   textColor: darkColor,
                   popAction: () {
-                              SystemChrome.setSystemUIOverlayStyle(
+                    SystemChrome.setSystemUIOverlayStyle(
                         const SystemUiOverlayStyle(
                       statusBarIconBrightness: Brightness.dark,
                       statusBarColor: Color(0xFFe8f6ee),
@@ -187,7 +183,7 @@ class _HomeHotlineState extends State<HomeHotline> {
                                     //     ]),
 
                                     Expanded(
-                                      flex: 2,
+                                      flex: 4,
                                       child: HotlineCard(
                                           state: HotlineState.paylater,
                                           title: "Hotline Paylater Kamu",
@@ -216,39 +212,48 @@ class _HomeHotlineState extends State<HomeHotline> {
                                               ],
                                             ),
                                           ),
-                                          Expanded(
-                                              child: Padding(
-                                                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                                child: Column(
-                                                                                            crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                                                                            children: [
-                                                Text(
-                                                            "FAQs",
-                                                            style: AppFontStyle.homeCardTitleText
-                                                                .copyWith(color: darkColor, fontSize: 22.sp),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 12.h,
-                                                          ),
-                                                Expanded(
-                                                  child: ListView(
-                                                    padding: EdgeInsets.zero,
-                                                    children: const [
-                                                      FAQItem(
-            question: 'Hal apa saja yang bisa saya tanyakan?',
-            detail: 'Hal-hal yang dapat dibantu',
-          ),
-          FAQItem(
-            question: 'Jam berapa operating hours hotline?',
-            detail: 'Detail operating hours',
-          ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                                                            ],
-                                                                                          ),
-                                              )),
+                                          // Expanded(
+                                          //     child: Padding(
+                                          //   padding: EdgeInsets.symmetric(
+                                          //       horizontal: 10.w),
+                                          //   child: Column(
+                                          //     crossAxisAlignment:
+                                          //         CrossAxisAlignment.start,
+                                          //     children: [
+                                          //       Text(
+                                          //         "FAQs",
+                                          //         style: AppFontStyle
+                                          //             .homeCardTitleText
+                                          //             .copyWith(
+                                          //                 color: darkColor,
+                                          //                 fontSize: 22.sp),
+                                          //       ),
+                                          //       SizedBox(
+                                          //         height: 12.h,
+                                          //       ),
+                                          //       Expanded(
+                                          //         child: ListView(
+                                          //           padding: EdgeInsets.zero,
+                                          //           children: const [
+                                          //             FAQItem(
+                                          //               question:
+                                          //                   'Hal apa saja yang bisa saya tanyakan?',
+                                          //               detail:
+                                          //                   'Hal-hal yang dapat dibantu',
+                                          //             ),
+                                          //             FAQItem(
+                                          //               question:
+                                          //                   'Jam berapa operating hours hotline?',
+                                          //               detail:
+                                          //                   'Detail operating hours',
+                                          //               ),
+                                          //             ],
+                                          //           ),
+                                          //         ),
+                                          //       ],
+                                          //     ),
+                                          //   ),
+                                          // ),
                                         ],
                                       ),
                                     ),
